@@ -16,6 +16,12 @@ int CApplication::Go()
 {
 	while (true)
 	{
+
+		if (CWindow::ProcessMessages() == CWindow::APPLICATION_QUIT)
+		{
+			return -1;
+		}
+
 		DoFrame();
 	}
 }
