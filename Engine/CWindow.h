@@ -11,7 +11,7 @@ class CWindow
 public:
 
 	//Enum for window Return messages
-	enum Message
+	enum class Message
 	{
 		APPLICATION_STANDARD,	//Standard message which shouldn't trigger a response
 		APPLICATION_QUIT

@@ -7,9 +7,7 @@
 #include <wrl.h>
 #include <vector>
 #include "CDXGIInfoManager.h"
-
 #include <memory>
-#include <random>
 
 class CGraphics
 {

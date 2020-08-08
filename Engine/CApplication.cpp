@@ -1,4 +1,5 @@
 #include "CApplication.h"
+#include <sstream>
 
 CApplication::CApplication()
 	:
@@ -18,7 +19,7 @@ int CApplication::Go()
 	while (true)
 	{
 
-		if (CWindow::ProcessMessages() == CWindow::APPLICATION_QUIT)
+		if (CWindow::ProcessMessages() == CWindow::Message::APPLICATION_QUIT)
 		{
 			return -1;
 		}
@@ -29,6 +30,6 @@ int CApplication::Go()
 
 void CApplication::DoFrame()
 {
-	m_Wnd.Gfx().BeginFrame();
+	m_Wnd.Gfx().BeginFrame(sin(m_Timer.TimeElapsed()));
 	m_Wnd.Gfx().EndFrame();
 }

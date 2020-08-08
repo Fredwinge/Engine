@@ -171,7 +171,7 @@ void CGraphics::EndFrame()
 	{
 		//Special error checking for Present since it can get the DXGI_ERROR_DEVICE_REMOVED error, 
 		//which contains additional information which is worth extracting
-		if (hr = DXGI_ERROR_DEVICE_REMOVED)
+		if (hr == DXGI_ERROR_DEVICE_REMOVED)
 		{
 			throw GFX_DEVICE_REMOVED_EXCEPT(m_pDevice->GetDeviceRemovedReason());
 		}

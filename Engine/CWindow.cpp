@@ -97,25 +97,11 @@ CWindow::CWindow(int width, int height, const char* name)
 		throw CHWND_LAST_EXCEPT();
 	}
 
-	//HWND hWnd = CreateWindowEx(
-	//	0,
-	//	pClassName,
-	//	"TestWindow",
-	//	WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-	//	200,		//Window x Position
-	//	200,		//Window y Position
-	//	640,		//Width of window
-	//	480,		//Height of window
-	//	nullptr,
-	//	nullptr,
-	//	hInstance,
-	//	nullptr
-
-	//Newly created windows start of as hidden so we want to show it
+	//Newly created windows start of as hidden so we have to make this one show
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 
 	//Create graphics object
-	//m_pGfx = std::make_unique<CGraphics>(m_hWnd);
+	m_pGfx = std::make_unique<CGraphics>(m_hWnd);
 
 }
 
@@ -149,7 +135,7 @@ CWindow::Message CWindow::ProcessMessages()
 		//check for quit because peekmessage does not signal this via return
 		if (msg.message == WM_QUIT)
 		{
-			return CWindow::APPLICATION_QUIT;
+			return CWindow::Message::APPLICATION_QUIT;
 		}
 
 
@@ -160,7 +146,7 @@ CWindow::Message CWindow::ProcessMessages()
 	}
 
 	//return standard message when not quitting app
-	return CWindow::APPLICATION_STANDARD;
+	return CWindow::Message::APPLICATION_STANDARD;
 }
 
 
@@ -327,4 +313,53 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) no
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+//Window exception stuff
+
+CWindow::HrException::HrException(int line, const char* file, HRESULT hr) noexcept
+	:
+	Exception(line, file),
+	m_hr(hr)
+{
+
+}
+
+const char* CWindow::HrException::what() const noexcept
+{
+	std::ostringstream oss;
+	oss << GetType() << std::endl								//Outputs type of function
+		<< "[Error Code] " << GetErrorCode() << std::endl		//Outputs error code
+		<< "[Description] " << GetErrorString() << std::endl	//Outputs error string
+		<< GetOriginString();									//Outputs origin string
+
+	m_sWhatBuffer = oss.str();
+
+	return m_sWhatBuffer.c_str();
+}
+
+std::string CWindow::Exception::TranslateErrorCode(HRESULT hr) noexcept
+{
+	char* pMsgBuffer = nullptr;
+
+	//Get description string for our error code
+	DWORD nMsgLength = FormatMessageA(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		nullptr,
+		hr,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		reinterpret_cast<LPSTR>(&pMsgBuffer),
+		0,
+		nullptr
+	);
+
+	if (nMsgLength == 0)
+	{
+		return "Unidentified error code";
+	}
+
+	std::string errorString = pMsgBuffer;
+	LocalFree(pMsgBuffer);
+
+	return errorString;
 }
