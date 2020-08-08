@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="CApplication.cpp" />
     <ClCompile Include="CKeyboard.cpp" />
+    <ClCompile Include="CMouse.cpp" />
+    <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
     <ClCompile Include="IException.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -148,6 +150,8 @@
   <ItemGroup>
     <ClInclude Include="CApplication.h" />
     <ClInclude Include="CKeyboard.h" />
+    <ClInclude Include="CMouse.h" />
+    <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />
     <ClInclude Include="IException.h" />
   </ItemGroup>

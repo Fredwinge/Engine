@@ -1,5 +1,6 @@
 #pragma once
 #include "CWindow.h"
+#include "CTimer.h"
 
 class CApplication
 {
@@ -16,4 +17,6 @@ private:
 	void DoFrame();
 
 	CWindow m_Wnd;
+
+	CTimer m_Timer;
 };

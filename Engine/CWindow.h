@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "IException.h"
 #include "CKeyboard.h"
+#include "CMouse.h"
 
 class CWindow
 {
@@ -100,7 +101,7 @@ private:
 public:
 
 	CKeyboard m_Keyboard;
-	//CMouse m_Mouse
+	CMouse m_Mouse;
 
 private:
 

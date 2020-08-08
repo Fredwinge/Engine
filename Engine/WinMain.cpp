@@ -8,7 +8,15 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	{
 		return CApplication{}.Go();
 	}
-	catch (...)	//Catch unknown exception
+	catch (const IException& e)			//Catch IException
+	{
+		MessageBoxA(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (const std::exception& e)		//Catch standard exception
+	{
+		MessageBoxA(nullptr, e.what(), "Standard Exception", MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch (...)							//Catch unknown exception
 	{
 		MessageBoxA(nullptr, "No Details Available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
