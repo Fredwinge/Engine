@@ -9,7 +9,7 @@ CWindow::WindowClass::WindowClass() noexcept
 	:
 	m_hInst(GetModuleHandle(nullptr))
 {
-
+	/*
 	//TODO: FIX ICON STUFF
 	//Load icon image
 	HICON icon = static_cast<HICON>(LoadImage(
@@ -29,7 +29,7 @@ CWindow::WindowClass::WindowClass() noexcept
 		16,											//Y-dimension
 		0											//Optional flags
 	));
-
+	*/
 
 	//Most windows versions have a regular version and an 'EX' version, 'EX' stands for extended
 	//'EX' are newer than regular version, but not necessarily better
@@ -41,12 +41,12 @@ CWindow::WindowClass::WindowClass() noexcept
 	wc.cbClsExtra = 0;					//Allows you to allocate extra bytes that we can use to store custom data
 	wc.cbWndExtra = 0;					//Allows us to allocate extra bytes of data for every new instance of this class
 	wc.hInstance = GetInstance();		//A handle to the instance containing the window procedure
-	wc.hIcon = icon;					//Handle to class icon
+	//wc.hIcon = icon;					//Handle to class icon
 	wc.hCursor = NULL;					//Handle to class cursor
 	wc.hbrBackground = NULL;			//Creates a brush which draws to the back of the window, NULL since we'll be using DirectX for all drawing purposes
 	wc.lpszMenuName = NULL;				//Menu name, pointless for us
 	wc.lpszClassName = GetName();		//Specifies the window class name, needed to pass class name when creating windows
-	wc.hIconSm = iconSmall;				//Handle to smaller icon that we can use for the application
+	//wc.hIconSm = iconSmall;				//Handle to smaller icon that we can use for the application
 
 	RegisterClassExA(&wc);
 }
@@ -163,15 +163,15 @@ CWindow::Message CWindow::ProcessMessages()
 	return CWindow::APPLICATION_STANDARD;
 }
 
-//TODO: CLEANUP / FIX
-//CGraphics& CWindow::Gfx()
-//{
-//	if (m_pGfx == nullptr)
-//	{
-//		throw CHWND_NOGFX_EXCEPT();
-//	}
-//	return *m_pGfx;
-//}
+
+CGraphics& CWindow::Gfx()
+{
+	if (m_pGfx == nullptr)
+	{
+		throw CHWND_NOGFX_EXCEPT();
+	}
+	return *m_pGfx;
+}
 
 //Message handler for setup
 LRESULT WINAPI CWindow::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

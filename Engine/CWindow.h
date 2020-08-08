@@ -3,6 +3,7 @@
 #include "IException.h"
 #include "CKeyboard.h"
 #include "CMouse.h"
+#include "CGraphics.h"
 
 class CWindow
 {
@@ -89,7 +90,7 @@ public:
 	void SetTitle(const std::string& title);
 	static Message ProcessMessages();
 
-	//CGraphics Gfx();
+	CGraphics& Gfx();
 
 private:
 
@@ -109,7 +110,7 @@ private:
 	int m_Height;
 	HWND m_hWnd;
 
-	//std::unique_ptr<CGraphics> m_pGfx;
+	std::unique_ptr<CGraphics> m_pGfx;
 };
 
 //Error exception helper macros

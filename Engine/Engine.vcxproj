@@ -140,6 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CApplication.cpp" />
+    <ClCompile Include="CDXGIInfoManager.cpp" />
+    <ClCompile Include="CGraphics.cpp" />
     <ClCompile Include="CKeyboard.cpp" />
     <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CTimer.cpp" />
@@ -149,10 +151,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h" />
+    <ClInclude Include="CDXGIInfoManager.h" />
+    <ClInclude Include="CGraphics.h" />
     <ClInclude Include="CKeyboard.h" />
     <ClInclude Include="CMouse.h" />
     <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />
+    <ClInclude Include="GraphicsThrowMacros.h" />
     <ClInclude Include="IException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
