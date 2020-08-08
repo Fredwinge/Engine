@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <vector>
+#include <string>
 
 //The purpose of this class is to extract additional information out of DirectX errors
 

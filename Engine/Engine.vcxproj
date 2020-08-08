@@ -146,6 +146,7 @@
     <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
+    <ClCompile Include="dxerr\dxerr.cpp" />
     <ClCompile Include="IException.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="CMouse.h" />
     <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />
+    <ClInclude Include="dxerr\dxerr.h" />
     <ClInclude Include="GraphicsThrowMacros.h" />
     <ClInclude Include="IException.h" />
   </ItemGroup>

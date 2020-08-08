@@ -42,6 +42,9 @@
     <ClCompile Include="CDXGIInfoManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dxerr\dxerr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsThrowMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dxerr\dxerr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
