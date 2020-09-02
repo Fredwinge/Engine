@@ -2,7 +2,7 @@
 #include <Windows.h>
 
 //Read mouse event from event queue
-CMouse::Event CMouse::Read() noexcept
+CMouse::Event CMouse::Read() //noexcept
 {
 	if (m_EventBuffer.size() > 0u)
 	{
@@ -17,7 +17,7 @@ CMouse::Event CMouse::Read() noexcept
 	}
 }
 
-void CMouse::OnMouseMove(int newX, int newY) noexcept
+void CMouse::OnMouseMove(int newX, int newY) //noexcept
 {
 	m_xPos = newX;
 	m_yPos = newY;
@@ -28,7 +28,7 @@ void CMouse::OnMouseMove(int newX, int newY) noexcept
 
 // MOUSE CAPTURE
 
-void CMouse::OnMouseEnter() noexcept
+void CMouse::OnMouseEnter() //noexcept
 {
 	m_bIsInWindow = true;
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::ENTER, *this));
@@ -36,7 +36,7 @@ void CMouse::OnMouseEnter() noexcept
 	TrimBuffer();
 }
 
-void CMouse::OnMouseLeave() noexcept
+void CMouse::OnMouseLeave() //noexcept
 {
 	m_bIsInWindow = false;
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::LEAVE, *this));
@@ -46,7 +46,7 @@ void CMouse::OnMouseLeave() noexcept
 
 // LEFT
 
-void CMouse::OnLeftPressed(int x, int y) noexcept
+void CMouse::OnLeftPressed(int x, int y) //noexcept
 {
 	m_bLeftIsPressed = true;
 
@@ -54,7 +54,7 @@ void CMouse::OnLeftPressed(int x, int y) noexcept
 	TrimBuffer();
 }
 
-void CMouse::OnLeftReleased(int x, int y) noexcept
+void CMouse::OnLeftReleased(int x, int y) //noexcept
 {
 	m_bLeftIsPressed = false;
 
@@ -64,7 +64,7 @@ void CMouse::OnLeftReleased(int x, int y) noexcept
 
 // RIGHT
 
-void CMouse::OnRightPressed(int x, int y) noexcept
+void CMouse::OnRightPressed(int x, int y) //noexcept
 {
 	m_bRightIsPressed = true;
 
@@ -72,7 +72,7 @@ void CMouse::OnRightPressed(int x, int y) noexcept
 	TrimBuffer();
 }
 
-void CMouse::OnRightReleased(int x, int y) noexcept
+void CMouse::OnRightReleased(int x, int y) //noexcept
 {
 	m_bRightIsPressed = false;
 
@@ -82,21 +82,21 @@ void CMouse::OnRightReleased(int x, int y) noexcept
 
 // WHEEL
 
-void CMouse::OnWheelUp(int x, int y) noexcept
+void CMouse::OnWheelUp(int x, int y) //noexcept
 {
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::WHEEL_UP, *this));
 
 	TrimBuffer();
 }
 
-void CMouse::OnWheelDown(int x, int y) noexcept
+void CMouse::OnWheelDown(int x, int y) //noexcept
 {
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::WHEEL_DOWN, *this));
 
 	TrimBuffer();
 }
 
-void CMouse::OnWheelDelta(int x, int y, int delta) noexcept
+void CMouse::OnWheelDelta(int x, int y, int delta) //noexcept
 {
 	m_wheelDeltaCarry += delta;
 
@@ -114,7 +114,7 @@ void CMouse::OnWheelDelta(int x, int y, int delta) noexcept
 }
 
 
-void CMouse::TrimBuffer() noexcept
+void CMouse::TrimBuffer() //noexcept
 {
 	while (m_EventBuffer.size() > s_bufferSize)
 	{

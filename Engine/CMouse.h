@@ -78,7 +78,7 @@ public:
 	CMouse(const CMouse&) = delete;
 	CMouse& operator=(const CMouse&) = delete;
 
-	CMouse::Event Read() noexcept;
+	CMouse::Event Read() /*noexcept*/;
 
 	//TODO: Implement 2DVector class for this instead
 	std::pair<int, int> GetPos() const noexcept		{ return{ m_xPos, m_yPos }; }
@@ -96,22 +96,22 @@ public:
 
 private:
 
-	void OnMouseMove(int x, int y) noexcept;
-	void OnMouseEnter() noexcept;
-	void OnMouseLeave() noexcept;
+	void OnMouseMove(int x, int y) /*noexcept*/;
+	void OnMouseEnter() /*noexcept*/;
+	void OnMouseLeave() /*noexcept*/;
 
-	void OnLeftPressed(int x, int y) noexcept;
-	void OnLeftReleased(int x, int y) noexcept;
+	void OnLeftPressed(int x, int y) /*noexcept*/;
+	void OnLeftReleased(int x, int y) /*noexcept*/;
 
-	void OnRightPressed(int x, int y) noexcept;
-	void OnRightReleased(int x, int y) noexcept;
+	void OnRightPressed(int x, int y) /*noexcept*/;
+	void OnRightReleased(int x, int y) /*noexcept*/;
 
-	void OnWheelUp(int x, int y) noexcept;
-	void OnWheelDown(int x, int y) noexcept;
+	void OnWheelUp(int x, int y) /*noexcept*/;
+	void OnWheelDown(int x, int y) /*noexcept*/;
 
-	void OnWheelDelta(int x, int y, int delta) noexcept;
+	void OnWheelDelta(int x, int y, int delta) /*noexcept*/;
 
-	void TrimBuffer() noexcept;
+	void TrimBuffer() /*noexcept*/;
 
 private:
 

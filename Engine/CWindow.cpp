@@ -190,7 +190,7 @@ LRESULT WINAPI CWindow::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARA
 	return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
 }
 
-LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //noexcept
 {
 
 	switch (msg)

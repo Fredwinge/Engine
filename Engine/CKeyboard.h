@@ -34,7 +34,7 @@ public:
 			m_cKeyCode(0u)
 		{ }
 
-		Event(Type type, unsigned char code) noexcept :
+		Event(Type type, unsigned char code) /*noexcept*/ :
 			m_eEventType(type),
 			m_cKeyCode(code)
 		{ }
@@ -52,13 +52,13 @@ public:
 	CKeyboard(const CKeyboard&) = delete;
 
 	//key event stuff
-	Event ReadKey() noexcept;																		
+	Event ReadKey() /*noexcept*/;																		
 	bool KeyisPressed(unsigned char keycode) const noexcept { return m_KeyStates[keycode]; }
 	bool KeyIsEmpty() const noexcept						{ return m_EventBuffer.empty(); }			//Check if there are any events in the event queue
 	void ClearKey() noexcept								{ m_EventBuffer = std::queue<Event>(); }	//Clears the queue
 
 	//char event stuff
-	char ReadChar() noexcept;
+	char ReadChar() /*noexcept*/;
 	bool CharIsEmpty() const noexcept						{ return m_CharBuffer.empty(); }
 	void ClearChar() noexcept								{ m_CharBuffer = std::queue<char>(); }
 
@@ -71,15 +71,15 @@ public:
 
 private:
 
-	void OnKeyPressed(unsigned char keycode) noexcept;
-	void OnKeyReleased(unsigned char keycode) noexcept;
+	void OnKeyPressed(unsigned char keycode) /*noexcept*/;
+	void OnKeyReleased(unsigned char keycode) /*noexcept*/;
 
-	void OnChar(char character) noexcept;
+	void OnChar(char character) /*noexcept*/;
 
 	void ClearState() noexcept	{ m_KeyStates.reset(); }				//Resets keystate bitset
 
 	template<typename T>
-	static void TrimBuffer(std::queue<T> & buffer) noexcept;			//Removes items from the buffer if its size grows larger than 16
+	static void TrimBuffer(std::queue<T> & buffer) /*noexcept*/;			//Removes items from the buffer if its size grows larger than 16
 
 private:
 

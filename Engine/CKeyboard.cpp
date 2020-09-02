@@ -1,7 +1,7 @@
 #include "CKeyboard.h"
 
 //Pull an event off the event queue
-CKeyboard::Event CKeyboard::ReadKey() noexcept
+CKeyboard::Event CKeyboard::ReadKey() //noexcept
 {
 	//Check if there's anything on the queue
 	if (m_EventBuffer.size() > 0u)
@@ -19,7 +19,7 @@ CKeyboard::Event CKeyboard::ReadKey() noexcept
 	}
 }
 
-char CKeyboard::ReadChar() noexcept
+char CKeyboard::ReadChar() //noexcept
 {
 	//Check if there's anything on the queue
 	if (m_CharBuffer.size() > 0u)
@@ -38,28 +38,28 @@ char CKeyboard::ReadChar() noexcept
 }
 
 
-void CKeyboard::OnKeyPressed(unsigned char keycode) noexcept
+void CKeyboard::OnKeyPressed(unsigned char keycode) //noexcept
 {
 	m_KeyStates[keycode] = true;													//Set keyState to true, indicating that the button has been pressed
 	m_EventBuffer.push(CKeyboard::Event(CKeyboard::Event::Type::PRESS, keycode));	//Push event type and keycode onto buffer
 	TrimBuffer(m_EventBuffer);														//Make sure the buffer doesn't go oversize
 }
 
-void CKeyboard::OnKeyReleased(unsigned char keycode) noexcept
+void CKeyboard::OnKeyReleased(unsigned char keycode) //noexcept
 {
 	m_KeyStates[keycode] = false;													//Set keyState to true, indicating that the button has been released
 	m_EventBuffer.push(CKeyboard::Event(CKeyboard::Event::Type::RELEASE, keycode));	//Push event type and keycode onto buffer
 	TrimBuffer(m_EventBuffer);														//Make sure the buffer doesn't go oversize
 }
 
-void CKeyboard::OnChar(char character) noexcept
+void CKeyboard::OnChar(char character) //noexcept
 {
 	m_CharBuffer.push(character);													//Push char onto buffer, no state here
 	TrimBuffer(m_CharBuffer);														//Make sure the buffer isn't oversized
 }
 
 template<typename T>
-void CKeyboard::TrimBuffer(std::queue<T>& buffer) noexcept
+void CKeyboard::TrimBuffer(std::queue<T>& buffer) //noexcept
 {
 	//Trims the buffer untils it's size is appropriate
 	while (buffer.size() > s_bufferSize)
