@@ -62,6 +62,8 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+#Include all libs
+!Libs/**
 
 # Files built by Visual Studio
 *_i.c
