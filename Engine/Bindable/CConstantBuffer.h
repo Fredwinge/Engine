@@ -12,9 +12,9 @@ public:
 	{
 		INFOMAN(gfx);
 
-		D3D11_MAPPED_SUBRESOURCE msr;
-		GFX_THROW_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &msr));
-		memcpy(msr.pData, &consts, sizeof(consts));
+		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
+		GFX_THROW_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
+		memcpy(mappedSubresource.pData, &consts, sizeof(consts));
 
 		GetContext(gfx)->Unmap(m_pConstantBuffer.Get(), 0u);
 	}
@@ -23,32 +23,32 @@ public:
 	{
 		INFOMAN(gfx);
 
-		D3D11_BUFFER_DESC cbd = {};
-		cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbd.Usage = D3D11_USAGE_DYNAMIC;
-		cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		cbd.MiscFlags = 0u;
-		cbd.ByteWidth = sizeof(C);
-		cbd.StructureByteStride = 0u;
+		D3D11_BUFFER_DESC cbufferDesc = {};
+		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		cbufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		cbufferDesc.MiscFlags = 0u;
+		cbufferDesc.ByteWidth = sizeof(C);
+		cbufferDesc.StructureByteStride = 0u;
 
 		D3D11_SUBRESOURCE_DATA csd = {};
 		csd.pSysMem = &consts;
 
-		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbd, &csd, &m_pConstantBuffer));
+		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
 	}
 	CConstantBuffer(CGraphics& gfx)
 	{
 		INFOMAN(gfx);
 
-		D3D11_BUFFER_DESC cbd = {};
-		cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbd.Usage = D3D11_USAGE_DYNAMIC;
-		cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-		cbd.MiscFlags = 0u;
-		cbd.ByteWidth = sizeof(C);
-		cbd.StructureByteStride = 0u;
+		D3D11_BUFFER_DESC cbufferDesc = {};
+		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		cbufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		cbufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		cbufferDesc.MiscFlags = 0u;
+		cbufferDesc.ByteWidth = sizeof(C);
+		cbufferDesc.StructureByteStride = 0u;
 
-		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbd, nullptr, &m_pConstantBuffer));
+		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
 	}
 
 protected:

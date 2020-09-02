@@ -1,6 +1,8 @@
 #pragma once
 #include "CWindow.h"
 #include "CTimer.h"
+#include "CCamera.h"
+#include "Drawable\CDrawable.h"
 
 class CApplication
 {
@@ -19,4 +21,12 @@ private:
 	CWindow m_Wnd;
 
 	CTimer m_Timer;
+
+	CCamera m_Camera;
+
+	//Debugging variables
+	std::vector<std::unique_ptr<CDrawable>> m_pDrawables;
+	static constexpr size_t nDrawables = 180;
+
+	float m_fSpeedFactor = 1.0f;
 };
