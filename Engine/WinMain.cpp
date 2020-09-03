@@ -23,7 +23,7 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	}
 #else
 
-	return CApplication{}.Go();
+	CApplication{}.Go();
 
 #endif
 
