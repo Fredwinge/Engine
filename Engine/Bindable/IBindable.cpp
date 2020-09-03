@@ -15,6 +15,6 @@ CDXGIInfoManager& IBindable::GetInfoManager(CGraphics& gfx) noexcept
 #ifndef NDEBUG
 	return gfx.m_InfoManager;
 #else
-	throw std::logic_error("You did dun fucked up [tried to access gfx.m_InfoManager in release]");
+	throw std::logic_error("Oopsie Woopsie [tried to access gfx.m_InfoManager in release]");
 #endif
 }

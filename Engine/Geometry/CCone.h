@@ -29,7 +29,7 @@ public:
 		vertices.emplace_back();
 		vertices.back().pos = { 0.0f, 0.0f, -1.0f };
 		const auto iCenter = (unsigned short)(vertices.size() - 1);
-		//the tip :darkness: -- Goddamnit chilli
+		//the top vertex
 		vertices.emplace_back();
 		vertices.back().pos = { 0.0f, 0.0f, 1.0f };
 		const auto iTip = (unsigned short)(vertices.size() - 1);
