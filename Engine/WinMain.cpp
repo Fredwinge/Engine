@@ -5,6 +5,9 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 {
 
 #ifdef _DEBUG
+
+	//Try catch is bad performance wise, only use in debug until a potentially better
+	//solution is found, we won't need exception info in release anyways since we won't be debugging
 	try
 	{
 		return CApplication{}.Go();
