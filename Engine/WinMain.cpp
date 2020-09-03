@@ -4,6 +4,7 @@
 int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
+#ifdef _DEBUG
 	try
 	{
 		return CApplication{}.Go();
@@ -20,6 +21,11 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	{
 		MessageBoxA(nullptr, "No Details Available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
+#else
+
+	return CApplication{}.Go();
+
+#endif
 
 	
 	return 0;
