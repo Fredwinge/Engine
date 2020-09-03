@@ -37,8 +37,7 @@ CTexture::CTexture(CGraphics& gfx, const wchar_t* fileName)
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	//GFX_THROW_INFO(GetDevice(gfx)->CreateShaderResourceView(m_pTexture2D.Get(), &srvDesc, &m_pTextureView));
-	DirectX::CreateShaderResourceView(GetDevice(gfx), image.GetScratch()->GetImage(0, 0, 0), 1u, image.GetScratch()->GetMetadata(), &m_pTextureView);
+	GFX_THROW_INFO(DirectX::CreateShaderResourceView(GetDevice(gfx), image.GetScratch()->GetImage(0, 0, 0), 1u, image.GetScratch()->GetMetadata(), &m_pTextureView));
 }
 
 void CTexture::Bind(CGraphics& gfx) noexcept

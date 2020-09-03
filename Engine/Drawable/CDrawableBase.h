@@ -15,7 +15,7 @@ protected:
 	//Not optimal for the most optimized systems
 	static bool IsStaticInitialized() noexcept	{ return !s_StaticBinds.empty(); };
 
-	static void AddStaticBind(std::unique_ptr<IBindable> pBindable) //noexcept IS DEBUG
+	static void AddStaticBind(std::unique_ptr<IBindable> pBindable)
 	{
 		assert("*Must* use AddIndexBuffer to bind index buffer" && typeid(*pBindable) != typeid(m_pIndexBuffer));
 		s_StaticBinds.push_back(std::move(pBindable));
@@ -28,9 +28,9 @@ protected:
 		s_StaticBinds.push_back(std::move(pIndexBuffer));
 	}
 
-	void SetIndexFromStatic() //noexcept IS DEBUG
+	void SetIndexFromStatic()
 	{
-		//asserts to make sure you dont accidentaly add multiple index buffers like a fucking idiot
+		//asserts to make sure you dont accidentally add multiple index buffers like a complete baboon
 		assert("Attempting to add index buffer a second time" && m_pIndexBuffer == nullptr);
 		for (const auto& b : s_StaticBinds)
 		{
