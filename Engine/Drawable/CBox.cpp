@@ -32,6 +32,16 @@ CBox::CBox(CGraphics& gfx,
 			dx::XMFLOAT3 pos;
 		};
 
+		/*//Box UV Coords
+		model.vertices[0].tex = { 0.0f, 0.0f }; //1, 2, 4
+		model.vertices[1].tex = { 1.0f, 0.0f }; //0, 3, 5
+		model.vertices[2].tex = { 0.0f, 1.0f }; //0, 3, 6
+		model.vertices[3].tex = { 1.0f, 1.0f }; //1, 2, 7
+		model.vertices[4].tex = { 1.0f, 1.0f }; //0, 5, 6
+		model.vertices[5].tex = { 0.0f, 1.0f }; //1, 4, 7
+		model.vertices[6].tex = { 1.0f, 0.0f }; //2, 4, 7
+		model.vertices[7].tex = { 0.0f, 0.0f }; //3, 5, 6
+		*/
 
 		auto model = CCube::Make<Vertex>();
 		AddStaticBind(std::make_unique<CVertexBuffer>(gfx, model.vertices));
