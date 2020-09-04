@@ -3,7 +3,7 @@
 
 int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-
+/*
 #ifdef _DEBUG
 
 	//Try catch is bad performance wise, only use in debug until a potentially better
@@ -29,7 +29,9 @@ int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 	CApplication{}.Go();
 
 #endif
+*/
 
+	CApplication{}.Go();
 	
 	return 0;
 }

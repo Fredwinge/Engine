@@ -61,8 +61,6 @@ private:
 	{
 	public:
 
-		//Everything here is noexcept because it runs at startup, 
-		//so it happens outside our try catch, any exceptions thrown wouldn't be caught
 
 		static const char* GetName() noexcept	{ return m_cWndClassName; }
 		static HINSTANCE GetInstance() noexcept { return s_wndClass.m_hInst; }

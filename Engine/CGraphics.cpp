@@ -12,6 +12,9 @@ namespace dx = DirectX;
 
 
 CGraphics::CGraphics(HWND hWnd)
+	:
+	m_mProjectionMatrix(),
+	m_mCameraMatrix()
 {
 
 	//Create swapchain description
@@ -173,11 +176,11 @@ void CGraphics::EndFrame()
 		//which contains additional information which is worth extracting
 		if (hr == DXGI_ERROR_DEVICE_REMOVED)
 		{
-			throw GFX_DEVICE_REMOVED_EXCEPT(m_pDevice->GetDeviceRemovedReason());
+			GFX_DEVICE_REMOVED_EXCEPT(m_pDevice->GetDeviceRemovedReason());
 		}
 		else
 		{
-			throw GFX_EXCEPT(hr);
+			GFX_EXCEPT(hr);
 		}
 	}
 }
@@ -205,9 +208,9 @@ CGraphics::HrException::HrException(int line, const char* file, HRESULT hr, std:
 	m_hr(hr)
 {
 	//Join all info messages with newlines into single string
-	for (const auto& m : infoMsgs)
+	for (const auto& msg : infoMsgs)
 	{
-		m_sInfo += m;
+		m_sInfo += msg;
 		m_sInfo.push_back('\n');
 	}
 	//remove final newline if it exists
@@ -215,6 +218,8 @@ CGraphics::HrException::HrException(int line, const char* file, HRESULT hr, std:
 	{
 		m_sInfo.pop_back();
 	}
+
+	DisplayError();
 }
 
 const char* CGraphics::HrException::what() const noexcept
@@ -271,6 +276,8 @@ CGraphics::InfoException::InfoException(int line, const char* file, std::vector<
 	{
 		m_sInfo.pop_back();
 	}
+
+	DisplayError();
 }
 
 const char* CGraphics::InfoException::what() const noexcept

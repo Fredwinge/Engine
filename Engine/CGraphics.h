@@ -28,7 +28,7 @@ public:
 
 		std::string GetErrorString() const noexcept;
 		std::string GetErrorDescription() const noexcept;
-		const char* GetType() const noexcept override	{ return "Graphics Exception"; }
+		const char* GetType() const noexcept override	{ return "D3D11 Error"; }
 		HRESULT GetErrorCode() const noexcept			{ return m_hr; }
 		std::string GetErrorInfo() const noexcept		{ return m_sInfo; }
 

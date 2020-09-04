@@ -72,7 +72,7 @@ CWindow::CWindow(int width, int height, const char* name)
 
 	if (AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
 	{
-		throw CHWND_LAST_EXCEPT();
+		CHWND_LAST_EXCEPT();
 	}
 
 	//Create window and get hWnd
@@ -94,7 +94,7 @@ CWindow::CWindow(int width, int height, const char* name)
 	//Make sure window is created correctly
 	if (m_hWnd == nullptr)
 	{
-		throw CHWND_LAST_EXCEPT();
+		CHWND_LAST_EXCEPT();
 	}
 
 	//Newly created windows start of as hidden so we have to make this one show
@@ -115,7 +115,7 @@ void CWindow::SetTitle(const std::string& title)
 {
 	if (SetWindowTextA(m_hWnd, title.c_str()) == 0)
 	{
-		throw CHWND_LAST_EXCEPT();
+		CHWND_LAST_EXCEPT();
 	}
 }
 
@@ -154,7 +154,7 @@ CGraphics& CWindow::Gfx()
 {
 	if (m_pGfx == nullptr)
 	{
-		throw CHWND_NOGFX_EXCEPT();
+		CHWND_NOGFX_EXCEPT();
 	}
 	return *m_pGfx;
 }
@@ -322,7 +322,7 @@ CWindow::HrException::HrException(int line, const char* file, HRESULT hr) noexce
 	Exception(line, file),
 	m_hr(hr)
 {
-
+	DisplayError();
 }
 
 const char* CWindow::HrException::what() const noexcept

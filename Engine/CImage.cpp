@@ -18,7 +18,7 @@ CImage CImage::MakeFromFile(const wchar_t* fileName)
 	if (FAILED(hr))
 	{
 		//failure
-		throw CImage::Exception(__LINE__, __FILE__, "Failed to load image");
+		CImage::Exception(__LINE__, __FILE__, "Failed to load image");
 	}
 
 	if (scratch.GetImage(0, 0, 0)->format != DXGI_FORMAT_B8G8R8A8_UNORM)
@@ -33,7 +33,7 @@ CImage CImage::MakeFromFile(const wchar_t* fileName)
 
 		if (FAILED(hr))
 		{
-			throw CImage::Exception(__LINE__, __FILE__, "Failed to convert image");
+			CImage::Exception(__LINE__, __FILE__, "Failed to convert image");
 		}
 
 		return CImage(std::move(converted));
@@ -49,6 +49,7 @@ CImage::Exception::Exception(int line, const char* file, std::string note) noexc
 	IException(line, file),
 	m_sNote(std::move(note))
 {
+	DisplayError();
 }
 
 const char* CImage::Exception::what() const noexcept

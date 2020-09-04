@@ -1,20 +1,22 @@
 #pragma once
-#include <exception>
+//#include <exception>
 #include <string>
 
 //Base exception class
-class IException : public std::exception
+class IException //: public std::exception
 {
 public:
 
 	IException(int line, const char* file) noexcept;
-	const char* what() const noexcept override;
+	virtual const char* what() const noexcept;
 
 	std::string GetOriginString() const noexcept;
 
 	virtual const char* GetType() const noexcept	{ return "Exception"; }
 	int GetLine() const noexcept					{ return m_iExceptionLine; }
 	const std::string& GetFile() const noexcept		{ return m_sExceptionFile; }
+
+	void DisplayError();
 
 private:
 

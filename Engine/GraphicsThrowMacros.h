@@ -10,9 +10,9 @@
 //Different macros depending of if we're in release or debug mode, since some info isn't available in release mode
 #ifndef NDEBUG
 #define GFX_EXCEPT(hr) CGraphics::HrException(__LINE__,__FILE__,(hr),m_InfoManager.GetMessages())
-#define GFX_THROW_INFO(hrcall) m_InfoManager.Set(); if(FAILED(hr = (hrcall))) throw GFX_EXCEPT(hr)
+#define GFX_THROW_INFO(hrcall) m_InfoManager.Set(); if(FAILED(hr = (hrcall))) CGraphics::HrException(__LINE__,__FILE__,(hr),m_InfoManager.GetMessages())
 #define GFX_DEVICE_REMOVED_EXCEPT(hr) CGraphics::DeviceRemovedException(__LINE__,__FILE__,(hr), m_InfoManager.GetMessages())
-#define GFX_THROW_INFO_ONLY(call) m_InfoManager.Set(); (call); {auto v = m_InfoManager.GetMessages(); if(v.empty() == false) {throw CGraphics::InfoException(__LINE__,__FILE__,v);}}
+#define GFX_THROW_INFO_ONLY(call) m_InfoManager.Set(); (call); {auto v = m_InfoManager.GetMessages(); if(v.empty() == false) { CGraphics::InfoException(__LINE__,__FILE__,v);}}
 #else
 #define GFX_EXCEPT(hr) CGraphics::HrException(__LINE__,__FILE__,(hr))
 #define GFX_THROW_INFO(hrcall) GFX_THROW_NOINFO(hrcall)
