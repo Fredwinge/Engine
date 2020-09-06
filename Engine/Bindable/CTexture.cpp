@@ -1,5 +1,5 @@
 #include "CTexture.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 CTexture::CTexture(CGraphics& gfx, const wchar_t* fileName)
 {
@@ -24,11 +24,12 @@ CTexture::CTexture(CGraphics& gfx, const wchar_t* fileName)
 
 	D3D11_SUBRESOURCE_DATA sd = {};
 	sd.pSysMem = image.GetBuffer();
+	//TODO: Clean this mess up
 	sd.SysMemPitch = (image.GetWidth() * 32 + 7) / 8;//image.GetBufferSize();
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_pTexture2D;
 
-	GFX_THROW_INFO(GetDevice(gfx)->CreateTexture2D(&textureDesc, &sd, &m_pTexture2D));
+	GFX_ASSERT_INFO(GetDevice(gfx)->CreateTexture2D(&textureDesc, &sd, &m_pTexture2D));
 
 	//Create shader resource view
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -37,7 +38,7 @@ CTexture::CTexture(CGraphics& gfx, const wchar_t* fileName)
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	srvDesc.Texture2D.MipLevels = 1;
 
-	GFX_THROW_INFO(DirectX::CreateShaderResourceView(GetDevice(gfx), image.GetScratch()->GetImage(0, 0, 0), 1u, image.GetScratch()->GetMetadata(), &m_pTextureView));
+	GFX_ASSERT_INFO(DirectX::CreateShaderResourceView(GetDevice(gfx), image.GetScratch()->GetImage(0, 0, 0), 1u, image.GetScratch()->GetMetadata(), &m_pTextureView));
 }
 
 void CTexture::Bind(CGraphics& gfx) noexcept

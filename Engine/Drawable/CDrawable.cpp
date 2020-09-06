@@ -1,5 +1,5 @@
 #include "CDrawable.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 #include "../Bindable/CIndexBuffer.h"
 #include <cassert>
 #include <typeinfo> //Checkup

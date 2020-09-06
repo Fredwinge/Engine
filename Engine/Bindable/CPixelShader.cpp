@@ -1,5 +1,5 @@
 #include "CPixelShader.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 CPixelShader::CPixelShader(CGraphics& gfx, LPCWSTR shaderLink)
 {
@@ -8,9 +8,9 @@ CPixelShader::CPixelShader(CGraphics& gfx, LPCWSTR shaderLink)
 	ID3DBlob* pBlob;
 
 	//D3DReadFileToBlob reads CSO files
-	GFX_THROW_INFO(D3DReadFileToBlob(shaderLink, &pBlob));
+	GFX_ASSERT_INFO(D3DReadFileToBlob(shaderLink, &pBlob));
 
-	GFX_THROW_INFO(GetDevice(gfx)->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &m_pPixelShader));
+	GFX_ASSERT_INFO(GetDevice(gfx)->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &m_pPixelShader));
 
 	pBlob->Release();
 }

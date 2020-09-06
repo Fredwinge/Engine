@@ -1,5 +1,5 @@
 #include "CVertexBuffer.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 
 void CVertexBuffer::Bind(CGraphics& gfx) noexcept

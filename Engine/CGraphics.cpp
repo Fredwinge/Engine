@@ -2,7 +2,7 @@
 #include "dxerr/dxerr.h"
 #include <DirectXMath.h>
 #include <sstream>
-#include "GraphicsThrowMacros.h"
+#include "GraphicsAssertMacros.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
@@ -50,7 +50,7 @@ CGraphics::CGraphics(HWND hWnd)
 	HRESULT hr;
 
 	//Creates a device, deviceContext and swapchain
-	GFX_THROW_INFO(D3D11CreateDeviceAndSwapChain(
+	GFX_ASSERT_INFO(D3D11CreateDeviceAndSwapChain(
 		nullptr,									//Specifies the display adapter we want, NULL is default
 		D3D_DRIVER_TYPE_HARDWARE,					//Driver type, there are other types than HARDWARE but there is little reason to use them
 		nullptr,									//Software driver, unless using a SOFTWARE driver type, keep this at null
@@ -70,13 +70,13 @@ CGraphics::CGraphics(HWND hWnd)
 
 
 	//Get the backbuffer
-	GFX_THROW_INFO(m_pSwapChain->GetBuffer(
+	GFX_ASSERT_INFO(m_pSwapChain->GetBuffer(
 		0,								//Index of the buffer we want to get, 0 is the backbuffer
 		__uuidof(ID3D11Resource),		//uuid of the interface which we want to recieve onto our subobject(???)
 		&pBackBuffer));					//** to the object we want to store the backbuffers address in
 
 //Create render target view
-	GFX_THROW_INFO(m_pDevice->CreateRenderTargetView(
+	GFX_ASSERT_INFO(m_pDevice->CreateRenderTargetView(
 		pBackBuffer.Get(),				//The resource which holds the render target we want a view on
 		nullptr,						//Description for Render target view configuration. nullptr gives us a default one we will use for now
 		&m_pRenderTargetView));			//The *ID3D11RenderTargetView which stores the rendertarget
@@ -91,7 +91,7 @@ CGraphics::CGraphics(HWND hWnd)
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;	//Decides if the depth stencil can be written to, there are only two options: ZERO and ALL
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;				//Determines what kind of comparison is going to be done to decide which pixels are drawn or not
 
-	GFX_THROW_INFO(m_pDevice->CreateDepthStencilState(&depthStencilDesc, &m_pDepthStencilState));
+	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilState(&depthStencilDesc, &m_pDepthStencilState));
 
 	//Bind depth stencil state to the pipeline
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
@@ -107,14 +107,14 @@ CGraphics::CGraphics(HWND hWnd)
 	depthStencilTxtDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilTxtDesc.Usage = D3D11_USAGE_DEFAULT;
 
-	GFX_THROW_INFO(m_pDevice->CreateTexture2D(&depthStencilTxtDesc, nullptr, &m_pDepthStencilTexture));
+	GFX_ASSERT_INFO(m_pDevice->CreateTexture2D(&depthStencilTxtDesc, nullptr, &m_pDepthStencilTexture));
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
 	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0u;
 
-	GFX_THROW_INFO(m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &depthStencilViewDesc, &m_pDepthStencilView));
+	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &depthStencilViewDesc, &m_pDepthStencilView));
 
 	//Configure viewport
 	D3D11_VIEWPORT viewPort;
@@ -180,7 +180,7 @@ void CGraphics::EndFrame()
 		}
 		else
 		{
-			GFX_EXCEPT(hr);
+			GFX_ASSERT(hr);
 		}
 	}
 }

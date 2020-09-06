@@ -1,6 +1,6 @@
 #include "CBox.h"
 #include "../Bindable/BindableBase.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 #include "../Geometry/CCube.h"
 
 CBox::CBox(CGraphics& gfx,

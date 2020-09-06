@@ -22,7 +22,7 @@ public:
 		D3D11_SUBRESOURCE_DATA vertexSubresourceData = {};
 		vertexSubresourceData.pSysMem = vertices.data();
 
-		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
+		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
 	}
 
 	void Bind(CGraphics& gfx) noexcept override;

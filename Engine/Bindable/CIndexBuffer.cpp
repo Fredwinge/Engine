@@ -1,5 +1,5 @@
 #include "CIndexBuffer.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& indices)
 	:
@@ -17,7 +17,7 @@ CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& in
 	D3D11_SUBRESOURCE_DATA indexBufferSD = {};
 	indexBufferSD.pSysMem = indices.data();
 
-	GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&indexBufferDesc, &indexBufferSD, &m_pIndexBuffer));
+	GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&indexBufferDesc, &indexBufferSD, &m_pIndexBuffer));
 
 }
 

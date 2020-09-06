@@ -1,11 +1,11 @@
 #include "CInputLayout.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 CInputLayout::CInputLayout(CGraphics& gfx, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob* pVertexShaderByteCode)
 {
 	INFOMAN(gfx);
 
-	GFX_THROW_INFO(GetDevice(gfx)->CreateInputLayout(
+	GFX_ASSERT_INFO(GetDevice(gfx)->CreateInputLayout(
 		layout.data(), 
 		layout.size(), 
 		pVertexShaderByteCode->GetBufferPointer(),

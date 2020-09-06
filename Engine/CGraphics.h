@@ -8,7 +8,7 @@
 #include <vector>
 #include "CDXGIInfoManager.h"
 #include <memory>
-#include "GraphicsThrowMacros.h"
+#include "GraphicsAssertMacros.h"
 
 class CGraphics
 {

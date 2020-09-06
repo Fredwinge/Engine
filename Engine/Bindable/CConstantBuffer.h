@@ -1,6 +1,6 @@
 #pragma once
 #include "IBindable.h"
-#include "../GraphicsThrowMacros.h"
+#include "../GraphicsAssertMacros.h"
 
 template <typename C>
 class CConstantBuffer : public IBindable
@@ -13,7 +13,7 @@ public:
 		INFOMAN(gfx);
 
 		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
-		GFX_THROW_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
+		GFX_ASSERT_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
 		memcpy(mappedSubresource.pData, &consts, sizeof(consts));
 
 		GetContext(gfx)->Unmap(m_pConstantBuffer.Get(), 0u);
@@ -34,7 +34,7 @@ public:
 		D3D11_SUBRESOURCE_DATA csd = {};
 		csd.pSysMem = &consts;
 
-		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
 	}
 	CConstantBuffer(CGraphics& gfx)
 	{
@@ -48,7 +48,7 @@ public:
 		cbufferDesc.ByteWidth = sizeof(C);
 		cbufferDesc.StructureByteStride = 0u;
 
-		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
 	}
 
 protected:
