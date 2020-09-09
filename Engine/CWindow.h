@@ -108,7 +108,7 @@ private:
 	int m_Height;
 	HWND m_hWnd;
 
-	std::unique_ptr<CGraphics> m_pGfx;
+	CGraphics* m_pGfx;
 };
 
 //Error exception helper macros

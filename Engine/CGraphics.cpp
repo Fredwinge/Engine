@@ -18,9 +18,7 @@ CGraphics::CGraphics(HWND hWnd)
 {
 
 	//Create swapchain description
-	DXGI_SWAP_CHAIN_DESC swapDesc;
-	//Make sure the swapchain doesn't contain any weird or random values
-	ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
+	DXGI_SWAP_CHAIN_DESC swapDesc = {};
 
 	swapDesc.BufferDesc.Width = 0;													//Resolution width, if set to 0, the width is obtained from the output window
 	swapDesc.BufferDesc.Height = 0;													//Resolution height, if set to 0, the height is obtained from the output window
@@ -85,8 +83,8 @@ CGraphics::CGraphics(HWND hWnd)
 //pBackBuffer->Release();
 
 	//Create Depth Stencil state
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+
 	depthStencilDesc.DepthEnable = true;							//Enable depth testing
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;	//Decides if the depth stencil can be written to, there are only two options: ZERO and ALL
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;				//Determines what kind of comparison is going to be done to decide which pixels are drawn or not
@@ -97,6 +95,7 @@ CGraphics::CGraphics(HWND hWnd)
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
 
 	D3D11_TEXTURE2D_DESC depthStencilTxtDesc = {};
+
 	depthStencilTxtDesc.SampleDesc.Count = 1;
 	depthStencilTxtDesc.SampleDesc.Quality = 0;
 	depthStencilTxtDesc.Format = DXGI_FORMAT_D32_FLOAT; //for depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
@@ -176,7 +175,7 @@ void CGraphics::EndFrame()
 		//which contains additional information which is worth extracting
 		if (hr == DXGI_ERROR_DEVICE_REMOVED)
 		{
-			GFX_DEVICE_REMOVED_EXCEPT(m_pDevice->GetDeviceRemovedReason());
+			GFX_DEVICE_REMOVED_ASSERT(m_pDevice->GetDeviceRemovedReason());
 		}
 		else
 		{
@@ -197,10 +196,10 @@ void CGraphics::BeginFrame(float r, float g, float b) noexcept
 
 void CGraphics::DrawIndexed(unsigned int indexCount)
 {
-	GFX_THROW_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
+	GFX_ASSERT_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
 }
 
-
+/*
 //Graphics exception stuff
 CGraphics::HrException::HrException(int line, const char* file, HRESULT hr, std::vector<std::string> infoMsgs) noexcept
 	:
@@ -290,3 +289,4 @@ const char* CGraphics::InfoException::what() const noexcept
 
 	return m_sWhatBuffer.c_str();
 }
+*/

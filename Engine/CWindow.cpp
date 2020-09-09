@@ -101,12 +101,15 @@ CWindow::CWindow(int width, int height, const char* name)
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 
 	//Create graphics object
-	m_pGfx = std::make_unique<CGraphics>(m_hWnd);
+	m_pGfx = new CGraphics(m_hWnd);
 
 }
 
 CWindow::~CWindow()
 {
+	if(m_pGfx == nullptr)
+		delete m_pGfx;
+
 	DestroyWindow(m_hWnd);
 }
 

@@ -15,7 +15,7 @@ class CGraphics
 	//Allow access to private variables for IBindable
 	friend class IBindable;
 public:
-
+	/*
 	class Exception : public IException
 	{
 		using IException::IException;
@@ -58,7 +58,7 @@ public:
 	private:
 		std::string m_sInfo;
 	};
-
+	*/
 	//We need a handle to our window to construct a Windows device object
 	CGraphics(HWND hWnd);
 	CGraphics(const CGraphics&) = delete;
