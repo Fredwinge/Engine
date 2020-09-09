@@ -1,11 +1,16 @@
 #pragma once
 #include <DirectXTex.h>
-#include "IException.h"
+//#include "IException.h"
 
 class CImage
 {
+
+	//Error function
+	static void CIMAGE_ERROR(int line, const char* file, const char* errorString);
+
 public:
 
+	/*
 	class Exception : public IException
 	{
 	public:
@@ -18,9 +23,9 @@ public:
 	private:
 
 		std::string m_sNote;
-	};
+	};*/
 
-	static CImage MakeFromFile(const wchar_t* fileName);
+	static CImage MakeFromFile(const wchar_t* filePath);
 
 	size_t GetWidth() { return m_Scratch.GetMetadata().width; }
 	size_t GetHeight() { return m_Scratch.GetMetadata().height; }

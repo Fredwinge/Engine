@@ -1,24 +1,35 @@
 #include "CImage.h"
 #include <sstream>
 
+//for converting wchar_t* to char* //somewhat ugly, maybe find a 'better' solution?
+#include <comdef.h>
+#include <string>
+
 CImage::CImage(DirectX::ScratchImage scratch)
 	:
 	m_Scratch(std::move(scratch))
 { }
 
-CImage CImage::MakeFromFile(const wchar_t* fileName)
+CImage CImage::MakeFromFile(const wchar_t* filePath)
 {
 
 	DirectX::ScratchImage scratch;
 
 	HRESULT hr;
 
-	hr = DirectX::LoadFromWICFile(fileName, DirectX::WIC_FLAGS::WIC_FLAGS_NONE, nullptr, scratch);
+	hr = DirectX::LoadFromWICFile(filePath, DirectX::WIC_FLAGS::WIC_FLAGS_NONE, nullptr, scratch);
 
 	if (FAILED(hr))
 	{
+		//Convert wchar* to char*
+		_bstr_t bStr(filePath);
+		char* cStr(bStr);
+		std::string errorStr = "Failed to load image: ";
+
+		errorStr.append(cStr);
+
 		//failure
-		CImage::Exception(__LINE__, __FILE__, "Failed to load image");
+		CIMAGE_ERROR(__LINE__, __FILE__, errorStr.c_str());
 	}
 
 	if (scratch.GetImage(0, 0, 0)->format != DXGI_FORMAT_B8G8R8A8_UNORM)
@@ -33,7 +44,14 @@ CImage CImage::MakeFromFile(const wchar_t* fileName)
 
 		if (FAILED(hr))
 		{
-			CImage::Exception(__LINE__, __FILE__, "Failed to convert image");
+			//Convert wchar* to char*
+			_bstr_t bStr(filePath);
+			char* cStr(bStr);
+			std::string errorStr = "Failed to convert image: ";
+
+			errorStr.append(cStr);
+
+			CIMAGE_ERROR(__LINE__, __FILE__, errorStr.c_str());
 		}
 
 		return CImage(std::move(converted));
@@ -43,6 +61,7 @@ CImage CImage::MakeFromFile(const wchar_t* fileName)
 
 }
 
+/*
 //EXCEPTION STUFF
 CImage::Exception::Exception(int line, const char* file, std::string note) noexcept
 	:
@@ -60,4 +79,16 @@ const char* CImage::Exception::what() const noexcept
 	m_sWhatBuffer = oss.str();
 
 	return m_sWhatBuffer.c_str();
+}
+*/
+
+void CImage::CIMAGE_ERROR(int line, const char* file, const char* errorString)
+{
+	std::ostringstream oss;
+	oss << "CImage Graphics Exception" << std::endl 
+		<< "[File] " << file << std::endl << "[Line] " << line << std::endl 
+		<< "[Note] " << errorString;
+
+	MessageBoxA(nullptr, oss.str().c_str(), "CImage Graphics Exception", MB_OK | MB_ICONEXCLAMATION);
+	exit(1);
 }
