@@ -18,7 +18,7 @@ CDXGIInfoManager::CDXGIInfoManager()
 	const auto hModDxgiDebug = LoadLibraryExA("dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 	if (hModDxgiDebug == nullptr)
 	{
-		CHWND_LAST_EXCEPT();
+		CHWND_LAST_ERROR();
 	}
 
 	//Get address of DXGIGetDebugInterface in dll
@@ -27,7 +27,7 @@ CDXGIInfoManager::CDXGIInfoManager()
 		);
 	if (DxgiGetDebugInterface == nullptr)
 	{
-		CHWND_LAST_EXCEPT();
+		CHWND_LAST_ERROR();
 	}
 
 	HRESULT hr;

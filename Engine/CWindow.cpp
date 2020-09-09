@@ -72,7 +72,7 @@ CWindow::CWindow(int width, int height, const char* name)
 
 	if (AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
 	{
-		CHWND_LAST_EXCEPT();
+		CHWND_LAST_ERROR();
 	}
 
 	//Create window and get hWnd
@@ -92,9 +92,9 @@ CWindow::CWindow(int width, int height, const char* name)
 	);
 
 	//Make sure window is created correctly
-	if (m_hWnd == nullptr)
+	if (m_hWnd == 0)
 	{
-		CHWND_LAST_EXCEPT();
+		CHWND_LAST_ERROR();
 	}
 
 	//Newly created windows start of as hidden so we have to make this one show
@@ -118,7 +118,7 @@ void CWindow::SetTitle(const std::string& title)
 {
 	if (SetWindowTextA(m_hWnd, title.c_str()) == 0)
 	{
-		CHWND_LAST_EXCEPT();
+		CHWND_LAST_ERROR();
 	}
 }
 
@@ -157,7 +157,7 @@ CGraphics& CWindow::Gfx()
 {
 	if (m_pGfx == nullptr)
 	{
-		CHWND_NOGFX_EXCEPT();
+		CHWND_NOGFX_ERROR();
 	}
 	return *m_pGfx;
 }
