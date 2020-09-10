@@ -125,7 +125,7 @@ private:
 	bool m_bIsInWindow = false;
 
 	//A regular snap up or down with your mousewheel == 120, however "finer resolution" mousewheels might have this at
-	//a lower value (such as 60, which would require to snaps for an effect), wheelDeltaCarry is used to accumulate these values
+	//a lower value (such as 60, which would require two snaps for an effect), wheelDeltaCarry is used to accumulate these values
 	//until they reach 120 or above (or below).
 	int m_wheelDeltaCarry = 0;
 

@@ -78,9 +78,6 @@
     <ClCompile Include="Bindable\CTopology.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CtransformCBuf.cpp">
-      <Filter>Bindable</Filter>
-    </ClCompile>
     <ClCompile Include="Bindable\CVertexBuffer.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="CCamera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bindable\CTransformCBuf.cpp">
+      <Filter>Bindable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

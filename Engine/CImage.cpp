@@ -90,5 +90,7 @@ void CImage::CIMAGE_ERROR(int line, const char* file, const char* errorString)
 		<< "[Note] " << errorString;
 
 	MessageBoxA(nullptr, oss.str().c_str(), "CImage Graphics Exception", MB_OK | MB_ICONEXCLAMATION);
+
+	//TODO: Should probably add a failsafe for textures that fail to load
 	exit(1);
 }

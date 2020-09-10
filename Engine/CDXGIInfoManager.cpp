@@ -50,8 +50,8 @@ void CDXGIInfoManager::Set() noexcept
 std::vector<std::string> CDXGIInfoManager::GetMessages() const
 {
 	std::vector<std::string> messages;
-	const auto end = m_pDXGIInfoQueue->GetNumStoredMessages(DXGI_DEBUG_ALL);
-	for (auto i = m_NextLine; i < end; ++i)
+	const UINT64 endLine = m_pDXGIInfoQueue->GetNumStoredMessages(DXGI_DEBUG_ALL);
+	for (UINT64 i = m_NextLine; i < endLine; ++i)
 	{
 		HRESULT hr;
 		SIZE_T messageLength;

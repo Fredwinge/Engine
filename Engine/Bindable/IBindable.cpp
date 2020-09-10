@@ -15,7 +15,6 @@ CDXGIInfoManager& IBindable::GetInfoManager(CGraphics& gfx) noexcept
 #ifndef NDEBUG
 	return gfx.m_InfoManager;
 #else
-	//TODO: Get a better solution
 	assert("You did dun fucked up [tried to access gfx.m_InfoManager in release]", false);
 #endif
 }

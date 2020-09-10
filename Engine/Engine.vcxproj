@@ -169,7 +169,7 @@
     <ClCompile Include="Bindable\CSampler.cpp" />
     <ClCompile Include="Bindable\CTexture.cpp" />
     <ClCompile Include="Bindable\CTopology.cpp" />
-    <ClCompile Include="Bindable\CtransformCBuf.cpp" />
+    <ClCompile Include="Bindable\CTransformCBuf.cpp" />
     <ClCompile Include="Bindable\CVertexBuffer.cpp" />
     <ClCompile Include="Bindable\CVertexShader.cpp" />
     <ClCompile Include="Bindable\IBindable.cpp" />

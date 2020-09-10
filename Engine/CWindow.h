@@ -1,6 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include "IException.h"
+//#include "IException.h"
 #include "CKeyboard.h"
 #include "CMouse.h"
 #include "CGraphics.h"
@@ -13,10 +13,10 @@ public:
 	//Enum for window Return messages
 	enum class Message
 	{
-		APPLICATION_STANDARD,	//Standard message which shouldn't trigger a response
+		UNSPECIFIED,		//Standard message which shouldn't trigger a response
 		APPLICATION_QUIT
 	};
-
+	/*
 	//Exception classes
 	class Exception : public IException
 	{
@@ -53,7 +53,7 @@ public:
 
 		const char* GetType() const noexcept override			{ return "Windows Exception [No Graphics]"; }
 	};
-
+	*/
 private:
 
 	//Singleton manages registration/cleanup of window class

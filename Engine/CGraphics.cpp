@@ -7,7 +7,7 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-namespace wrl = Microsoft::WRL;
+//namespace wrl = Microsoft::WRL;
 namespace dx = DirectX;
 
 
@@ -63,7 +63,7 @@ CGraphics::CGraphics(HWND hWnd)
 		&m_pDeviceContext));						//The device context we want to create
 
 
-	wrl::ComPtr<ID3D11Resource> pBackBuffer = nullptr;
+	ID3D11Resource* pBackBuffer = nullptr;
 
 
 
@@ -71,16 +71,16 @@ CGraphics::CGraphics(HWND hWnd)
 	GFX_ASSERT_INFO(m_pSwapChain->GetBuffer(
 		0,								//Index of the buffer we want to get, 0 is the backbuffer
 		__uuidof(ID3D11Resource),		//uuid of the interface which we want to recieve onto our subobject(???)
-		&pBackBuffer));					//** to the object we want to store the backbuffers address in
+		(LPVOID*)&pBackBuffer));		//** to the object we want to store the backbuffers address in
 
-//Create render target view
+	//Create render target view
 	GFX_ASSERT_INFO(m_pDevice->CreateRenderTargetView(
-		pBackBuffer.Get(),				//The resource which holds the render target we want a view on
+		pBackBuffer,					//The resource which holds the render target we want a view on
 		nullptr,						//Description for Render target view configuration. nullptr gives us a default one we will use for now
 		&m_pRenderTargetView));			//The *ID3D11RenderTargetView which stores the rendertarget
 
-//Release pBackBuffer since it's no longer needed | Not needed since pBackBuffer is a ComPtr
-//pBackBuffer->Release();
+	//Release pBackBuffer since it's no longer needed
+	pBackBuffer->Release();
 
 	//Create Depth Stencil state
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
@@ -95,10 +95,10 @@ CGraphics::CGraphics(HWND hWnd)
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
 
 	D3D11_TEXTURE2D_DESC depthStencilTxtDesc = {};
-
+	
 	depthStencilTxtDesc.SampleDesc.Count = 1;
 	depthStencilTxtDesc.SampleDesc.Quality = 0;
-	depthStencilTxtDesc.Format = DXGI_FORMAT_D32_FLOAT; //for depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
+	depthStencilTxtDesc.Format = DXGI_FORMAT_D32_FLOAT; //For depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
 	depthStencilTxtDesc.Width = 800;
 	depthStencilTxtDesc.Height = 600;
 	depthStencilTxtDesc.ArraySize = 1;					//The amount of textures, we only need 1
@@ -187,7 +187,7 @@ void CGraphics::EndFrame()
 void CGraphics::BeginFrame(float r, float g, float b) noexcept
 {
 
-	const float color[] = { r,g,b, 1.0f };
+	const float color[] = { r, g, b, 1.0f };
 	m_pDeviceContext->ClearRenderTargetView(m_pRenderTargetView, color);
 
 	//Gotta clear the depth stencil every frame as well

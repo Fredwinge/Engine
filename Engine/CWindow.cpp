@@ -34,7 +34,7 @@ CWindow::WindowClass::WindowClass() noexcept
 	//Most windows versions have a regular version and an 'EX' version, 'EX' stands for extended
 	//'EX' are newer than regular version, but not necessarily better
 
-	WNDCLASSEXA wc = { 0 };
+	WNDCLASSEXA wc = {};
 	wc.cbSize = sizeof(wc);				//Size of the structure, needed
 	wc.style = CS_OWNDC;				//OWNDC creates a device context for every new window
 	wc.lpfnWndProc = HandleMsgSetup;	//A pointer to the function which handles ALL messages to the window, by extension, the behaviour of it
@@ -149,16 +149,21 @@ CWindow::Message CWindow::ProcessMessages()
 	}
 
 	//return standard message when not quitting app
-	return CWindow::Message::APPLICATION_STANDARD;
+	return CWindow::Message::UNSPECIFIED;
 }
 
 
 CGraphics& CWindow::Gfx()
 {
+
+	//m_pGfx should never be null but we error check for debugging purposes
+#ifndef NDEBUG
 	if (m_pGfx == nullptr)
 	{
 		CHWND_NOGFX_ERROR();
 	}
+#endif // !NDEBUG
+
 	return *m_pGfx;
 }
 
@@ -318,6 +323,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+/*
 //Window exception stuff
 
 CWindow::HrException::HrException(int line, const char* file, HRESULT hr) noexcept
@@ -366,3 +372,4 @@ std::string CWindow::Exception::TranslateErrorCode(HRESULT hr) noexcept
 
 	return errorString;
 }
+*/
