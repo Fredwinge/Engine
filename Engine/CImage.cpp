@@ -69,38 +69,13 @@ CImage::Result CImage::MakeFromFile(const wchar_t* filePath, CImage** ppImage)
 
 }
 
-/*
-//EXCEPTION STUFF
-CImage::Exception::Exception(int line, const char* file, std::string note) noexcept
-	:
-	IException(line, file),
-	m_sNote(std::move(note))
-{
-	DisplayError();
-}
-
-const char* CImage::Exception::what() const noexcept
-{
-	std::ostringstream oss;
-	oss << IException::what() << std::endl << "[Note] " << GetNote();
-
-	m_sWhatBuffer = oss.str();
-
-	return m_sWhatBuffer.c_str();
-}
-*/
-
 void CImage::CIMAGE_ERROR(int line, const char* file, const char* errorString)
 {
 	std::ostringstream oss;
 	oss << "CImage error!" << std::endl 
 		<< "[File] " << file << std::endl << "[Line] " << line << std::endl 
 		<< "[Note] " << errorString;
-
-	//MessageBoxA(nullptr, oss.str().c_str(), "CImage Graphics Exception", MB_OK | MB_ICONEXCLAMATION);
 	
 	OutputDebugString(oss.str().c_str());
 
-	//TODO: Should probably add a failsafe for textures that fail to load
-	//exit(1);
 }

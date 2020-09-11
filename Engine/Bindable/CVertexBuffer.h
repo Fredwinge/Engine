@@ -10,7 +10,7 @@ public:
 		:
 		m_stride(sizeof(V))
 	{
-		INFOMAN(gfx);
+		GET_INFOMANAGER(gfx);
 
 		D3D11_BUFFER_DESC vertexBufferDesc = {};
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;

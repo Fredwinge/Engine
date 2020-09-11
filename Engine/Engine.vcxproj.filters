@@ -36,9 +36,6 @@
     <ClCompile Include="CWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CKeyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CKeyboard.h">

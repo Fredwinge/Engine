@@ -5,7 +5,7 @@ CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& in
 	:
 	m_IndexCount(indices.size())
 {
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	D3D11_BUFFER_DESC indexBufferDesc = {};
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;

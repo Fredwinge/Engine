@@ -3,7 +3,7 @@
 
 CVertexShader::CVertexShader(CGraphics& gfx, LPCWSTR shaderLink)
 {
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	//D3DReadFileToBlob reads CSO files
 	GFX_ASSERT_INFO(D3DReadFileToBlob(shaderLink, &m_pBytecodeBlob));

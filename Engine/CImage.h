@@ -1,6 +1,5 @@
 #pragma once
 #include <DirectXTex.h>
-//#include "IException.h"
 
 class CImage
 {
@@ -15,21 +14,6 @@ public:
 		LOAD_FAILED,
 		LOAD_SUCCESSFUL
 	};
-
-	/*
-	class Exception : public IException
-	{
-	public:
-
-		Exception(int line, const char* file, std::string note) noexcept;
-		const char* what() const noexcept override;
-		const char* GetType() const noexcept override { return "CImage Graphics Exception"; }
-		const std::string& GetNote() const noexcept { return m_sNote; }
-
-	private:
-
-		std::string m_sNote;
-	};*/
 
 	static Result MakeFromFile(const wchar_t* filePath, CImage** ppImage);
 

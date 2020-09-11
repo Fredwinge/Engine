@@ -4,7 +4,7 @@
 CTexture::CTexture(CGraphics& gfx, const wchar_t* fileName)
 {
 
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	CImage* image = nullptr;
 

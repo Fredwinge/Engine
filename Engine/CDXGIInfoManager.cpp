@@ -7,8 +7,6 @@
 
 #pragma comment(lib, "dxguid.lib")
 
-//#define GFX_ASSERT_NOINFO(hrcall) if(FAILED(hr = (hrcall))) throw CGraphics::HrException(__LINE__,__FILE__,hr)
-
 CDXGIInfoManager::CDXGIInfoManager()
 {
 	//Define function signature of DXGIGetDebugInterface

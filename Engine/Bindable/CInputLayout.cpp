@@ -3,7 +3,7 @@
 
 CInputLayout::CInputLayout(CGraphics& gfx, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob* pVertexShaderByteCode)
 {
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	GFX_ASSERT_INFO(GetDevice(gfx)->CreateInputLayout(
 		layout.data(), 

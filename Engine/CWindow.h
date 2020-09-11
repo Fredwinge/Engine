@@ -1,6 +1,5 @@
 #pragma once
 #include <Windows.h>
-//#include "IException.h"
 #include "CKeyboard.h"
 #include "CMouse.h"
 #include "CGraphics.h"
@@ -16,44 +15,7 @@ public:
 		UNSPECIFIED,		//Standard message which shouldn't trigger a response
 		APPLICATION_QUIT
 	};
-	/*
-	//Exception classes
-	class Exception : public IException
-	{
-		using IException::IException;
 
-	public:
-
-		static std::string TranslateErrorCode(HRESULT hr) noexcept;
-	};
-
-	class HrException : public Exception
-	{
-
-	public:
-		HrException(int line, const char* file, HRESULT hr) noexcept;
-		const char* what() const noexcept override;
-
-		virtual const char* GetType() const noexcept override	{ return "Windows Exception"; }
-
-		HRESULT GetErrorCode() const noexcept					{ return m_hr; }
-		std::string GetErrorString() const noexcept				{ return TranslateErrorCode(m_hr); }
-
-	private:
-
-		HRESULT m_hr;
-	};
-
-	class NoGfxException : public Exception
-	{
-
-	public:
-
-		using Exception::Exception;
-
-		const char* GetType() const noexcept override			{ return "Windows Exception [No Graphics]"; }
-	};
-	*/
 private:
 
 	//Singleton manages registration/cleanup of window class
@@ -111,8 +73,7 @@ private:
 	CGraphics* m_pGfx;
 };
 
-//Error exception helper macros
-//Needed to get line and file which the exception was thrown from
+//Error helper macros
 #define CHWND_ERROR(hr) __WND_ERROR(__LINE__, __FILE__, hr)
 #define CHWND_LAST_ERROR() __WND_ERROR(__LINE__, __FILE__, GetLastError())
 #define CHWND_NOGFX_ERROR() __WND_NO_GFX_ERROR(__LINE__, __FILE__)

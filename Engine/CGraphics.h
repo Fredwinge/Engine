@@ -1,6 +1,5 @@
 #pragma once
 #include <Windows.h>
-//#include "IException.h"
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
@@ -15,50 +14,7 @@ class CGraphics
 	//Allow access to private variables for IBindable
 	friend class IBindable;
 public:
-	/*
-	class Exception : public IException
-	{
-		using IException::IException;
-	};
-	class HrException : public Exception
-	{
-	public:
-		HrException(int line, const char* file, HRESULT hr, std::vector<std::string> infoMsgs = {}) noexcept;
-		const char* what() const noexcept override;
-
-		std::string GetErrorString() const noexcept;
-		std::string GetErrorDescription() const noexcept;
-		const char* GetType() const noexcept override	{ return "D3D11 Error"; }
-		HRESULT GetErrorCode() const noexcept			{ return m_hr; }
-		std::string GetErrorInfo() const noexcept		{ return m_sInfo; }
-
-	private:
-		HRESULT m_hr;
-		std::string m_sInfo;
-	};
-	//DeviceRemovedException is meant to extract information from DXGI_ERROR_DEVICE_REMOVED errors purely
-	class DeviceRemovedException : public HrException
-	{
-		using HrException::HrException;
-
-	public:
-		const char* GetType() { return "Graphics Exception [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)"; }
-
-	private:
-		std::string m_sReason;
-	};
-	//InfoException gives us information from draw calls purely
-	class InfoException : public Exception
-	{
-	public:
-		InfoException(int line, const char* file, std::vector<std::string> infoMsgs = {}) noexcept;
-		const char* what() const noexcept override;
-		const char* GetType() const noexcept override	{ return "Graphics Info Exception"; }
-		std::string GetErrorInfo() const noexcept		{ return m_sInfo; }
-	private:
-		std::string m_sInfo;
-	};
-	*/
+	
 	//We need a handle to our window to construct a Windows device object
 	CGraphics(HWND hWnd);
 	CGraphics(const CGraphics&) = delete;

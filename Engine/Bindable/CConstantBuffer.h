@@ -10,7 +10,7 @@ public:
 	//Functions have to be in the header since templates work that way (?)
 	void Update(CGraphics& gfx, const C& consts)
 	{
-		INFOMAN(gfx);
+		GET_INFOMANAGER(gfx);
 
 		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
 		GFX_ASSERT_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
@@ -21,7 +21,7 @@ public:
 
 	CConstantBuffer(CGraphics& gfx, const C& consts)
 	{
-		INFOMAN(gfx);
+		GET_INFOMANAGER(gfx);
 
 		D3D11_BUFFER_DESC cbufferDesc = {};
 		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -38,7 +38,7 @@ public:
 	}
 	CConstantBuffer(CGraphics& gfx)
 	{
-		INFOMAN(gfx);
+		GET_INFOMANAGER(gfx);
 
 		D3D11_BUFFER_DESC cbufferDesc = {};
 		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;

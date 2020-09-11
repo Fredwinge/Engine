@@ -3,10 +3,8 @@
 #include <sstream>
 #include <vector>
 #include "dxerr\dxerr.h"
-//Checks if a HRESULT function has failed, if so, throw an exception
-//#define GFX_THROW_FAILED(hrcall) if(FAILED(hr = (hrcall))) throw Graphics::HrException(__LINE__,__FILE__,hr)
 
-//Graphics exception checking/throwing macros (some with dxgi infos)
+//Graphics error macros (some with dxgi infos)
 #define GFX_ASSERT_NOINFO(hr) __GFX_ASSERT(__LINE__, __FILE__, (hr)) //TODO: REMOVE???
 #define GFX_ASSERT_NOINFO(hrcall) if(FAILED(hr = (hrcall))) __GFX_ASSERT(__LINE__,__FILE__,hr)
 
@@ -28,9 +26,9 @@
 //Macro for importing infomanager into local scope
 //this.GetInfoManager(Graphics& gfx) must exist
 #ifdef NDEBUG
-#define INFOMAN(gfx) HRESULT hr
+#define GET_INFOMANAGER(gfx) HRESULT hr
 #else
-#define INFOMAN(gfx) HRESULT hr; CDXGIInfoManager& m_InfoManager = GetInfoManager((gfx))
+#define GET_INFOMANAGER(gfx) HRESULT hr; CDXGIInfoManager& m_InfoManager = GetInfoManager((gfx))
 #endif
 
 
@@ -119,7 +117,7 @@ inline void __GFX_ASSERT_DEVICE_REMOVED(int line, const char* file, HRESULT hr, 
 	DXGetErrorDescriptionA(hr, buf, sizeof(buf));
 
 	std::ostringstream oss;
-	oss << "Graphics Exception [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)" << std::endl
+	oss << "Graphics Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)" << std::endl
 		<< "[Error Code] 0x" << std::hex << std::uppercase << hr
 		<< std::dec << " (" << (unsigned long)hr << ")" << std::endl
 		<< "[Error String] " << DXGetErrorStringA(hr) << std::endl
@@ -132,6 +130,6 @@ inline void __GFX_ASSERT_DEVICE_REMOVED(int line, const char* file, HRESULT hr, 
 	}
 	oss << "[File] " << file << std::endl << "[Line] " << line;
 
-	MessageBoxA(nullptr, oss.str().c_str(), "Graphics Exception [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)", MB_OK | MB_ICONEXCLAMATION);
+	MessageBoxA(nullptr, oss.str().c_str(), "Graphics Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)", MB_OK | MB_ICONEXCLAMATION);
 	exit(1);
 }

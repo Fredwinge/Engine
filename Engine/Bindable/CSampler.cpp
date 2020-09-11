@@ -3,7 +3,7 @@
 
 CSampler::CSampler(CGraphics& gfx)
 {
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	D3D11_SAMPLER_DESC samplerDesc = {};
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;

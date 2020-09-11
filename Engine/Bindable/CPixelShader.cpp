@@ -3,7 +3,7 @@
 
 CPixelShader::CPixelShader(CGraphics& gfx, LPCWSTR shaderLink)
 {
-	INFOMAN(gfx);
+	GET_INFOMANAGER(gfx);
 
 	ID3DBlob* pBlob;
 
