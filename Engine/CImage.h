@@ -10,6 +10,12 @@ class CImage
 
 public:
 
+	enum Result
+	{
+		LOAD_FAILED,
+		LOAD_SUCCESSFUL
+	};
+
 	/*
 	class Exception : public IException
 	{
@@ -25,7 +31,7 @@ public:
 		std::string m_sNote;
 	};*/
 
-	static CImage MakeFromFile(const wchar_t* filePath);
+	static Result MakeFromFile(const wchar_t* filePath, CImage** ppImage);
 
 	size_t GetWidth() { return m_Scratch.GetMetadata().width; }
 	size_t GetHeight() { return m_Scratch.GetMetadata().height; }

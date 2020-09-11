@@ -10,7 +10,7 @@ CImage::CImage(DirectX::ScratchImage scratch)
 	m_Scratch(std::move(scratch))
 { }
 
-CImage CImage::MakeFromFile(const wchar_t* filePath)
+CImage::Result CImage::MakeFromFile(const wchar_t* filePath, CImage** ppImage)
 {
 
 	DirectX::ScratchImage scratch;
@@ -30,6 +30,8 @@ CImage CImage::MakeFromFile(const wchar_t* filePath)
 
 		//failure
 		CIMAGE_ERROR(__LINE__, __FILE__, errorStr.c_str());
+
+		return LOAD_FAILED;
 	}
 
 	if (scratch.GetImage(0, 0, 0)->format != DXGI_FORMAT_B8G8R8A8_UNORM)
@@ -52,12 +54,18 @@ CImage CImage::MakeFromFile(const wchar_t* filePath)
 			errorStr.append(cStr);
 
 			CIMAGE_ERROR(__LINE__, __FILE__, errorStr.c_str());
+
+			return LOAD_FAILED;
 		}
 
-		return CImage(std::move(converted));
+		*ppImage = new CImage(std::move(converted));
+
+		return LOAD_SUCCESSFUL;
 	}
 	
-	return CImage(std::move(scratch));
+	*ppImage = new CImage(std::move(scratch));
+
+	return LOAD_SUCCESSFUL;
 
 }
 
@@ -85,12 +93,14 @@ const char* CImage::Exception::what() const noexcept
 void CImage::CIMAGE_ERROR(int line, const char* file, const char* errorString)
 {
 	std::ostringstream oss;
-	oss << "CImage Graphics Exception" << std::endl 
+	oss << "CImage error!" << std::endl 
 		<< "[File] " << file << std::endl << "[Line] " << line << std::endl 
 		<< "[Note] " << errorString;
 
-	MessageBoxA(nullptr, oss.str().c_str(), "CImage Graphics Exception", MB_OK | MB_ICONEXCLAMATION);
+	//MessageBoxA(nullptr, oss.str().c_str(), "CImage Graphics Exception", MB_OK | MB_ICONEXCLAMATION);
+	
+	OutputDebugString(oss.str().c_str());
 
 	//TODO: Should probably add a failsafe for textures that fail to load
-	exit(1);
+	//exit(1);
 }
