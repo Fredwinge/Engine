@@ -1,7 +1,7 @@
 # Engine
 
 This is a project i've been working on during my free time to further my DirectX knowledge, most of the stuff so far 
-is ripped from ChiliTomatoNoodle's 3D DirectX Programming series with some minor alterations. <br> 
+is ripped from ChiliTomatoNoodle's 3D DirectX Programming series with some alterations. <br> 
 ChiliTomatoNoodle's 3D DirectX Programming series can be found here: <br>
 https://www.youtube.com/watch?v=_4FArgOX1I4&list=PLqCJpWy5Fohd3S7ICFXwUomYW0Wv67pDD
 
