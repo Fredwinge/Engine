@@ -197,6 +197,9 @@
     <ClInclude Include="GraphicsAssertMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WindowsAssertMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">

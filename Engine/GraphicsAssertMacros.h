@@ -90,8 +90,8 @@ inline void __GFX_ASSERT_INFO_ONLY(int line, const char* file, std::vector<std::
 
 	std::ostringstream oss;
 	oss << "Graphics Info Error" << std::endl
-		<< "\n[Error Info]\n" << errorInfo << std::endl << std::endl;
-	oss << "[File] " << file << std::endl << "[Line] " << line;
+		<< "\n[Error Info]\n" << errorInfo << std::endl << std::endl
+		<< "[File] " << file << std::endl << "[Line] " << line;
 
 	MessageBoxA(nullptr, oss.str().c_str(), "GFX Info Error", MB_OK | MB_ICONEXCLAMATION);
 	exit(1);

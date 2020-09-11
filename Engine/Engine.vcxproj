@@ -221,6 +221,7 @@
     <ClInclude Include="Geometry\CSphere.h" />
     <ClInclude Include="Geometry\GeometricMath.h" />
     <ClInclude Include="GraphicsAssertMacros.h" />
+    <ClInclude Include="WindowsAssertMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">

@@ -1,5 +1,6 @@
 #include "CWindow.h"
 #include <sstream>
+#include "WindowsAssertMacros.h"
 //#include "resource.h"
 
 //CWindow::WindowClass
@@ -72,7 +73,7 @@ CWindow::CWindow(int width, int height, const char* name)
 
 	if (AdjustWindowRect(&wr, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
 	{
-		CHWND_LAST_ERROR();
+		WND_LAST_ERROR();
 	}
 
 	//Create window and get hWnd
@@ -94,7 +95,7 @@ CWindow::CWindow(int width, int height, const char* name)
 	//Make sure window is created correctly
 	if (m_hWnd == 0)
 	{
-		CHWND_LAST_ERROR();
+		WND_LAST_ERROR();
 	}
 
 	//Newly created windows start of as hidden so we have to make this one show
@@ -118,7 +119,7 @@ void CWindow::SetTitle(const std::string& title)
 {
 	if (SetWindowTextA(m_hWnd, title.c_str()) == 0)
 	{
-		CHWND_LAST_ERROR();
+		WND_LAST_ERROR();
 	}
 }
 
@@ -160,7 +161,12 @@ CGraphics& CWindow::Gfx()
 #ifndef NDEBUG
 	if (m_pGfx == nullptr)
 	{
-		CHWND_NOGFX_ERROR();
+		std::ostringstream oss;
+		oss << "Windows Error [Gfx ptr was null]" << std::endl 
+			<< "[File] " << __FILE__ << std::endl << "[Line] " << __LINE__;
+
+		MessageBoxA(nullptr, oss.str().c_str(), "Windows Error", MB_OK | MB_ICONEXCLAMATION);
+		exit(1);
 	}
 #endif // !NDEBUG
 

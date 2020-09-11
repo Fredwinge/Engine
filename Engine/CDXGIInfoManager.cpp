@@ -1,9 +1,9 @@
 #include "CDXGIInfoManager.h"
-#include "CWindow.h"
 #include "CGraphics.h"
 #include <dxgidebug.h>
 #include <memory>
 #include "GraphicsAssertMacros.h"
+#include "WindowsAssertMacros.h"
 
 #pragma comment(lib, "dxguid.lib")
 
@@ -16,7 +16,7 @@ CDXGIInfoManager::CDXGIInfoManager()
 	const auto hModDxgiDebug = LoadLibraryExA("dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 	if (hModDxgiDebug == nullptr)
 	{
-		CHWND_LAST_ERROR();
+		WND_LAST_ERROR();
 	}
 
 	//Get address of DXGIGetDebugInterface in dll
@@ -25,7 +25,7 @@ CDXGIInfoManager::CDXGIInfoManager()
 		);
 	if (DxgiGetDebugInterface == nullptr)
 	{
-		CHWND_LAST_ERROR();
+		WND_LAST_ERROR();
 	}
 
 	HRESULT hr;
