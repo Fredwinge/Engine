@@ -179,6 +179,7 @@
     <ClCompile Include="CGraphics.cpp" />
     <ClCompile Include="CImage.cpp" />
     <ClCompile Include="CKeyboard.cpp" />
+    <ClCompile Include="CModelLoader.cpp" />
     <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CGraphics.h" />
     <ClInclude Include="CImage.h" />
     <ClInclude Include="CKeyboard.h" />
+    <ClInclude Include="CModelLoader.h" />
     <ClInclude Include="CMouse.h" />
     <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />

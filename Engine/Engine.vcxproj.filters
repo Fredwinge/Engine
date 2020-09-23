@@ -96,6 +96,9 @@
     <ClCompile Include="Bindable\CTransformCBuf.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="CModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WindowsAssertMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CModelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
