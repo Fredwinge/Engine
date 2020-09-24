@@ -26,7 +26,7 @@ CApplication::CApplication()
 	m_Wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 0.75f, 0.5f, 100.0f));
 	m_Wnd.Gfx().SetCamera(m_Camera.GetMatrix());
 
-	CModelLoader::LoadModel("../Data/Models/Torvud.obj");
+	m_pTorvudModel = CModelLoader::LoadModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
 }
 
 CApplication::~CApplication()
@@ -58,6 +58,8 @@ void CApplication::DoFrame()
 		d->Update(m_Wnd.m_Keyboard.KeyisPressed(VK_SPACE) ? 0.0f : deltaTime);
 		d->Draw(m_Wnd.Gfx());
 	}
+
+	m_pTorvudModel->Draw(m_Wnd.Gfx());
 
 	m_Wnd.Gfx().EndFrame();
 }

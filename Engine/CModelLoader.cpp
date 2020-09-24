@@ -4,7 +4,7 @@
 #include "Vectors.h"
 #include <Windows.h>
 
-void CModelLoader::LoadModel(const char* path)
+CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 {
 
 	//"r" is for read
@@ -19,7 +19,11 @@ void CModelLoader::LoadModel(const char* path)
 	std::vector<Vector2> texcoords;
 	std::vector<Vector3> normals;
 
-	std::vector<UINT> indices;
+	std::vector<unsigned short> indices;
+	std::vector<unsigned short> uv_indices;
+	std::vector<unsigned short> normal_indices;
+
+	std::vector<CModel::VertexData> VertexBuffer;
 
 	//Read file until end is reached
 	while (true)
@@ -61,11 +65,12 @@ void CModelLoader::LoadModel(const char* path)
 		}
 		else if (strcmp("f", lineHeader) == 0)
 		{
-			UINT vertex_indices[3];
+			UINT vertex_indices[4];
 
-			UINT uvIdx[3];
-			UINT nrmIdx[3];
+			UINT uvIdx[4];
+			UINT nrmIdx[4];
 
+			//TODO: Figure out format, since it seems to differ all over the place
 			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
 									&vertex_indices[0], &uvIdx[0], &nrmIdx[0],
 									&vertex_indices[1], &uvIdx[1], &nrmIdx[1],
@@ -74,12 +79,27 @@ void CModelLoader::LoadModel(const char* path)
 			if(matches != 9)
 				assert(false && "This ain't gonna work");
 
-			for(int i = 0; i < 3; ++i)
-				indices.push_back(vertex_indices[i]);
+			for (int i = 0; i < 3; ++i)
+			{
+				indices.push_back(vertex_indices[i] - 1);
+				uv_indices.push_back(uvIdx[i] - 1);
+				normal_indices.push_back(nrmIdx[i] - 1);
+			}
 		}
 
 
 	}
+
+	for (int i = 0; i < indices.size(); ++i)
+	{
+		CModel::VertexData VertexData;
+		VertexData.Position = vertices[indices[i]];
+		VertexData.TexCoord = texcoords[uv_indices[i]];
+		VertexData.Normal = normals[normal_indices[i]];
+
+		VertexBuffer.push_back(VertexData);
+	}
+
 	//LOG FILE
 	/*
 	FILE* pLogFile;
@@ -97,6 +117,15 @@ void CModelLoader::LoadModel(const char* path)
 	//delete fileBuffer;
 	*/
 
+	//Vertices are already added in correct order
+	std::vector<unsigned short> tempIndices;
+	for (int i = 0; i < VertexBuffer.size(); ++i)
+	{
+		tempIndices.push_back(i);
+	}
+
 	delete pFile;
+
+	return new CModel(rGfx, &VertexBuffer, &tempIndices);
 
 }

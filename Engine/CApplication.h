@@ -4,6 +4,8 @@
 #include "CCamera.h"
 #include "Drawable\CDrawable.h"
 
+#include "Drawable\CModel.h"
+
 class CApplication
 {
 public:
@@ -29,4 +31,6 @@ private:
 	static constexpr size_t nDrawables = 180;
 
 	float m_fSpeedFactor = 1.0f;
+
+	CModel* m_pTorvudModel;
 };

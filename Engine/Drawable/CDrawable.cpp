@@ -24,7 +24,7 @@ void CDrawable::AddBind(std::unique_ptr<IBindable> bind) //noexcept
 	binds.push_back(std::move(bind));
 }
 
-void CDrawable::AddIndexBuffer(std::unique_ptr<CIndexBuffer> ibuf) noexcept
+void CDrawable::AddIndexBuffer(std::unique_ptr<CIndexBuffer> ibuf) /*noexcept*/
 {
 	assert("Attempting to add index buffer a second time" && m_pIndexBuffer == nullptr);
 	m_pIndexBuffer = ibuf.get();

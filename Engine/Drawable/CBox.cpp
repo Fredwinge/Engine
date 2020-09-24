@@ -3,7 +3,7 @@
 #include "../GraphicsAssertMacros.h"
 #include "../Geometry/CCube.h"
 
-CBox::CBox(CGraphics& gfx,
+CBox::CBox(CGraphics& rGfx,
 	std::mt19937& rng,
 	std::uniform_real_distribution<float>&adist,
 	std::uniform_real_distribution<float>&ddist,
@@ -44,15 +44,15 @@ CBox::CBox(CGraphics& gfx,
 		*/
 
 		auto model = CCube::Make<Vertex>();
-		AddStaticBind(std::make_unique<CVertexBuffer>(gfx, model.vertices));
+		AddStaticBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
 
-		auto pVertexShader = std::make_unique<CVertexShader>(gfx, L"../Debug/BaseVertexShader.cso");
+		auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/PrimitiveVertexShader.cso");
 		auto pVertexShaderByteCode = pVertexShader->GetBytecode();
 		AddStaticBind(std::move(pVertexShader));
 
-		AddStaticBind(std::make_unique<CPixelShader>(gfx, L"../Debug/BasePixelShader.cso"));
+		AddStaticBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/PrimitivePixelShader.cso"));
 
-		AddStaticIndexBuffer(std::make_unique<CIndexBuffer>(gfx, model.indices));
+		AddStaticIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
 
 		struct PixelCBuffer
 		{
@@ -77,27 +77,27 @@ CBox::CBox(CGraphics& gfx,
 				{1.0f, 0.0f, 1.0f, 1.0f},
 			}
 		};
-		AddStaticBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(gfx, PxCBuffer));
+		AddStaticBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(rGfx, PxCBuffer));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
 		{
 			{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		};
-		AddStaticBind(std::make_unique<CInputLayout>(gfx, inputElementDesc, pVertexShaderByteCode));
+		AddStaticBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
 
-		AddStaticBind(std::make_unique<CTopology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+		AddStaticBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 	}
 	else
 	{
 		SetIndexFromStatic();
 	}
 
-	AddBind(std::make_unique<CTransformCBuf>(gfx, *this));
+	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));
 
 	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, bdist(rng)));
 }
 
-void CBox::Update(float deltaTime) noexcept
+void CBox::Update(float deltaTime) /*noexcept*/
 {
 	roll += droll * deltaTime;
 	pitch += dpitch * deltaTime;
@@ -107,7 +107,7 @@ void CBox::Update(float deltaTime) noexcept
 	chi += dchi * deltaTime;
 }
 
-DirectX::XMMATRIX CBox::GetTransformXM() const noexcept
+DirectX::XMMATRIX CBox::GetTransformXM() const /*noexcept*/
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *

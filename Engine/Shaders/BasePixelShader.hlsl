@@ -1,11 +1,13 @@
 
-cbuffer Cbuf
+struct PS_INPUT
 {
-	float4 face_colors[8];
+	float4 position : SV_Position;
+	float2 uv		: TexCoord;
+	float3 normal	: Normal;
 };
 
-float4 main( uint triangleID : SV_PrimitiveID) : SV_Target
+float4 main( PS_INPUT IN) : SV_Target
 {
 
-	return float4(face_colors[(triangleID / 2) % 8].rgb, 1.0f);
+	return float4(IN.normal.xyz, 1.0f);
 }
