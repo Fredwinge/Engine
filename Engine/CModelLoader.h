@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 class CModelLoader
 {
@@ -6,4 +7,6 @@ class CModelLoader
 public:
 
 	static void LoadModel(const char* path);
+
+	
 };
