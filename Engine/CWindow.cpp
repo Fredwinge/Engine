@@ -61,7 +61,8 @@ CWindow::WindowClass::~WindowClass()
 CWindow::CWindow(int width, int height, const char* name)
 	:
 	m_Width(width),
-	m_Height(height)
+	m_Height(height),
+	m_ScreenSize(width, height)
 {
 
 	//Calculate window size based on desired client region size
@@ -102,7 +103,7 @@ CWindow::CWindow(int width, int height, const char* name)
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 
 	//Create graphics object
-	m_pGfx = new CGraphics(m_hWnd);
+	m_pGfx = new CGraphics(m_hWnd, m_ScreenSize);
 
 }
 

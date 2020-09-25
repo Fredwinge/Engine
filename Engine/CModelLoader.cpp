@@ -150,13 +150,13 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
     	std::vector<unsigned short> tempIndices;
 	for (int i = 0; i < VertexBuffer.size(); ++i)
 	{
-		//tempIndices.push_back(i - 2);
-		//tempIndices.push_back(i - 1);
 		tempIndices.push_back(i);
 	}
 
 	delete pFile;
 
-	return new CModel(rGfx, &VertexBuffer, &tempIndices);
+	CModel* pModel = new CModel(rGfx, &VertexBuffer, &tempIndices);
+
+	return pModel;
 
 }

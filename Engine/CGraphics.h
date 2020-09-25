@@ -8,6 +8,7 @@
 #include "CDXGIInfoManager.h"
 #include <memory>
 #include "GraphicsAssertMacros.h"
+#include "Maths\Vectors.h"
 
 class CGraphics
 {
@@ -16,7 +17,7 @@ class CGraphics
 public:
 	
 	//We need a handle to our window to construct a Windows device object
-	CGraphics(HWND hWnd);
+	CGraphics(HWND hWnd, Vector2 wndSize);
 	CGraphics(const CGraphics&) = delete;
 	CGraphics& operator=(const CGraphics&) = delete;
 	~CGraphics();

@@ -3,6 +3,7 @@
 #include "CKeyboard.h"
 #include "CMouse.h"
 #include "CGraphics.h"
+#include "Maths\Vectors.h"
 
 class CWindow
 {
@@ -52,6 +53,8 @@ public:
 
 	CGraphics& Gfx();
 
+	Vector2 GetScreenSize() const noexcept { return m_ScreenSize; }
+
 private:
 
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -69,6 +72,9 @@ private:
 	int m_Width;
 	int m_Height;
 	HWND m_hWnd;
+
+	//TODO: figure out wether screenSize or windowSize fits best
+	Vector2 m_ScreenSize;
 
 	CGraphics* m_pGfx;
 };

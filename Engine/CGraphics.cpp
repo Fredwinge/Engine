@@ -11,7 +11,7 @@
 namespace dx = DirectX;
 
 
-CGraphics::CGraphics(HWND hWnd)
+CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	:
 	m_mProjectionMatrix(),
 	m_mCameraMatrix()
@@ -99,8 +99,8 @@ CGraphics::CGraphics(HWND hWnd)
 	depthStencilTxtDesc.SampleDesc.Count = 1;
 	depthStencilTxtDesc.SampleDesc.Quality = 0;
 	depthStencilTxtDesc.Format = DXGI_FORMAT_D32_FLOAT; //For depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
-	depthStencilTxtDesc.Width = 800;
-	depthStencilTxtDesc.Height = 600;
+	depthStencilTxtDesc.Width = wndSize.x;
+	depthStencilTxtDesc.Height = wndSize.y;
 	depthStencilTxtDesc.ArraySize = 1;					//The amount of textures, we only need 1
 	depthStencilTxtDesc.MipLevels = 1;
 	depthStencilTxtDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
@@ -117,8 +117,8 @@ CGraphics::CGraphics(HWND hWnd)
 
 	//Configure viewport
 	D3D11_VIEWPORT viewPort;
-	viewPort.Width = 800;
-	viewPort.Height = 600;
+	viewPort.Width = wndSize.x;
+	viewPort.Height = wndSize.y;
 	viewPort.MinDepth = 0;
 	viewPort.MaxDepth = 1;
 	viewPort.TopLeftX = 0;
