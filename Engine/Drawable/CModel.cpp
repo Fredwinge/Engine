@@ -73,13 +73,13 @@ CModel::CModel(CGraphics& rGfx, std::vector<VertexData>* pVertexBuffer, std::vec
 
 void CModel::Update(float deltaTime)
 {
-
+	yaw += 4.0f * deltaTime;
 }
 
 DirectX::XMMATRIX CModel::GetTransformXM() const
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, 0.0f, -10.0f) *
+		DirectX::XMMatrixTranslation(r, -3.0f, -10.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
 }

@@ -66,22 +66,21 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 		else if (strcmp("f", lineHeader) == 0)
 		{
 			
-			UINT vertex_indices[4];
+			UINT vertex_indices[3];
 
-			UINT uvIdx[4];
-			UINT nrmIdx[4];
+			UINT uvIdx[3];
+			UINT nrmIdx[3];
 
 			//TODO: Figure out format, since it seems to differ all over the place
-			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n", 
+			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
 									&vertex_indices[0], &uvIdx[0], &nrmIdx[0],
 									&vertex_indices[1], &uvIdx[1], &nrmIdx[1],
-									&vertex_indices[2], &uvIdx[2], &nrmIdx[2],
-									&vertex_indices[3], &uvIdx[3], &nrmIdx[3]);
+									&vertex_indices[2], &uvIdx[2], &nrmIdx[2]);
 
-			if(matches != 12)
+			if(matches != 9)
 				assert(false && "This ain't gonna work");
 
-			for (int i = 0; i < 4; ++i)
+			for (int i = 0; i < 3; ++i)
 			{
 				indices.push_back(vertex_indices[i] - 1);
 				uv_indices.push_back(uvIdx[i] - 1);
@@ -148,16 +147,12 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 	*/
 
 	//Vertices are already added in correct order
-	std::vector<unsigned short> tempIndices;
-	for (int i = 2; i < VertexBuffer.size(); i += 3)
+    	std::vector<unsigned short> tempIndices;
+	for (int i = 0; i < VertexBuffer.size(); ++i)
 	{
-		tempIndices.push_back(i - 2);
-		tempIndices.push_back(i - 1);
+		//tempIndices.push_back(i - 2);
+		//tempIndices.push_back(i - 1);
 		tempIndices.push_back(i);
-
-		tempIndices.push_back(i - 1);
-		tempIndices.push_back(i);
-		tempIndices.push_back(i + 1);
 	}
 
 	delete pFile;

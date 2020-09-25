@@ -31,7 +31,7 @@ CApplication::CApplication()
 
 CApplication::~CApplication()
 {
-
+	delete m_pTorvudModel;
 }
 
 int CApplication::Go()
@@ -59,6 +59,7 @@ void CApplication::DoFrame()
 		d->Draw(m_Wnd.Gfx());
 	}
 
+	m_pTorvudModel->Update(m_Wnd.m_Keyboard.KeyisPressed(VK_SPACE) ? 0.0f : deltaTime);
 	m_pTorvudModel->Draw(m_Wnd.Gfx());
 
 	m_Wnd.Gfx().EndFrame();

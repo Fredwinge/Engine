@@ -16,7 +16,7 @@ struct VS_OUTPUT
 {
 	float4 position : SV_Position;
 	float2 uv		: TexCoord;
-	float3 normal	: Normal;
+	float3 normal	: NORMALOS;
 };
 
 VS_OUTPUT main(VS_INPUT IN)
