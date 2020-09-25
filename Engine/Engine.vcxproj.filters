@@ -25,6 +25,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{0e9756c2-7178-4bd3-b656-d385470542d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Maths">
+      <UniqueIdentifier>{42004ff6-ae33-4218-beb1-fbb32700e87f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -209,11 +212,11 @@
     <ClInclude Include="CModelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vectors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Drawable\CModel.h">
       <Filter>Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths\Vectors.h">
+      <Filter>Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

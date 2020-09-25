@@ -3,7 +3,7 @@
 
 CModel::CModel(CGraphics& rGfx, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndices)
 	:
-	r(10.0f),
+	r(0.0f),
 	roll(0.0f),
 	pitch(0.0f),
 	yaw(0.0f),
@@ -80,6 +80,6 @@ DirectX::XMMATRIX CModel::GetTransformXM() const
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
+		DirectX::XMMatrixTranslation(r, 0.0f, -10.0f) *
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
 }

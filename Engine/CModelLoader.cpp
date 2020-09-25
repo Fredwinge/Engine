@@ -1,7 +1,7 @@
 #include "CModelLoader.h"
 #include <stdio.h>
 #include <assert.h>
-#include "Vectors.h"
+#include "Maths/Vectors.h"
 #include <Windows.h>
 
 CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
@@ -65,26 +65,56 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 		}
 		else if (strcmp("f", lineHeader) == 0)
 		{
+			
 			UINT vertex_indices[4];
 
 			UINT uvIdx[4];
 			UINT nrmIdx[4];
 
 			//TODO: Figure out format, since it seems to differ all over the place
-			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n", 
 									&vertex_indices[0], &uvIdx[0], &nrmIdx[0],
 									&vertex_indices[1], &uvIdx[1], &nrmIdx[1],
-									&vertex_indices[2], &uvIdx[2], &nrmIdx[2]);
+									&vertex_indices[2], &uvIdx[2], &nrmIdx[2],
+									&vertex_indices[3], &uvIdx[3], &nrmIdx[3]);
 
-			if(matches != 9)
+			if(matches != 12)
 				assert(false && "This ain't gonna work");
 
-			for (int i = 0; i < 3; ++i)
+			for (int i = 0; i < 4; ++i)
 			{
 				indices.push_back(vertex_indices[i] - 1);
 				uv_indices.push_back(uvIdx[i] - 1);
 				normal_indices.push_back(nrmIdx[i] - 1);
 			}
+			
+			/*
+			while (true)
+			{
+				UINT vertex_indices;
+
+				UINT uvIdx;
+				UINT nrmIdx;
+
+				//TODO: Figure out format, since it seems to differ all over the place
+				int matches = fscanf_s(pFile, "%d/%d/%d",
+					&vertex_indices, &uvIdx, &nrmIdx);
+
+				if (matches != 3)
+				{
+					//assert(false && "This ain't gonna work");
+
+					//fscanf_s(pFile, "\n");
+					break;
+				}
+				else
+				{
+					indices.push_back(vertex_indices - 1);
+					uv_indices.push_back(uvIdx - 1);
+					normal_indices.push_back(nrmIdx - 1);
+				}
+			}
+			*/
 		}
 
 
@@ -119,9 +149,15 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 
 	//Vertices are already added in correct order
 	std::vector<unsigned short> tempIndices;
-	for (int i = 0; i < VertexBuffer.size(); ++i)
+	for (int i = 2; i < VertexBuffer.size(); i += 3)
 	{
+		tempIndices.push_back(i - 2);
+		tempIndices.push_back(i - 1);
 		tempIndices.push_back(i);
+
+		tempIndices.push_back(i - 1);
+		tempIndices.push_back(i);
+		tempIndices.push_back(i + 1);
 	}
 
 	delete pFile;

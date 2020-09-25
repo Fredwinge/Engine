@@ -1,6 +1,6 @@
 #pragma once
 #include "CDrawableBase.h"
-#include "../Vectors.h"
+#include "../Maths/Vectors.h"
 
 class CModel : public CDrawableBase<CModel>
 {
