@@ -1,9 +1,9 @@
 #pragma once
-#include "CDrawableBase.h"
+#include "CDrawable.h"
 #include <random>
 
 
-class CBox : public CDrawableBase<CBox>
+class CBox : public CDrawable
 {
 public:
 

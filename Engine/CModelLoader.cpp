@@ -153,7 +153,8 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 		tempIndices.push_back(i);
 	}
 
-	delete pFile;
+	fclose(pFile);
+	//delete pFile;
 
 	*pVertexBuffer = VertexBuffer;
 	*pIndexBuffer = tempIndices;

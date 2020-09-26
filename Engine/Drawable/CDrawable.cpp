@@ -10,14 +10,6 @@ void CDrawable::Draw(CGraphics& gfx) const //noexcept
 	{
 		b->Bind(gfx);
 	}
-	//TODO: Rework
-	if (GetStaticBinds() != nullptr) 
-	{
-		for (auto& b : *GetStaticBinds())
-		{
-			b->Bind(gfx);
-		}
-	}
 
 	gfx.DrawIndexed(m_pIndexBuffer->GetCount());
 }

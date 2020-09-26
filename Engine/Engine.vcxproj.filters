@@ -134,9 +134,6 @@
     <ClInclude Include="Drawable\CDrawable.h">
       <Filter>Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="Drawable\CDrawableBase.h">
-      <Filter>Drawable</Filter>
-    </ClInclude>
     <ClInclude Include="Bindable\BindableBase.h">
       <Filter>Bindable</Filter>
     </ClInclude>

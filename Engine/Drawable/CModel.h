@@ -1,5 +1,5 @@
 #pragma once
-#include "CDrawableBase.h"
+#include "CDrawable.h"
 #include "../Maths/Vectors.h"
 
 class CModel : public CDrawable
@@ -36,8 +36,5 @@ private:
 
 	//model transform
 	DirectX::XMFLOAT3X3 mt;
-
-	//TODO: Fix this shit
-	const std::vector<std::unique_ptr<IBindable>>* GetStaticBinds() const noexcept { return nullptr; }
 
 };

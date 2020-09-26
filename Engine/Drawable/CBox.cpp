@@ -25,73 +25,64 @@ CBox::CBox(CGraphics& rGfx,
 
 	namespace dx = DirectX;
 
-	if (IsStaticInitialized() == false)
+	//BINDS
+	//Bind vertex buffer
+	struct Vertex
 	{
-		struct Vertex
-		{
-			dx::XMFLOAT3 pos;
-		};
+		dx::XMFLOAT3 pos;
+	};
 
-		/*//Box UV Coords
-		model.vertices[0].tex = { 0.0f, 0.0f }; //1, 2, 4
-		model.vertices[1].tex = { 1.0f, 0.0f }; //0, 3, 5
-		model.vertices[2].tex = { 0.0f, 1.0f }; //0, 3, 6
-		model.vertices[3].tex = { 1.0f, 1.0f }; //1, 2, 7
-		model.vertices[4].tex = { 1.0f, 1.0f }; //0, 5, 6
-		model.vertices[5].tex = { 0.0f, 1.0f }; //1, 4, 7
-		model.vertices[6].tex = { 1.0f, 0.0f }; //2, 4, 7
-		model.vertices[7].tex = { 0.0f, 0.0f }; //3, 5, 6
-		*/
+	auto model = CCube::Make<Vertex>();
+	AddBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
 
-		auto model = CCube::Make<Vertex>();
-		AddStaticBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
+	//Bind vertex shader
+	auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/PrimitiveVertexShader.cso");
+	auto pVertexShaderByteCode = pVertexShader->GetBytecode();
+	AddBind(std::move(pVertexShader));
 
-		auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/PrimitiveVertexShader.cso");
-		auto pVertexShaderByteCode = pVertexShader->GetBytecode();
-		AddStaticBind(std::move(pVertexShader));
+	//Bind pixel shader
+	AddBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/PrimitivePixelShader.cso"));
 
-		AddStaticBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/PrimitivePixelShader.cso"));
+	//Bind index buffer
+	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
 
-		AddStaticIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
-
-		struct PixelCBuffer
-		{
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} face_colors[8];
-		};
-		const PixelCBuffer PxCBuffer =
-		{
-			{
-				{1.0f, 0.0f, 1.0f, 1.0f},
-				{1.0f, 0.0f, 0.0f, 1.0f},
-				{0.0f, 1.0f, 0.0f, 1.0f},
-				{0.0f, 1.0f, 1.0f, 1.0f},
-				{1.0f, 1.0f, 0.0f, 1.0f},
-				{0.0f, 0.0f, 1.0f, 1.0f},
-				{1.0f, 1.0f, 1.0f, 1.0f},
-				{1.0f, 0.0f, 1.0f, 1.0f},
-			}
-		};
-		AddStaticBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(rGfx, PxCBuffer));
-
-		const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
-		{
-			{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		};
-		AddStaticBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
-
-		AddStaticBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-	}
-	else
+	//Bind pixel constant buffer
+	struct PixelCBuffer
 	{
-		SetIndexFromStatic();
-	}
+		struct
+		{
+			float r;
+			float g;
+			float b;
+			float a;
+		} face_colors[8];
+	};
+	const PixelCBuffer PxCBuffer =
+	{
+		{
+			{1.0f, 0.0f, 1.0f, 1.0f},
+			{1.0f, 0.0f, 0.0f, 1.0f},
+			{0.0f, 1.0f, 0.0f, 1.0f},
+			{0.0f, 1.0f, 1.0f, 1.0f},
+			{1.0f, 1.0f, 0.0f, 1.0f},
+			{0.0f, 0.0f, 1.0f, 1.0f},
+			{1.0f, 1.0f, 1.0f, 1.0f},
+			{1.0f, 0.0f, 1.0f, 1.0f},
+		}
+	};
+	AddBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(rGfx, PxCBuffer));
 
+	//Bind input layout
+	const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
+	{
+		{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	};
+	AddBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
+
+	//Bind topology
+	AddBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+
+	//Bind matrix constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));
 
 	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, bdist(rng)));

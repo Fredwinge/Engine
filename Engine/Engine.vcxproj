@@ -214,7 +214,6 @@
     <ClInclude Include="CWindow.h" />
     <ClInclude Include="Drawable\CBox.h" />
     <ClInclude Include="Drawable\CDrawable.h" />
-    <ClInclude Include="Drawable\CDrawableBase.h" />
     <ClInclude Include="Drawable\CModel.h" />
     <ClInclude Include="dxerr\dxerr.h" />
     <ClInclude Include="Geometry\CCone.h" />
