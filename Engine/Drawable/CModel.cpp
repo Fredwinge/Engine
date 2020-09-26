@@ -1,7 +1,8 @@
 #include "CModel.h"
 #include "../Bindable/BindableBase.h"
+#include "../CModelLoader.h"
 
-CModel::CModel(CGraphics& rGfx, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndices)
+CModel::CModel(CGraphics& rGfx, const char* path)
 	:
 	r(0.0f),
 	roll(0.0f),
@@ -13,59 +14,39 @@ CModel::CModel(CGraphics& rGfx, std::vector<VertexData>* pVertexBuffer, std::vec
 {
 	namespace dx = DirectX;
 
-	if (IsStaticInitialized() == false)
+	std::vector<VertexData> VertexBuffer;
+	std::vector<unsigned short> IndexBuffer;
+
+	CModelLoader::LoadModel(path, &VertexBuffer, &IndexBuffer);
+
+	//BINDS
+	//Bind vertex buffer
+	AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));
+
+	//Bind vertex shader
+	auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/BaseVertexShader.cso");
+	auto pVertexShaderByteCode = pVertexShader->GetBytecode();
+	AddBind(std::move(pVertexShader));
+
+	//Bind pixel shader
+	AddBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/BasePixelShader.cso"));
+
+	//Bind index buffer
+	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, IndexBuffer));
+
+	//Bind input layout
+	const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
 	{
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	};
+	AddBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
 
-		AddStaticBind(std::make_unique<CVertexBuffer>(rGfx, *pVertexBuffer));
-
-		auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/BaseVertexShader.cso");
-		auto pVertexShaderByteCode = pVertexShader->GetBytecode();
-		AddStaticBind(std::move(pVertexShader));
-
-		AddStaticBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/BasePixelShader.cso"));
-
-		AddStaticIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, *pIndices));
-
-		//struct PixelCBuffer
-		//{
-		//	struct
-		//	{
-		//		float r;
-		//		float g;
-		//		float b;
-		//		float a;
-		//	} face_colors[8];
-		//};
-		//const PixelCBuffer PxCBuffer =
-		//{
-		//	{
-		//		{1.0f, 0.0f, 1.0f, 1.0f},
-		//	{1.0f, 0.0f, 0.0f, 1.0f},
-		//	{0.0f, 1.0f, 0.0f, 1.0f},
-		//	{0.0f, 1.0f, 1.0f, 1.0f},
-		//	{1.0f, 1.0f, 0.0f, 1.0f},
-		//	{0.0f, 0.0f, 1.0f, 1.0f},
-		//	{1.0f, 1.0f, 1.0f, 1.0f},
-		//	{1.0f, 0.0f, 1.0f, 1.0f},
-		//	}
-		//};
-		//AddStaticBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(rGfx, PxCBuffer));
-
-		const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
-		{
-			{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		};
-		AddStaticBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
-
-		AddStaticBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-	}
-	else
-	{
-		SetIndexFromStatic();
-	}
-
+	//Bind topology
+	AddBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+	
+	//Bind vertex constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));
 
 	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, 1.0f));

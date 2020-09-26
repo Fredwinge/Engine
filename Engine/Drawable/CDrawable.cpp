@@ -6,13 +6,17 @@
 
 void CDrawable::Draw(CGraphics& gfx) const //noexcept
 {
-	for (auto& b : binds)
+	for (auto& b : m_Binds)
 	{
 		b->Bind(gfx);
 	}
-	for (auto& b : GetStaticBinds())
+	//TODO: Rework
+	if (GetStaticBinds() != nullptr) 
 	{
-		b->Bind(gfx);
+		for (auto& b : *GetStaticBinds())
+		{
+			b->Bind(gfx);
+		}
 	}
 
 	gfx.DrawIndexed(m_pIndexBuffer->GetCount());
@@ -21,12 +25,12 @@ void CDrawable::Draw(CGraphics& gfx) const //noexcept
 void CDrawable::AddBind(std::unique_ptr<IBindable> bind) //noexcept
 {
 	assert("*Must* use AddIndexBuffer to bind index buffer" && typeid(*bind) != typeid(CIndexBuffer));
-	binds.push_back(std::move(bind));
+	m_Binds.push_back(std::move(bind));
 }
 
 void CDrawable::AddIndexBuffer(std::unique_ptr<CIndexBuffer> ibuf) /*noexcept*/
 {
 	assert("Attempting to add index buffer a second time" && m_pIndexBuffer == nullptr);
 	m_pIndexBuffer = ibuf.get();
-	binds.push_back(std::move(ibuf));
+	m_Binds.push_back(std::move(ibuf));
 }

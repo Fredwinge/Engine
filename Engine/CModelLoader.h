@@ -6,8 +6,11 @@
 class CModelLoader
 {
 
-public:
+	friend class CModel;
 
-	static CModel* LoadModel(CGraphics& rGfx, const char* path);
+private:
+
+	//TODO: Rework to just use ptrs instead of vectors
+	static void LoadModel(const char* path, std::vector<CModel::VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer);
 	
 };

@@ -45,7 +45,7 @@ protected:
 
 private:
 
-	const std::vector<std::unique_ptr<IBindable>>& GetStaticBinds() const noexcept { return s_StaticBinds; }
+	const std::vector<std::unique_ptr<IBindable>>* GetStaticBinds() const noexcept { return &s_StaticBinds; }
 
 	static std::vector<std::unique_ptr<IBindable>> s_StaticBinds;
 

@@ -4,7 +4,7 @@
 #include "Maths/Vectors.h"
 #include <Windows.h>
 
-CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
+void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
 {
 
 	//"r" is for read
@@ -155,8 +155,11 @@ CModel* CModelLoader::LoadModel(CGraphics& rGfx, const char* path)
 
 	delete pFile;
 
-	CModel* pModel = new CModel(rGfx, &VertexBuffer, &tempIndices);
+	*pVertexBuffer = VertexBuffer;
+	*pIndexBuffer = tempIndices;
 
-	return pModel;
+	//CModel* pModel = new CModel(rGfx, &VertexBuffer, &tempIndices);
+
+	//return pModel;
 
 }

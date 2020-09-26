@@ -2,7 +2,7 @@
 #include "CDrawableBase.h"
 #include "../Maths/Vectors.h"
 
-class CModel : public CDrawableBase<CModel>
+class CModel : public CDrawable
 {
 public:
 
@@ -15,7 +15,7 @@ public:
 	};
 
 	//TODO: Replace vectors with just ptrs?
-	CModel(CGraphics& rGfx, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndices);
+	CModel(CGraphics& rGfx, const char* path);
 
 	void Update(float deltaTime) override;
 	DirectX::XMMATRIX GetTransformXM() const override;
@@ -36,5 +36,8 @@ private:
 
 	//model transform
 	DirectX::XMFLOAT3X3 mt;
+
+	//TODO: Fix this shit
+	const std::vector<std::unique_ptr<IBindable>>* GetStaticBinds() const noexcept { return nullptr; }
 
 };

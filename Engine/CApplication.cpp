@@ -1,7 +1,6 @@
 #include "CApplication.h"
 #include <sstream>
 #include "Drawable\CBox.h"
-#include "CModelLoader.h"
 
 CApplication::CApplication()
 	:
@@ -26,7 +25,7 @@ CApplication::CApplication()
 	m_Wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 0.75f, 0.5f, 100.0f));
 	m_Wnd.Gfx().SetCamera(m_Camera.GetMatrix());
 
-	m_pTorvudModel = CModelLoader::LoadModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
+	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
 }
 
 CApplication::~CApplication()
