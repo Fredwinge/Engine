@@ -119,6 +119,10 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 
 	}
 
+	//TODO: Are indices and vertices correct?
+	//Look this up, looks right on screen, weird numbers in debugger
+	//Only for Torvud tough, suzzane is fine.
+	//Either way this can probably be done in a nicer way
 	for (int i = 0; i < indices.size(); ++i)
 	{
 		CModel::VertexData VertexData;
