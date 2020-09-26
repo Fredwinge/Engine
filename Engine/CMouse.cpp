@@ -17,10 +17,9 @@ CMouse::Event CMouse::Read() //noexcept
 	}
 }
 
-void CMouse::OnMouseMove(int newX, int newY) //noexcept
+void CMouse::OnMouseMove(Vector2 newPos) //noexcept
 {
-	m_xPos = newX;
-	m_yPos = newY;
+	m_Pos = newPos;
 
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::MOVE, *this));
 	TrimBuffer();
@@ -46,7 +45,7 @@ void CMouse::OnMouseLeave() //noexcept
 
 // LEFT
 
-void CMouse::OnLeftPressed(int x, int y) //noexcept
+void CMouse::OnLeftPressed() //noexcept
 {
 	m_bLeftIsPressed = true;
 
@@ -54,7 +53,7 @@ void CMouse::OnLeftPressed(int x, int y) //noexcept
 	TrimBuffer();
 }
 
-void CMouse::OnLeftReleased(int x, int y) //noexcept
+void CMouse::OnLeftReleased() //noexcept
 {
 	m_bLeftIsPressed = false;
 
@@ -64,7 +63,7 @@ void CMouse::OnLeftReleased(int x, int y) //noexcept
 
 // RIGHT
 
-void CMouse::OnRightPressed(int x, int y) //noexcept
+void CMouse::OnRightPressed() //noexcept
 {
 	m_bRightIsPressed = true;
 
@@ -72,7 +71,7 @@ void CMouse::OnRightPressed(int x, int y) //noexcept
 	TrimBuffer();
 }
 
-void CMouse::OnRightReleased(int x, int y) //noexcept
+void CMouse::OnRightReleased() //noexcept
 {
 	m_bRightIsPressed = false;
 
@@ -82,21 +81,21 @@ void CMouse::OnRightReleased(int x, int y) //noexcept
 
 // WHEEL
 
-void CMouse::OnWheelUp(int x, int y) //noexcept
+void CMouse::OnWheelUp() //noexcept
 {
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::WHEEL_UP, *this));
 
 	TrimBuffer();
 }
 
-void CMouse::OnWheelDown(int x, int y) //noexcept
+void CMouse::OnWheelDown() //noexcept
 {
 	m_EventBuffer.push(CMouse::Event(CMouse::Event::Type::WHEEL_DOWN, *this));
 
 	TrimBuffer();
 }
 
-void CMouse::OnWheelDelta(int x, int y, int delta) //noexcept
+void CMouse::OnWheelDelta(int delta) //noexcept
 {
 	m_wheelDeltaCarry += delta;
 
@@ -104,12 +103,12 @@ void CMouse::OnWheelDelta(int x, int y, int delta) //noexcept
 	while (m_wheelDeltaCarry >= WHEEL_DELTA)
 	{
 		m_wheelDeltaCarry -= WHEEL_DELTA;
-		OnWheelUp(x, y);
+		OnWheelUp();
 	}
 	while (m_wheelDeltaCarry <= -WHEEL_DELTA)
 	{
 		m_wheelDeltaCarry += WHEEL_DELTA;
-		OnWheelDown(x, y);
+		OnWheelDown();
 	}
 }
 

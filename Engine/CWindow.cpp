@@ -254,7 +254,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 		//Check if mouse is inside client region
 		if (pt.x >= 0 && pt.x < m_Width && pt.y >= 0 && pt.y < m_Height)
 		{
-			m_Mouse.OnMouseMove(pt.x, pt.y);
+			m_Mouse.OnMouseMove(Vector2(pt.x, pt.y));
 
 			//If mouse previously weren't inside client region, set IsInWindow to true
 			if (m_Mouse.IsInWindow() == false)
@@ -271,7 +271,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 			//this is to allow the user the liberty of dragging the window
 			if (m_Mouse.LeftIsPressed() == true || m_Mouse.RightIsPressed() == true)	//wParam & (MK_LBUTTON | MK_RBUTTON) also does the trick
 			{
-				m_Mouse.OnMouseMove(pt.x, pt.y);
+				m_Mouse.OnMouseMove(Vector2(pt.x, pt.y));
 			}
 			// If mouse is outside the client region and no clicking is occuring then you have left the window
 			else
@@ -285,42 +285,36 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 	}
 	case WM_LBUTTONDOWN:
 	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		m_Mouse.OnLeftPressed(pt.x, pt.y);
+		m_Mouse.OnLeftPressed();
 
 		break;
 	}
 	case WM_RBUTTONDOWN:
 	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		m_Mouse.OnRightPressed(pt.x, pt.y);
+		m_Mouse.OnRightPressed();
 
 		break;
 	}
 
 	case WM_LBUTTONUP:
 	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		m_Mouse.OnLeftReleased(pt.x, pt.y);
+		m_Mouse.OnLeftReleased();
 
 		break;
 	}
 	case WM_RBUTTONUP:
 	{
-		const POINTS pt = MAKEPOINTS(lParam);
-		m_Mouse.OnRightReleased(pt.x, pt.y);
+		m_Mouse.OnRightReleased();
 
 		break;
 	}
 
 	case WM_MOUSEWHEEL:
 	{
-		const POINTS pt = MAKEPOINTS(lParam);
-
 		//Get wheel delta
 		const int delta = GET_WHEEL_DELTA_WPARAM(wParam);
 
-		m_Mouse.OnWheelDelta(pt.x, pt.y, delta);
+		m_Mouse.OnWheelDelta(delta);
 
 		break;
 	}

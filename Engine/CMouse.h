@@ -1,5 +1,6 @@
 #pragma once
 #include <queue>
+#include "Maths\Vectors.h"
 
 class CMouse
 {
@@ -34,8 +35,7 @@ public:
 		bool m_bLeftIsPressed;
 		bool m_bRightIsPressed;
 
-		int m_xPos;
-		int m_yPos;
+		Vector2 m_Pos;
 
 	public:
 
@@ -44,8 +44,7 @@ public:
 			m_eType(Type::INVALID),
 			m_bLeftIsPressed(false),
 			m_bRightIsPressed(false),
-			m_xPos(0),
-			m_yPos(0)
+			m_Pos(0.0f, 0.0f)
 		{
 		}
 
@@ -54,8 +53,7 @@ public:
 			m_eType(type),
 			m_bLeftIsPressed(parent.m_bLeftIsPressed),
 			m_bRightIsPressed(parent.m_bRightIsPressed),
-			m_xPos(parent.m_xPos),
-			m_yPos(parent.m_yPos)
+			m_Pos(parent.m_Pos)
 		{
 		}
 
@@ -63,10 +61,7 @@ public:
 
 		Type GetType() const noexcept				{ return m_eType; }
 
-		std::pair<int, int> GetPos()const noexcept	{ return { m_xPos, m_yPos }; }
-
-		int GetPosX() const noexcept				{ return m_xPos; }
-		int GetPosY() const noexcept				{ return m_yPos; }
+		Vector2 GetPos()const noexcept				{ return m_Pos; }
 
 		bool LeftIsPressed()						{ return m_bLeftIsPressed; }
 		bool RightIsPressed()						{ return m_bRightIsPressed; }
@@ -80,11 +75,7 @@ public:
 
 	CMouse::Event Read() /*noexcept*/;
 
-	//TODO: Implement 2DVector class for this instead
-	std::pair<int, int> GetPos() const noexcept		{ return{ m_xPos, m_yPos }; }
-
-	int GetPosX() const noexcept					{ return m_xPos; }
-	int GetPosY() const noexcept					{ return m_yPos; }
+	Vector2 GetPos() const noexcept					{ return m_Pos; }
 
 	bool IsInWindow() const noexcept				{ return m_bIsInWindow; }
 	bool LeftIsPressed() const noexcept				{ return m_bLeftIsPressed; }
@@ -96,29 +87,28 @@ public:
 
 private:
 
-	void OnMouseMove(int x, int y) /*noexcept*/;
-	void OnMouseEnter() /*noexcept*/;
-	void OnMouseLeave() /*noexcept*/;
+	void OnMouseMove(Vector2 newPos);
+	void OnMouseEnter();
+	void OnMouseLeave();
 
-	void OnLeftPressed(int x, int y) /*noexcept*/;
-	void OnLeftReleased(int x, int y) /*noexcept*/;
+	void OnLeftPressed();
+	void OnLeftReleased();
 
-	void OnRightPressed(int x, int y) /*noexcept*/;
-	void OnRightReleased(int x, int y) /*noexcept*/;
+	void OnRightPressed();
+	void OnRightReleased();
 
-	void OnWheelUp(int x, int y) /*noexcept*/;
-	void OnWheelDown(int x, int y) /*noexcept*/;
+	void OnWheelUp();
+	void OnWheelDown();
 
-	void OnWheelDelta(int x, int y, int delta) /*noexcept*/;
+	void OnWheelDelta(int delta);
 
-	void TrimBuffer() /*noexcept*/;
+	void TrimBuffer();
 
 private:
 
 	static constexpr unsigned int s_bufferSize = 16u;
 
-	int m_xPos;
-	int m_yPos;
+	Vector2 m_Pos;
 
 	bool m_bLeftIsPressed = false;
 	bool m_bRightIsPressed = false;
