@@ -10,7 +10,7 @@ class CModelLoader
 
 private:
 
-	//TODO: Rework to just use ptrs instead of vectors
+	//TODO: Figure out a good way to rework this, if necessary
 	static void LoadModel(const char* path, std::vector<CModel::VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer);
 	
 };

@@ -82,11 +82,13 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 
 			for (int i = 0; i < 3; ++i)
 			{
+				//Subtract by 1 since OBJ indices start at 1 rather than 0
 				indices.push_back(vertex_indices[i] - 1);
 				uv_indices.push_back(uvIdx[i] - 1);
 				normal_indices.push_back(nrmIdx[i] - 1);
 			}
 			
+#pragma region Maybe useful for rework?
 			/*
 			while (true)
 			{
@@ -114,6 +116,9 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 				}
 			}
 			*/
+
+#pragma endregion
+
 		}
 
 
@@ -158,13 +163,8 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 	}
 
 	fclose(pFile);
-	//delete pFile;
 
 	*pVertexBuffer = VertexBuffer;
 	*pIndexBuffer = tempIndices;
-
-	//CModel* pModel = new CModel(rGfx, &VertexBuffer, &tempIndices);
-
-	//return pModel;
 
 }

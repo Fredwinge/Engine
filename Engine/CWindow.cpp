@@ -60,9 +60,7 @@ CWindow::WindowClass::~WindowClass()
 //CWindow
 CWindow::CWindow(int width, int height, const char* name)
 	:
-	m_Width(width),
-	m_Height(height),
-	m_ScreenSize(width, height)
+	m_Size(width, height)
 {
 
 	//Calculate window size based on desired client region size
@@ -103,7 +101,7 @@ CWindow::CWindow(int width, int height, const char* name)
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
 
 	//Create graphics object
-	m_pGfx = new CGraphics(m_hWnd, m_ScreenSize);
+	m_pGfx = new CGraphics(m_hWnd, m_Size);
 
 }
 
@@ -252,7 +250,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 		const POINTS pt = MAKEPOINTS(lParam);
 
 		//Check if mouse is inside client region
-		if (pt.x >= 0 && pt.x < m_Width && pt.y >= 0 && pt.y < m_Height)
+		if (pt.x >= 0 && pt.x < m_Size.x && pt.y >= 0 && pt.y < m_Size.y)
 		{
 			m_Mouse.OnMouseMove(Vector2(pt.x, pt.y));
 

@@ -53,7 +53,7 @@ public:
 
 	CGraphics& Gfx();
 
-	Vector2 GetScreenSize() const noexcept { return m_ScreenSize; }
+	Vector2 GetSize() const noexcept { return m_Size; }
 
 private:
 
@@ -69,12 +69,9 @@ public:
 
 private:
 
-	int m_Width;
-	int m_Height;
 	HWND m_hWnd;
 
-	//TODO: figure out wether screenSize or windowSize fits best
-	Vector2 m_ScreenSize;
+	Vector2 m_Size;
 
 	CGraphics* m_pGfx;
 };
