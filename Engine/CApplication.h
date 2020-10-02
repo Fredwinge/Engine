@@ -5,6 +5,7 @@
 #include "Renderable\IRenderable.h"
 
 #include "Renderable\CModel.h"
+#include "RenderCallbacks\IRenderCallback.h"
 
 class CApplication
 {
@@ -34,4 +35,6 @@ private:
 	float m_fSpeedFactor = 1.0f;
 
 	CModel* m_pTorvudModel;
+
+	IRenderCallback* pRenderCallback;
 };

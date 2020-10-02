@@ -4,7 +4,7 @@
 #include "Maths/Vectors.h"
 #include <Windows.h>
 
-void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
+void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
 {
 
 	//"r" is for read
@@ -23,7 +23,7 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 	std::vector<unsigned short> uv_indices;
 	std::vector<unsigned short> normal_indices;
 
-	std::vector<CModel::VertexData> VertexBuffer;
+	std::vector<VertexData> VertexBuffer;
 
 	//Read file until end is reached
 	while (true)
@@ -130,7 +130,7 @@ void CModelLoader::LoadModel(const char* path, std::vector<CModel::VertexData>* 
 	//Either way this can probably be done in a nicer way
 	for (int i = 0; i < indices.size(); ++i)
 	{
-		CModel::VertexData VertexData;
+		VertexData VertexData;
 		VertexData.Position = vertices[indices[i]];
 		VertexData.TexCoord = texcoords[uv_indices[i]];
 		VertexData.Normal = normals[normal_indices[i]];

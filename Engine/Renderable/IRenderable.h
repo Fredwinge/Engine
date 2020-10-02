@@ -1,7 +1,10 @@
 #pragma once
 #include "../CGraphics.h"
 #include <DirectXMath.h>
+#include "EssentialRenderData.h"
+//#include "../RenderCallbacks/IRenderCallback.h"
 
+class IRenderCallback;
 class IBindable;
 
 class IRenderable
@@ -14,14 +17,22 @@ public:
 	virtual ~IRenderable() = default;
 	
 	virtual DirectX::XMMATRIX GetTransformXM() const /*noexcept*/ = 0;
-	void Render(CGraphics& gfx) const; //noexcept; // IS DEBUG
+	void Render(CGraphics& gfx);// const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
+
+	//TODO: Remove
+	RenderData* GetRenderData() { return m_pRenderData; }
+
+	void SetRenderCallback(IRenderCallback* pRenderCallback) { m_pRenderCallback = pRenderCallback; }
 
 protected:
 
 	void AddBind(std::unique_ptr<IBindable> bind); //noexcept;
 	void AddIndexBuffer(std::unique_ptr<class CIndexBuffer> ibuf) /*noexcept*/;
 
+	RenderData* m_pRenderData = nullptr;
+
+	IRenderCallback* m_pRenderCallback = nullptr;
 
 private:
 

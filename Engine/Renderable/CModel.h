@@ -6,14 +6,6 @@ class CModel : public IRenderable
 {
 public:
 
-	//TODO: put somewhere better?
-	struct VertexData
-	{
-		Vector3 Position;
-		Vector2 TexCoord;
-		Vector3 Normal;
-	};
-
 	//TODO: Replace vectors with just ptrs?
 	CModel(CGraphics& rGfx, const char* path);
 

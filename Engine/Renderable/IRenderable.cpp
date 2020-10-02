@@ -4,14 +4,23 @@
 #include <cassert>
 #include <typeinfo> //Checkup
 
-void IRenderable::Render(CGraphics& gfx) const //noexcept
+#include "../RenderCallbacks/IRenderCallback.h"
+
+void IRenderable::Render(CGraphics& gfx) /*const*/ //noexcept
 {
+	/*
 	for (auto& b : m_Binds)
 	{
 		b->Bind(gfx);
 	}
 
-	gfx.DrawIndexed(m_pIndexBuffer->GetCount());
+	gfx.DrawIndexed(m_pIndexBuffer->GetCount());*/
+
+	IRenderable* current = this;
+
+	if (m_pRenderCallback != nullptr)
+		m_pRenderCallback->RenderCallback(gfx, current);
+
 }
 
 void IRenderable::AddBind(std::unique_ptr<IBindable> bind) //noexcept

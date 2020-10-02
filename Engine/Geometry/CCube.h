@@ -1,8 +1,11 @@
 #pragma once
 #include "CIndexedTriangleList.h"
 #include <DirectXMath.h>
+#include "../Maths/Vectors.h"
 
 //	C		U		B		E
+
+//TODO: Clean up this mess of a class
 
 class CCube
 {
@@ -16,7 +19,7 @@ public:
 		constexpr float side = 1.0f / 2.0f;
 
 		//A cube has 8 vertices
-		std::vector<dx::XMFLOAT3> vertices;
+		std::vector<Vector3> vertices;
 		vertices.emplace_back(-side, -side, -side); //0
 		vertices.emplace_back( side, -side, -side); //1
 		vertices.emplace_back(-side,  side, -side); //2
@@ -29,7 +32,7 @@ public:
 		std::vector<V> verts(vertices.size());
 		for (size_t i = 0; i < vertices.size(); ++i)
 		{
-			verts[i].pos = vertices[i];
+			verts[i] = vertices[i];
 		}
 
 		return { 

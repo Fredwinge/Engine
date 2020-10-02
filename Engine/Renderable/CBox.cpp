@@ -32,8 +32,22 @@ CBox::CBox(CGraphics& rGfx,
 		dx::XMFLOAT3 pos;
 	};
 
-	auto model = CCube::Make<Vertex>();
-	AddBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
+	auto model = CCube::Make<Vector3>();
+
+	//Wow, nice fix
+	std::vector<VertexData> vertexBuffer;
+	for (int i = 0; i < model.vertices.size(); ++i)
+	{
+		VertexData vData;
+		vData.Position = model.vertices[i];
+		vertexBuffer.push_back(vData);
+	}
+	m_pRenderData = new RenderData(CIndexBuffer(rGfx, model.indices), CVertexBuffer(rGfx, vertexBuffer));
+	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
+	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
+	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
+
+	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
 
 	//Bind vertex shader
 	auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/PrimitiveVertexShader.cso");
@@ -83,7 +97,7 @@ CBox::CBox(CGraphics& rGfx,
 	AddBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 	//Bind matrix constant buffer
-	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));
+	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
 	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, bdist(rng)));
 }

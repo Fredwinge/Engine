@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Renderable\CModel.h"
+#include "Renderable/EssentialRenderData.h"
 #include "CGraphics.h"
 
 class CModelLoader
@@ -11,6 +11,6 @@ class CModelLoader
 private:
 
 	//TODO: Figure out a good way to rework this, if necessary
-	static void LoadModel(const char* path, std::vector<CModel::VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer);
+	static void LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer);
 	
 };

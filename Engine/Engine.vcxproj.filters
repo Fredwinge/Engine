@@ -28,6 +28,9 @@
     <Filter Include="Renderable">
       <UniqueIdentifier>{91754949-e2be-4aaf-810c-4a43408c0f4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RenderCallbacks">
+      <UniqueIdentifier>{a7ad8cd6-6125-402d-960b-9ed37f44b894}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="Renderable\IRenderable.cpp">
       <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderCallbacks\IRenderCallback.cpp">
+      <Filter>RenderCallbacks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +219,12 @@
       <Filter>Renderable</Filter>
     </ClInclude>
     <ClInclude Include="Renderable\IRenderable.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCallbacks\IRenderCallback.h">
+      <Filter>RenderCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable\EssentialRenderData.h">
       <Filter>Renderable</Filter>
     </ClInclude>
   </ItemGroup>

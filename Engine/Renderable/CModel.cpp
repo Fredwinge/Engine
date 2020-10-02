@@ -19,9 +19,13 @@ CModel::CModel(CGraphics& rGfx, const char* path)
 
 	CModelLoader::LoadModel(path, &VertexBuffer, &IndexBuffer);
 
+	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, IndexBuffer);
+	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, VertexBuffer);
+	m_pRenderData = new RenderData(CIndexBuffer(rGfx, IndexBuffer), CVertexBuffer(rGfx, VertexBuffer));
+	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, IndexBuffer));
 	//BINDS
 	//Bind vertex buffer
-	AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));
+	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));
 
 	//Bind vertex shader
 	auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/BaseVertexShader.cso");
@@ -47,7 +51,7 @@ CModel::CModel(CGraphics& rGfx, const char* path)
 	AddBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 	
 	//Bind vertex constant buffer
-	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));
+	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
 	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, 1.0f));
 }

@@ -26,11 +26,22 @@ CApplication::CApplication()
 	m_Wnd.Gfx().SetCamera(m_Camera.GetMatrix());
 
 	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
+
+	pRenderCallback = new IRenderCallback(m_Wnd.Gfx());
+
+	for (auto& d : m_pRenderables)
+	{
+		d->SetRenderCallback(pRenderCallback);
+	}
+
+	m_pTorvudModel->SetRenderCallback(pRenderCallback);
 }
 
 CApplication::~CApplication()
 {
 	delete m_pTorvudModel;
+
+	delete pRenderCallback;
 }
 
 int CApplication::Go()

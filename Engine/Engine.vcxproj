@@ -187,6 +187,7 @@
     <ClCompile Include="Renderable\CBox.cpp" />
     <ClCompile Include="Renderable\IRenderable.cpp" />
     <ClCompile Include="Renderable\CModel.cpp" />
+    <ClCompile Include="RenderCallbacks\IRenderCallback.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -223,8 +224,10 @@
     <ClInclude Include="GraphicsAssertMacros.h" />
     <ClInclude Include="Maths\Vectors.h" />
     <ClInclude Include="Renderable\CBox.h" />
+    <ClInclude Include="Renderable\EssentialRenderData.h" />
     <ClInclude Include="Renderable\IRenderable.h" />
     <ClInclude Include="Renderable\CModel.h" />
+    <ClInclude Include="RenderCallbacks\IRenderCallback.h" />
     <ClInclude Include="WindowsAssertMacros.h" />
   </ItemGroup>
   <ItemGroup>
