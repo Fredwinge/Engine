@@ -17,11 +17,18 @@ CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& in
 	D3D11_SUBRESOURCE_DATA indexBufferSD = {};
 	indexBufferSD.pSysMem = indices.data();
 
-	GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&indexBufferDesc, &indexBufferSD, &m_pIndexBuffer));
+	GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&indexBufferDesc, &indexBufferSD, &m_pIndexBuffer));
+
+}
+
+CIndexBuffer::CIndexBuffer(ID3D11Buffer* pIndexBuffer)
+	:
+	m_pIndexBuffer(pIndexBuffer)
+{
 
 }
 
 void CIndexBuffer::Bind(CGraphics& gfx) noexcept
 {
-	GetContext(gfx)->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	gfx.GetDeviceContext()->IASetIndexBuffer(m_pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 }

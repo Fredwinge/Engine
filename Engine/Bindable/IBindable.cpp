@@ -1,5 +1,6 @@
 #include "IBindable.h"
 
+/*
 ID3D11DeviceContext* IBindable::GetContext(CGraphics& gfx) noexcept
 {
 	return gfx.m_pDeviceContext;
@@ -18,3 +19,4 @@ CDXGIInfoManager& IBindable::GetInfoManager(CGraphics& gfx) noexcept
 	assert("You did dun fucked up [tried to access gfx.m_InfoManager in release]", false);
 #endif
 }
+*/

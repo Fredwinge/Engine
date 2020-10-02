@@ -3,7 +3,7 @@
 #include "../Renderable/IRenderable.h"
 #include <DirectXMath.h>
 
-//TODO: Remove this?
+//TODO: Remove this when it's no longer needed
 //The purpose of CTransformCBuf is to automatically set the perspective matrix in the vertex constant buffer
 
 class CTransformCBuf : public IBindable

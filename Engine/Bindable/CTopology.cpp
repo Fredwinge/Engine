@@ -9,5 +9,5 @@ CTopology::CTopology(CGraphics& gfx, D3D11_PRIMITIVE_TOPOLOGY type)
 
 void CTopology::Bind(CGraphics& gfx) noexcept
 {
-	GetContext(gfx)->IASetPrimitiveTopology(m_TopologyType);
+	gfx.GetDeviceContext()->IASetPrimitiveTopology(m_TopologyType);
 }

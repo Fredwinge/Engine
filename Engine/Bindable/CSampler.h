@@ -6,6 +6,7 @@ class CSampler : public IBindable
 public:
 
 	CSampler(CGraphics& gfx);
+	CSampler(ID3D11SamplerState* pSampler);
 
 	void Bind(CGraphics& gfx) noexcept override;
 

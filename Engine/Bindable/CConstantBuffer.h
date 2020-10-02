@@ -2,6 +2,8 @@
 #include "IBindable.h"
 #include "../GraphicsAssertMacros.h"
 
+//TODO: Figure out what to do with this class
+
 template <typename C>
 class CConstantBuffer : public IBindable
 {
@@ -13,10 +15,10 @@ public:
 		GET_INFOMANAGER(gfx);
 
 		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
-		GFX_ASSERT_INFO(GetContext(gfx)->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
+		GFX_ASSERT_INFO(gfx.GetDeviceContext()->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
 		memcpy(mappedSubresource.pData, &consts, sizeof(consts));
 
-		GetContext(gfx)->Unmap(m_pConstantBuffer.Get(), 0u);
+		gfx.GetDeviceContext()->Unmap(m_pConstantBuffer.Get(), 0u);
 	}
 
 	CConstantBuffer(CGraphics& gfx, const C& consts)
@@ -34,7 +36,7 @@ public:
 		D3D11_SUBRESOURCE_DATA csd = {};
 		csd.pSysMem = &consts;
 
-		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
 	}
 	CConstantBuffer(CGraphics& gfx)
 	{
@@ -48,7 +50,7 @@ public:
 		cbufferDesc.ByteWidth = sizeof(C);
 		cbufferDesc.StructureByteStride = 0u;
 
-		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
 	}
 
 protected:
@@ -63,9 +65,7 @@ template <typename C>
 class CVertexConstantBuffer : public CConstantBuffer<C>
 {
 	//This is needed due to some inheritance issues with templates
-	//for the bind function to work, this->GetContext(gfx)... also works
 	using CConstantBuffer<C>::m_pConstantBuffer;
-	using IBindable::GetContext;
 
 public:
 
@@ -73,7 +73,7 @@ public:
 
 	void Bind(CGraphics& gfx) noexcept override
 	{
-		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
+		gfx.GetDeviceContext()->VSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
 	}
 };
 
@@ -81,7 +81,6 @@ template <typename C>
 class CPixelConstantBuffer : public CConstantBuffer<C>
 {
 	using CConstantBuffer<C>::m_pConstantBuffer;
-	using IBindable::GetContext;
 	
 public:
 
@@ -89,6 +88,6 @@ public:
 
 	void Bind(CGraphics& gfx) noexcept override
 	{
-		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
+		gfx.GetDeviceContext()->PSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
 	}
 };

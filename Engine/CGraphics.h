@@ -13,7 +13,7 @@
 class CGraphics
 {
 	//Allow access to private variables for IBindable
-	friend class IBindable;
+	//friend class IBindable;
 public:
 	
 	//We need a handle to our window to construct a Windows device object
@@ -33,7 +33,18 @@ public:
 	void SetCamera(DirectX::FXMMATRIX cam) noexcept			{ m_mCameraMatrix = cam; }
 	DirectX::XMMATRIX GetCamera() const noexcept			{ return m_mCameraMatrix; }
 
+
+	//Get functions for device & device context in case one wants to create bindables
+	//that don't directly correspond to the IBindable classes
+	ID3D11Device*			GetDevice()						{ return m_pDevice; }
+	ID3D11DeviceContext*	GetDeviceContext()				{ return m_pDeviceContext; }
+
+#ifndef NDEBUG
+	CDXGIInfoManager& GetInfoManager() { return m_InfoManager; }
+#endif // !NDEBUG
+
 private:
+
 #ifndef NDEBUG
 	CDXGIInfoManager m_InfoManager;
 #endif // !NDEBUG

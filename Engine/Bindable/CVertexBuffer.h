@@ -18,17 +18,21 @@ public:
 		vertexBufferDesc.CPUAccessFlags = 0u;
 		vertexBufferDesc.MiscFlags = 0u;
 		vertexBufferDesc.ByteWidth = UINT(sizeof(V) * vertices.size());
-		vertexBufferDesc.StructureByteStride = m_stride;
+		vertexBufferDesc.StructureByteStride = sizeof(V);
 		D3D11_SUBRESOURCE_DATA vertexSubresourceData = {};
 		vertexSubresourceData.pSysMem = vertices.data();
 
-		GFX_ASSERT_INFO(GetDevice(gfx)->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
+		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
 	}
+
+	CVertexBuffer(ID3D11Buffer* pVertexBuffer);
 
 	void Bind(CGraphics& gfx) noexcept override;
 
 protected:
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_pVertexBuffer;
+
+	//TODO: Remove?
 	unsigned int m_stride;
 };

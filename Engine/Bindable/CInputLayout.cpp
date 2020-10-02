@@ -5,7 +5,7 @@ CInputLayout::CInputLayout(CGraphics& gfx, const std::vector<D3D11_INPUT_ELEMENT
 {
 	GET_INFOMANAGER(gfx);
 
-	GFX_ASSERT_INFO(GetDevice(gfx)->CreateInputLayout(
+	GFX_ASSERT_INFO(gfx.GetDevice()->CreateInputLayout(
 		layout.data(), 
 		layout.size(), 
 		pVertexShaderByteCode->GetBufferPointer(),
@@ -13,7 +13,14 @@ CInputLayout::CInputLayout(CGraphics& gfx, const std::vector<D3D11_INPUT_ELEMENT
 		&m_pInputLayout));
 }
 
+CInputLayout::CInputLayout(ID3D11InputLayout* pInputLayout)
+	:
+	m_pInputLayout(pInputLayout)
+{
+
+}
+
 void CInputLayout::Bind(CGraphics& gfx) noexcept
 {
-	GetContext(gfx)->IASetInputLayout(m_pInputLayout.Get());
+	gfx.GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
 }

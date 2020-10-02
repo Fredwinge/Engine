@@ -6,6 +6,7 @@ class CVertexShader : public IBindable
 public:
 
 	CVertexShader(CGraphics& gfx, LPCWSTR link);
+	CVertexShader(ID3D11VertexShader* pVertexShader);
 
 	void Bind(CGraphics& gfx) noexcept override;
 	ID3DBlob* GetBytecode() const noexcept { return m_pBytecodeBlob.Get(); }

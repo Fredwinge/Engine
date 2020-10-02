@@ -11,11 +11,18 @@ CSampler::CSampler(CGraphics& gfx)
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
-	GFX_ASSERT_INFO(GetDevice(gfx)->CreateSamplerState(&samplerDesc, &m_pSampler));
+	GFX_ASSERT_INFO(gfx.GetDevice()->CreateSamplerState(&samplerDesc, &m_pSampler));
+
+}
+
+CSampler::CSampler(ID3D11SamplerState* pSampler)
+	:
+	m_pSampler(pSampler)
+{
 
 }
 
 void CSampler::Bind(CGraphics& gfx) noexcept
 {
-	GetContext(gfx)->PSSetSamplers(0, 1, m_pSampler.GetAddressOf());
+	gfx.GetDeviceContext()->PSSetSamplers(0, 1, m_pSampler.GetAddressOf());
 }

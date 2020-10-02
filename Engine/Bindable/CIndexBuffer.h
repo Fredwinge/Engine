@@ -6,6 +6,7 @@ class CIndexBuffer : public IBindable
 public:
 
 	CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& indices);
+	CIndexBuffer(ID3D11Buffer* pIndexBuffer);
 
 	void Bind(CGraphics& gfx) noexcept override;
 
