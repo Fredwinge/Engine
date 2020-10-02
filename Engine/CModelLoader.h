@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Drawable\CModel.h"
+#include "Renderable\CModel.h"
 #include "CGraphics.h"
 
 class CModelLoader

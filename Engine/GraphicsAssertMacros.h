@@ -5,7 +5,6 @@
 #include "dxerr\dxerr.h"
 
 //Graphics error macros (some with dxgi infos)
-#define GFX_ASSERT_NOINFO(hr) __GFX_ASSERT(__LINE__, __FILE__, (hr)) //TODO: REMOVE???
 #define GFX_ASSERT_NOINFO(hrcall) if(FAILED(hr = (hrcall))) __GFX_ASSERT(__LINE__,__FILE__,hr)
 
 //Different macros depending of if we're in release or debug mode, since some info isn't available in release mode

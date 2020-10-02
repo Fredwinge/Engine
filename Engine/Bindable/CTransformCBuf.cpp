@@ -2,7 +2,7 @@
 
 std::unique_ptr<CVertexConstantBuffer<DirectX::XMMATRIX>> CTransformCBuf::m_pVCBuf;
 
-CTransformCBuf::CTransformCBuf(CGraphics& gfx, const CDrawable& parent)
+CTransformCBuf::CTransformCBuf(CGraphics& gfx, const IRenderable& parent)
 	:
 	m_rParent(parent)
 {

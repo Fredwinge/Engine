@@ -1,9 +1,9 @@
 #pragma once
-#include "CDrawable.h"
+#include "IRenderable.h"
 #include <random>
 
 
-class CBox : public CDrawable
+class CBox : public IRenderable
 {
 public:
 

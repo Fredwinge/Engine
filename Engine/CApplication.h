@@ -2,9 +2,9 @@
 #include "CWindow.h"
 #include "CTimer.h"
 #include "CCamera.h"
-#include "Drawable\CDrawable.h"
+#include "Renderable\IRenderable.h"
 
-#include "Drawable\CModel.h"
+#include "Renderable\CModel.h"
 
 class CApplication
 {
@@ -18,7 +18,8 @@ public:
 
 private:
 
-	void DoFrame();
+	void Update();
+	void Render(CGraphics& rGfx);
 
 	CWindow m_Wnd;
 
@@ -27,8 +28,8 @@ private:
 	CCamera m_Camera;
 
 	//Debugging variables
-	std::vector<std::unique_ptr<CDrawable>> m_pDrawables;
-	static constexpr size_t nDrawables = 180;
+	std::vector<std::unique_ptr<IRenderable>> m_pRenderables;
+	static constexpr size_t numRenderables = 180;
 
 	float m_fSpeedFactor = 1.0f;
 

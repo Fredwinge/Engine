@@ -1,6 +1,6 @@
 #pragma once
 #include "CConstantBuffer.h"
-#include "../Drawable/CDrawable.h"
+#include "../Renderable/IRenderable.h"
 #include <DirectXMath.h>
 
 //TODO: Remove this?
@@ -10,7 +10,7 @@ class CTransformCBuf : public IBindable
 {
 public:
 
-	CTransformCBuf(CGraphics& gfx, const CDrawable& parent);
+	CTransformCBuf(CGraphics& gfx, const IRenderable& parent);
 	void Bind(CGraphics& gfx) noexcept override;
 
 private:
@@ -18,6 +18,6 @@ private:
 	//m_pVCBuf is a unique ptr so that it can be dynamically allocated and reused
 	//incase we initialize multiple versions of one object, for performance reasons
 	static std::unique_ptr<CVertexConstantBuffer<DirectX::XMMATRIX>> m_pVCBuf;
-	const CDrawable& m_rParent;
+	const IRenderable& m_rParent;
 
 };

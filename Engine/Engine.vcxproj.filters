@@ -16,9 +16,6 @@
     <Filter Include="Bindable">
       <UniqueIdentifier>{138c108b-2df4-40f9-8f87-debead5d50d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable">
-      <UniqueIdentifier>{91754949-e2be-4aaf-810c-4a43408c0f4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{530a767b-b368-408b-9289-ae8f281692be}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="Maths">
       <UniqueIdentifier>{42004ff6-ae33-4218-beb1-fbb32700e87f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderable">
+      <UniqueIdentifier>{91754949-e2be-4aaf-810c-4a43408c0f4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +56,6 @@
     </ClCompile>
     <ClCompile Include="dxerr\dxerr.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Drawable\CDrawable.cpp">
-      <Filter>Drawable</Filter>
     </ClCompile>
     <ClCompile Include="Bindable\CIndexBuffer.cpp">
       <Filter>Bindable</Filter>
@@ -90,9 +87,6 @@
     <ClCompile Include="CImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Drawable\CBox.cpp">
-      <Filter>Drawable</Filter>
-    </ClCompile>
     <ClCompile Include="CCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,8 +96,14 @@
     <ClCompile Include="CModelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Drawable\CModel.cpp">
-      <Filter>Drawable</Filter>
+    <ClCompile Include="Renderable\CBox.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable\CModel.cpp">
+      <Filter>Renderable</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable\IRenderable.cpp">
+      <Filter>Renderable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="dxerr\dxerr.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Drawable\CDrawable.h">
-      <Filter>Drawable</Filter>
     </ClInclude>
     <ClInclude Include="Bindable\BindableBase.h">
       <Filter>Bindable</Filter>
@@ -173,9 +170,6 @@
     <ClInclude Include="CImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Drawable\CBox.h">
-      <Filter>Drawable</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\CCone.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -209,11 +203,17 @@
     <ClInclude Include="CModelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Drawable\CModel.h">
-      <Filter>Drawable</Filter>
-    </ClInclude>
     <ClInclude Include="Maths\Vectors.h">
       <Filter>Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable\CBox.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable\CModel.h">
+      <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable\IRenderable.h">
+      <Filter>Renderable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 #pragma once
-#include "CDrawable.h"
+#include "IRenderable.h"
 #include "../Maths/Vectors.h"
 
-class CModel : public CDrawable
+class CModel : public IRenderable
 {
 public:
 

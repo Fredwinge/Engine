@@ -4,20 +4,17 @@
 
 class IBindable;
 
-class CDrawable
+class IRenderable
 {
-	//CDrawableBase is a friend so it has access to the private variables
-	template<class T>
-	friend class CDrawableBase;
 
 public:
 
-	CDrawable() = default;
-	CDrawable(const CDrawable&) = delete;
-	virtual ~CDrawable() = default;
+	IRenderable() = default;
+	IRenderable(const IRenderable&) = delete;
+	virtual ~IRenderable() = default;
 	
 	virtual DirectX::XMMATRIX GetTransformXM() const /*noexcept*/ = 0;
-	void Draw(CGraphics& gfx) const; //noexcept; // IS DEBUG
+	void Render(CGraphics& gfx) const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
 
 protected:
