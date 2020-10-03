@@ -1,6 +1,7 @@
 #pragma once
 #include "../Bindable/CIndexBuffer.h"
 #include "../Bindable/CVertexBuffer.h"
+#include <DirectXMath.h>
 
 //TEMPORARY FILE
 //TODO: FIND A BETTER SETUP FOR THIS
@@ -11,10 +12,14 @@ struct RenderData
 	{
 		pIndexBuffer = new CIndexBuffer(iBuffer);
 		pVertexBuffer = new CVertexBuffer(vBuffer);
+
+		transform = DirectX::XMMATRIX::XMMATRIX();
 	}
 
 	CIndexBuffer* pIndexBuffer;
 	CVertexBuffer* pVertexBuffer;
+
+	DirectX::XMMATRIX transform;
 };
 
 //TODO: put somewhere better?

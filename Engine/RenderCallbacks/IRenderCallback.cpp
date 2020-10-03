@@ -27,12 +27,12 @@ IRenderCallback::~IRenderCallback()
 		delete m_pInputLayout;
 }
 
-void IRenderCallback::RenderCallback(CGraphics& rGfx, IRenderable* pRenderable)
+void IRenderCallback::RenderCallback(CGraphics& rGfx, RenderData* pRenderData)
 {
 
 	ID3D11DeviceContext* pContext = rGfx.GetDeviceContext();
 
-	pRenderable->GetRenderData()->pVertexBuffer->Bind(rGfx);
+	pRenderData->pVertexBuffer->Bind(rGfx);
 
 	m_pVertexShader->Bind(rGfx);
 
@@ -42,16 +42,16 @@ void IRenderCallback::RenderCallback(CGraphics& rGfx, IRenderable* pRenderable)
 
 	vrtCBuf cbuf;
 
-	cbuf.transformMatrix = DirectX::XMMatrixTranspose(pRenderable->GetTransformXM() * rGfx.GetCamera() * rGfx.GetProjection());
+	cbuf.transformMatrix = DirectX::XMMatrixTranspose(pRenderData->transform * rGfx.GetCamera() * rGfx.GetProjection());
 
 	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(rGfx, cbuf);
 	vertexCBuffer->Bind(rGfx);
 
-	pRenderable->GetRenderData()->pIndexBuffer->Bind(rGfx);
+	pRenderData->pIndexBuffer->Bind(rGfx);
 
 	m_pPixelShader->Bind(rGfx);
 
-	rGfx.DrawIndexed(pRenderable->GetRenderData()->pIndexBuffer->GetCount());
+	rGfx.DrawIndexed(pRenderData->pIndexBuffer->GetCount());
 
 
 	delete vertexCBuffer;

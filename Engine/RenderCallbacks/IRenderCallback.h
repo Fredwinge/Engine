@@ -13,7 +13,7 @@ public:
 	~IRenderCallback();
 
 	//TODO: Change from IRenderable to something else
-	virtual void RenderCallback(CGraphics& rGfx, IRenderable* pRenderable);
+	virtual void RenderCallback(CGraphics& rGfx, RenderData* pRenderData);
 
 
 private:

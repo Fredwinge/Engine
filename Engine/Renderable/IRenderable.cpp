@@ -16,10 +16,10 @@ void IRenderable::Render(CGraphics& gfx) /*const*/ //noexcept
 
 	gfx.DrawIndexed(m_pIndexBuffer->GetCount());*/
 
-	IRenderable* current = this;
+	m_pRenderData->transform = GetTransformXM();
 
 	if (m_pRenderCallback != nullptr)
-		m_pRenderCallback->RenderCallback(gfx, current);
+		m_pRenderCallback->RenderCallback(gfx, m_pRenderData);
 
 }
 

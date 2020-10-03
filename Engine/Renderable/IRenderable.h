@@ -20,9 +20,6 @@ public:
 	void Render(CGraphics& gfx);// const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
 
-	//TODO: Remove
-	RenderData* GetRenderData() { return m_pRenderData; }
-
 	void SetRenderCallback(IRenderCallback* pRenderCallback) { m_pRenderCallback = pRenderCallback; }
 
 protected:
