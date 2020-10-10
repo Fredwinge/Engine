@@ -9,3 +9,5 @@ So far i've followed the content up until Episode 26 (texture mapping) as well a
 as a guide for implementing the DirectXTex library as i decided to break away from the tutorials by not using GDI+ at this point. <br>
 The DirectXTex library can be found here: <br>
 https://github.com/microsoft/DirectXTex
+
+If you want to look at more recent developments check out the unstable branch, master tends to fall behind a bit.
