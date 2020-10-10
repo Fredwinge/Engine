@@ -61,7 +61,7 @@ void CModel::Update(float deltaTime)
 	yaw += 4.0f * deltaTime;
 }
 
-DirectX::XMMATRIX CModel::GetTransformXM() const
+DirectX::XMMATRIX CModel::GetWorldMatrix() const
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *

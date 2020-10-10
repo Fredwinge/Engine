@@ -14,7 +14,7 @@ namespace dx = DirectX;
 CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	:
 	m_mProjectionMatrix(),
-	m_mCameraMatrix()
+	m_mViewMatrix()
 {
 
 	//Create swapchain description

@@ -30,8 +30,11 @@ public:
 	void SetProjection(DirectX::FXMMATRIX proj) noexcept	{ m_mProjectionMatrix = proj; }
 	DirectX::XMMATRIX GetProjection() const noexcept		{ return m_mProjectionMatrix; }
 
-	void SetCamera(DirectX::FXMMATRIX cam) noexcept			{ m_mCameraMatrix = cam; }
-	DirectX::XMMATRIX GetCamera() const noexcept			{ return m_mCameraMatrix; }
+	void SetView(DirectX::FXMMATRIX cam) noexcept			{ m_mViewMatrix = cam; }
+	DirectX::XMMATRIX GetView() const noexcept				{ return m_mViewMatrix; }
+
+	//TODO: Should probably use the camera class for storing view & projection
+	DirectX::XMMATRIX GetViewProjection() const noexcept	{ return m_mViewMatrix * m_mProjectionMatrix; }
 
 
 	//Get functions for device & device context in case one wants to create bindables
@@ -69,6 +72,6 @@ private:
 	//Projection matrix
 	DirectX::XMMATRIX m_mProjectionMatrix;
 
-	//Camera matrix
-	DirectX::XMMATRIX m_mCameraMatrix;
+	//View matrix
+	DirectX::XMMATRIX m_mViewMatrix;
 };

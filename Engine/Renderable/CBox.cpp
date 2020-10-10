@@ -112,7 +112,7 @@ void CBox::Update(float deltaTime) /*noexcept*/
 	chi += dchi * deltaTime;
 }
 
-DirectX::XMMATRIX CBox::GetTransformXM() const /*noexcept*/
+DirectX::XMMATRIX CBox::GetWorldMatrix() const /*noexcept*/
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *

@@ -10,7 +10,7 @@ public:
 	CModel(CGraphics& rGfx, const char* path);
 
 	void Update(float deltaTime) override;
-	DirectX::XMMATRIX GetTransformXM() const override;
+	DirectX::XMMATRIX GetWorldMatrix() const override;
 
 private:
 

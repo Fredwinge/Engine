@@ -16,7 +16,7 @@ public:
 	IRenderable(const IRenderable&) = delete;
 	virtual ~IRenderable() = default;
 	
-	virtual DirectX::XMMATRIX GetTransformXM() const /*noexcept*/ = 0;
+	virtual DirectX::XMMATRIX GetWorldMatrix() const /*noexcept*/ = 0;
 	void Render(CGraphics& gfx);// const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
 

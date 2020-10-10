@@ -13,13 +13,14 @@ struct RenderData
 		pIndexBuffer = new CIndexBuffer(iBuffer);
 		pVertexBuffer = new CVertexBuffer(vBuffer);
 
-		transform = DirectX::XMMATRIX::XMMATRIX();
+		mWorldMatrix = DirectX::XMMATRIX::XMMATRIX();
 	}
 
 	CIndexBuffer* pIndexBuffer;
 	CVertexBuffer* pVertexBuffer;
 
-	DirectX::XMMATRIX transform;
+	//TODO: Actually model * world, rename?
+	DirectX::XMMATRIX mWorldMatrix;
 };
 
 //TODO: put somewhere better?

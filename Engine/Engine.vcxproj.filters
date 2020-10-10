@@ -93,9 +93,6 @@
     <ClCompile Include="CCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CTransformCBuf.cpp">
-      <Filter>Bindable</Filter>
-    </ClCompile>
     <ClCompile Include="CModelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Bindable\CTopology.h">
-      <Filter>Bindable</Filter>
-    </ClInclude>
-    <ClInclude Include="Bindable\CTransformCBuf.h">
       <Filter>Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Bindable\CVertexBuffer.h">

@@ -1,6 +1,8 @@
 #pragma once
 #include <DirectXMath.h>
 
+//TODO: rework
+
 class CCamera
 {
 
@@ -12,7 +14,7 @@ public:
 
 private:
 
-	DirectX::XMMATRIX m_mProjectionMatrix;
+	//DirectX::XMMATRIX m_mProjectionMatrix;
 
 	float x = 0.0f;
 	float y = 0.0f;

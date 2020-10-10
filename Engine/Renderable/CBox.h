@@ -15,7 +15,7 @@ public:
 		std::uniform_real_distribution<float>&bdist);
 
 	void Update(float deltaTime) /*noexcept*/ override;
-	DirectX::XMMATRIX GetTransformXM() const /*noexcept*/ override;
+	DirectX::XMMATRIX GetWorldMatrix() const /*noexcept*/ override;
 
 private:
 	//Positional

@@ -42,7 +42,7 @@ void IRenderCallback::RenderCallback(CGraphics& rGfx, RenderData* pRenderData)
 
 	vrtCBuf cbuf;
 
-	cbuf.transformMatrix = DirectX::XMMatrixTranspose(pRenderData->transform * rGfx.GetCamera() * rGfx.GetProjection());
+	cbuf.transformMatrix = DirectX::XMMatrixTranspose(pRenderData->mWorldMatrix * rGfx.GetViewProjection());
 
 	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(rGfx, cbuf);
 	vertexCBuffer->Bind(rGfx);
