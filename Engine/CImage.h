@@ -25,9 +25,14 @@ public:
 
 	DirectX::ScratchImage* GetScratch() { return &m_Scratch; }
 
+	const DXGI_FORMAT GetFormat() { return m_DXGIFormat; }
+
 private:
 
 	CImage(DirectX::ScratchImage scratch);
 
 	DirectX::ScratchImage m_Scratch;
+
+	//TODO: Support more formats
+	const DXGI_FORMAT m_DXGIFormat = DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM;
 };
