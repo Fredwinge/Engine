@@ -21,20 +21,27 @@ CApplication::CApplication()
 
 		m_pRenderables.push_back(std::make_unique<CBox>(m_Wnd.Gfx(), rng, adist, ddist, odist, rdist, bdist));
 	}
+	OutputDebugString("\nCreated boxes");
 
 	m_Wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 0.75f, 0.5f, 100.0f));
+	OutputDebugString("\nSet projection matrix");
 	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
+	OutputDebugString("\nSet view matrix");
 
 	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
+	OutputDebugString("\ncreated torvud model");
 
 	pRenderCallback = new IRenderCallback(m_Wnd.Gfx());
+	OutputDebugString("\ncreated rendercallback");
 
 	for (auto& d : m_pRenderables)
 	{
 		d->SetRenderCallback(pRenderCallback);
 	}
 
+	OutputDebugString("\nSet boxes rendercallback");
 	m_pTorvudModel->SetRenderCallback(pRenderCallback);
+	OutputDebugString("\nSet torvud rendercallback");
 }
 
 CApplication::~CApplication()

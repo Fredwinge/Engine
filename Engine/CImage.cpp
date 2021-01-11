@@ -74,7 +74,7 @@ void CImage::CIMAGE_ERROR(int line, const char* file, const char* errorString)
 	std::ostringstream oss;
 	oss << "CImage error!" << std::endl 
 		<< "[File] " << file << std::endl << "[Line] " << line << std::endl 
-		<< "[Note] " << errorString;
+		<< "[Note] " << errorString << std::endl;
 	
 	OutputDebugString(oss.str().c_str());
 

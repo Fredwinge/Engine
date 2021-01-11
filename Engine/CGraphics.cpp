@@ -35,7 +35,8 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	swapDesc.Windowed = TRUE;														//Describes wether it's windowed or not
 	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;									//Describes options for handling the contents of the presentation buffer after presenting a surface
 	swapDesc.Flags = 0;																//Describes options for swapchain behaviour
-
+	
+	OutputDebugString("\ncreated swapchain desc");
 
 	//Only set the debug flag if we're actually in debug mode
 	UINT uSwapCreateFlags = 0u;
@@ -61,7 +62,8 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 		&m_pDevice,									//The device we want to create
 		nullptr,									//Returns the first supported Feature level
 		&m_pDeviceContext));						//The device context we want to create
-
+	
+	OutputDebugString("\nSet boxes device, context and swapchain");
 
 	ID3D11Resource* pBackBuffer = nullptr;
 
@@ -72,15 +74,21 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 		0,								//Index of the buffer we want to get, 0 is the backbuffer
 		__uuidof(ID3D11Resource),		//uuid of the interface which we want to recieve onto our subobject(???)
 		(LPVOID*)&pBackBuffer));		//** to the object we want to store the backbuffers address in
+	
+	OutputDebugString("\nget backbuffer");
 
 	//Create render target view
 	GFX_ASSERT_INFO(m_pDevice->CreateRenderTargetView(
 		pBackBuffer,					//The resource which holds the render target we want a view on
 		nullptr,						//Description for Render target view configuration. nullptr gives us a default one we will use for now
 		&m_pRenderTargetView));			//The *ID3D11RenderTargetView which stores the rendertarget
+	
+	OutputDebugString("\ncreate render target view");
 
 	//Release pBackBuffer since it's no longer needed
 	pBackBuffer->Release();
+
+	OutputDebugString("\nreleased backbuffer");
 
 	//Create Depth Stencil state
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
@@ -90,6 +98,8 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;				//Determines what kind of comparison is going to be done to decide which pixels are drawn or not
 
 	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilState(&depthStencilDesc, &m_pDepthStencilState));
+
+	OutputDebugString("\ncreated depth stencil state");
 
 	//Bind depth stencil state to the pipeline
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
@@ -108,12 +118,16 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 
 	GFX_ASSERT_INFO(m_pDevice->CreateTexture2D(&depthStencilTxtDesc, nullptr, &m_pDepthStencilTexture));
 
+	OutputDebugString("\ncreated depthstencil texture");
+
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
 	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0u;
 
 	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &depthStencilViewDesc, &m_pDepthStencilView));
+
+	OutputDebugString("\ncreated depthstencil view");
 
 	//Configure viewport
 	D3D11_VIEWPORT viewPort;
@@ -125,8 +139,12 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	viewPort.TopLeftY = 0;
 	m_pDeviceContext->RSSetViewports(1u, &viewPort);
 
+	OutputDebugString("\nConfigured viewport");
+
 	//Bind depth stencil view to OM
 	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
+
+	OutputDebugString("\nSet render target");
 
 }
 

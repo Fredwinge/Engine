@@ -75,6 +75,8 @@ CWindow::CWindow(int width, int height, const char* name)
 		WND_LAST_ERROR();
 	}
 
+	OutputDebugString("\nAdjusted window rect");
+
 	//Create window and get hWnd
 	m_hWnd = CreateWindowExA(
 		0,
@@ -91,6 +93,8 @@ CWindow::CWindow(int width, int height, const char* name)
 		this
 	);
 
+	OutputDebugString("\nCreated hWnd");
+
 	//Make sure window is created correctly
 	if (m_hWnd == 0)
 	{
@@ -99,9 +103,11 @@ CWindow::CWindow(int width, int height, const char* name)
 
 	//Newly created windows start of as hidden so we have to make this one show
 	ShowWindow(m_hWnd, SW_SHOWDEFAULT);
+	OutputDebugString("\nWindow shown");
 
 	//Create graphics object
 	m_pGfx = new CGraphics(m_hWnd, m_Size);
+	OutputDebugString("\nCreated cgraphics");
 
 }
 
