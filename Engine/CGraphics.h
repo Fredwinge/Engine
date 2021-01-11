@@ -30,7 +30,7 @@ public:
 	void SetProjection(DirectX::FXMMATRIX proj) noexcept	{ m_mProjectionMatrix = proj; }
 	DirectX::XMMATRIX GetProjection() const noexcept		{ return m_mProjectionMatrix; }
 
-	void SetView(DirectX::FXMMATRIX cam) noexcept			{ m_mViewMatrix = cam; }
+	void SetView(DirectX::FXMMATRIX view) noexcept			{ m_mViewMatrix = view; }
 	DirectX::XMMATRIX GetView() const noexcept				{ return m_mViewMatrix; }
 
 	//TODO: Should probably use the camera class for storing view & projection

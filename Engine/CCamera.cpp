@@ -5,7 +5,7 @@ namespace dx = DirectX;
 dx::XMMATRIX CCamera::GetMatrix() const noexcept
 {
 
-	const auto pos = dx::XMVectorSet(x, y, z, 0.0f);/*dx::XMVector3Transform(dx::XMVectorSet(0.0f, 0.0f, -r, 0.0f),
+	const auto pos = dx::XMVectorSet(m_vPos.x, m_vPos.y, m_vPos.z, 1.0f);/*dx::XMVector3Transform(dx::XMVectorSet(0.0f, 0.0f, -r, 0.0f),
 		dx::XMMatrixRotationRollPitchYaw(phi, -theta, 0.0f));*/
 
 	/*return dx::XMMatrixLookAtLH(pos, dx::XMVectorZero(), 
@@ -29,9 +29,8 @@ dx::XMMATRIX CCamera::GetMatrix() const noexcept
 
 void CCamera::Reset() noexcept
 {
-	x = 0.0f;
-	y = 0.0f;
-	z = -20.0f;
+
+	m_vPos = { 0.0f, 0.0f, -20.0f };
 	//phi = 0.0f;
 	//theta = 0.0f;
 
@@ -40,4 +39,23 @@ void CCamera::Reset() noexcept
 	//roll = 0.0f;
 
 	//m_mProjectionMatrix = GetMatrix();
+}
+
+void CCamera::MoveCamera(CKeyboard* pKbd, float deltaTime)
+{
+	if (pKbd == nullptr)
+		return;
+
+	const float moveDelta = 2.0f * deltaTime;
+
+	if (pKbd->KeyIsPressed('A'))
+		m_vPos.x -= moveDelta;
+	if (pKbd->KeyIsPressed('D'))
+		m_vPos.x += moveDelta;
+
+	if (pKbd->KeyIsPressed('W'))
+		m_vPos.z += moveDelta;
+	if (pKbd->KeyIsPressed('S'))
+		m_vPos.z -= moveDelta;
+
 }

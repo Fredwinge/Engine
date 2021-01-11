@@ -53,7 +53,7 @@ public:
 
 	//key event stuff
 	Event ReadKey() /*noexcept*/;																		
-	bool KeyisPressed(unsigned char keycode) const noexcept { return m_KeyStates[keycode]; }
+	bool KeyIsPressed(unsigned char keycode) const noexcept { return m_KeyStates[keycode]; }
 	bool KeyIsEmpty() const noexcept						{ return m_EventBuffer.empty(); }			//Check if there are any events in the event queue
 	void ClearKey() noexcept								{ m_EventBuffer = std::queue<Event>(); }	//Clears the queue
 

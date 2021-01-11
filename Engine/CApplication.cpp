@@ -10,8 +10,8 @@ CApplication::CApplication()
 	for (size_t i = 0; i < numRenderables; ++i)
 	{
 		std::mt19937 rng{ std::random_device{}() };
-		std::uniform_real_distribution<float>adist{ 0.0f, 3.1415f * 2.0f };
-		std::uniform_real_distribution<float>ddist{ 0.0f, 3.1415f * 2.0f };
+		std::uniform_real_distribution<float> adist{ 0.0f, 3.1415f * 2.0f };
+		std::uniform_real_distribution<float> ddist{ 0.0f, 3.1415f * 2.0f };
 		std::uniform_real_distribution<float> odist{ 0.0f, 3.1415 * 0.3f };
 		std::uniform_real_distribution<float> rdist{ 6.0f, 20.0f };
 		std::uniform_real_distribution<float> bdist{ 0.4f, 3.0f };
@@ -72,10 +72,13 @@ void CApplication::Update()
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
 	{
-		d->Update(m_Wnd.m_Keyboard.KeyisPressed(VK_SPACE) ? 0.0f : deltaTime);
+		d->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
 	}
 
-	m_pTorvudModel->Update(m_Wnd.m_Keyboard.KeyisPressed(VK_SPACE) ? 0.0f : deltaTime);
+	m_pTorvudModel->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
+
+	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, deltaTime);
+	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 }
 
 void CApplication::Render(CGraphics& rGfx)
