@@ -327,3 +327,22 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+
+//Lock mouse to window
+void CWindow::ToggleCursorLock(bool lock)
+{
+	if (lock == true)
+	{
+		RECT wr;
+		if (GetWindowRect(m_hWnd, &wr) == true)
+		{
+			ClipCursor(&wr);
+		}
+		else
+		{
+			OutputDebugString("\nCouldn't lock cursor to window, do better error call here\n");
+		}
+	}
+	else
+		ClipCursor(nullptr);
+}

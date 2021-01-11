@@ -55,6 +55,9 @@ public:
 
 	Vector2 GetSize() const noexcept { return m_Size; }
 
+	//TODO: Put somewhere else / do differently?
+	void ToggleCursorLock(bool lock);
+
 private:
 
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

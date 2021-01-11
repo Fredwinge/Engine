@@ -79,6 +79,15 @@ void CApplication::Update()
 
 	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, deltaTime);
 	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
+
+	if (m_Wnd.m_Keyboard.KeyIsPressed(VK_ESCAPE))
+	{
+		m_Wnd.ToggleCursorLock(true);
+	}
+	else if (m_Wnd.m_Keyboard.KeyIsPressed(VK_CONTROL))
+	{
+		m_Wnd.ToggleCursorLock(false);
+	}
 }
 
 void CApplication::Render(CGraphics& rGfx)
