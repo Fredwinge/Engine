@@ -183,6 +183,7 @@
     <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
     <ClCompile Include="dxerr\dxerr.cpp" />
+    <ClCompile Include="Maths\Vectors.cpp" />
     <ClCompile Include="Renderable\CBox.cpp" />
     <ClCompile Include="Renderable\IRenderable.cpp" />
     <ClCompile Include="Renderable\CModel.cpp" />

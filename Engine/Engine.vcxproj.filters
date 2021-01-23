@@ -108,6 +108,9 @@
     <ClCompile Include="RenderCallbacks\IRenderCallback.cpp">
       <Filter>RenderCallbacks</Filter>
     </ClCompile>
+    <ClCompile Include="Maths\Vectors.cpp">
+      <Filter>Maths</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h">
