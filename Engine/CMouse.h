@@ -2,6 +2,7 @@
 #include <queue>
 #include "Maths\Vectors.h"
 
+//TODO: Should rework this class, there's a lot of trash
 class CMouse
 {
 
@@ -85,9 +86,14 @@ public:
 
 	void Flush() noexcept							{ m_EventBuffer = std::queue<Event>(); }
 
+	//TODO: Seperate raw data in some way
+	Vector2 GetRawPos() const						{ return m_RawPos; }
+	Vector2 GetRawDelta() const						{ return m_RawPos - m_LastRawPos; }
+	void ResetRawDelta()							{ m_LastRawPos = m_RawPos; }
+
 private:
 
-	void OnMouseMove(Vector2 newPos);
+	void SetPos(Vector2 newPos);
 	void OnMouseEnter();
 	void OnMouseLeave();
 
@@ -104,11 +110,18 @@ private:
 
 	void TrimBuffer();
 
+	//TODO: Seperate raw data in some way
+	void MoveRaw(Vector2 rawDelta);
+
 private:
 
 	static constexpr unsigned int s_bufferSize = 16u;
 
 	Vector2 m_Pos;
+
+	//TODO: Seperate raw data in some way
+	Vector2 m_RawPos	 = { 0.0f, 0.0f };
+	Vector2 m_LastRawPos = { 0.0f, 0.0f };
 
 	bool m_bLeftIsPressed = false;
 	bool m_bRightIsPressed = false;

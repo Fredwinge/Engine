@@ -57,6 +57,10 @@ public:
 
 	//TODO: Put somewhere else / do differently?
 	void ToggleCursorLock(bool lock);
+	//TODO: Definetly put somewhere else
+	void SetCursorPosition(Vector2 pos);
+	void HideCursor(bool hide);
+	Vector2 GetWindowCenter();
 
 private:
 

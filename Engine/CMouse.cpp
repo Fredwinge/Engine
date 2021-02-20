@@ -17,7 +17,7 @@ CMouse::Event CMouse::Read() //noexcept
 	}
 }
 
-void CMouse::OnMouseMove(Vector2 newPos) //noexcept
+void CMouse::SetPos(Vector2 newPos) //noexcept
 {
 	m_Pos = newPos;
 
@@ -119,4 +119,11 @@ void CMouse::TrimBuffer() //noexcept
 	{
 		m_EventBuffer.pop();
 	}
+}
+
+//RAW DATA
+void CMouse::MoveRaw(Vector2 rawDelta)
+{
+	m_LastRawPos = m_RawPos;
+	m_RawPos += rawDelta;
 }

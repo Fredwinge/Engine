@@ -50,6 +50,21 @@ CWindow::WindowClass::WindowClass() noexcept
 	//wc.hIconSm = iconSmall;				//Handle to smaller icon that we can use for the application
 
 	RegisterClassExA(&wc);
+
+
+	//Register rawinput for mouse
+	RAWINPUTDEVICE Rid;
+
+	Rid.usUsagePage = 0x01;         //HID_USAGE_PAGE_GENERIC
+	Rid.usUsage = 0x02;             //HID_USAGE_GENERIC_MOUSE
+	Rid.dwFlags = 0;				//No flags necessary
+	Rid.hwndTarget = 0;				//No hwnd necessary
+
+	if (RegisterRawInputDevices(&Rid, 1, sizeof(Rid)) == FALSE)
+	{
+		//Registration failed
+		WND_LAST_ERROR();
+	}
 }
 
 CWindow::WindowClass::~WindowClass()
@@ -258,7 +273,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 		//Check if mouse is inside client region
 		if (pt.x >= 0 && pt.x < m_Size.x && pt.y >= 0 && pt.y < m_Size.y)
 		{
-			m_Mouse.OnMouseMove(Vector2(pt.x, pt.y));
+			m_Mouse.SetPos(Vector2(pt.x, pt.y));
 
 			//If mouse previously weren't inside client region, set IsInWindow to true
 			if (m_Mouse.IsInWindow() == false)
@@ -275,7 +290,7 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 			//this is to allow the user the liberty of dragging the window
 			if (m_Mouse.LeftIsPressed() == true || m_Mouse.RightIsPressed() == true)	//wParam & (MK_LBUTTON | MK_RBUTTON) also does the trick
 			{
-				m_Mouse.OnMouseMove(Vector2(pt.x, pt.y));
+				m_Mouse.SetPos(Vector2(pt.x, pt.y));
 			}
 			// If mouse is outside the client region and no clicking is occuring then you have left the window
 			else
@@ -323,6 +338,54 @@ LRESULT CWindow::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) //
 		break;
 	}
 	//////////////////// END MOUSE  MESSAGES ////////////////////
+	///////////////////// RAWINPUT MESSAGES /////////////////////
+	case WM_INPUT:
+	{
+		UINT dwSize;
+
+		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &dwSize, sizeof(RAWINPUTHEADER));
+		LPBYTE lpb = new BYTE[dwSize];
+		if (lpb == NULL) 
+		{
+			break;
+		} 
+
+		if (GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER)) != dwSize)
+			OutputDebugString ("\nGetRawInputData does not return correct size !\n"); 
+
+		RAWINPUT* raw = (RAWINPUT*)lpb;
+		switch (raw->header.dwType)
+		{
+		case RIM_TYPEMOUSE:
+		{
+			RAWMOUSE mouse = raw->data.mouse;
+
+			if (mouse.usFlags & MOUSE_MOVE_ABSOLUTE)
+			{
+
+				bool isVirtualDesktop = (mouse.usFlags & MOUSE_VIRTUAL_DESKTOP) == MOUSE_VIRTUAL_DESKTOP;
+
+				int width  = GetSystemMetrics(isVirtualDesktop ? SM_CXVIRTUALSCREEN : SM_CXSCREEN);
+				int height = GetSystemMetrics(isVirtualDesktop ? SM_CYVIRTUALSCREEN : SM_CYSCREEN);
+
+				int absoluteX = int((mouse.lLastX / 65535.0f) * width);
+				int absoluteY = int((mouse.lLastY / 65535.0f) * height);
+
+				m_Mouse.SetPos(Vector2(absoluteX, absoluteY));
+			}
+			else if (mouse.lLastX != 0 || mouse.lLastY != 0)
+			{
+				int relativeX = mouse.lLastX;
+				int relativeY = mouse.lLastY;
+
+				m_Mouse.MoveRaw(Vector2(relativeX, relativeY));
+			}
+
+			break;
+		}
+		}
+	}
+	/////////////////// END RAWINPUT MESSAGES ///////////////////
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -345,4 +408,51 @@ void CWindow::ToggleCursorLock(bool lock)
 	}
 	else
 		ClipCursor(nullptr);
+}
+
+//Set cursor position
+void CWindow::SetCursorPosition(Vector2 pos)
+{
+	RECT wr;
+	if (GetWindowRect(m_hWnd, &wr) == true)
+	{
+
+		int x = wr.right - wr.left;
+		int y = wr.bottom - wr.top;
+
+		x *= pos.x;
+		y *= pos.y;
+
+		x += wr.left;
+		y += wr.top;
+
+		SetCursorPos(x, y);
+		m_Mouse.SetPos(Vector2(x, y));
+	}
+}
+
+void CWindow::HideCursor(bool hide)
+{
+	ShowCursor(!hide);
+}
+
+Vector2 CWindow::GetWindowCenter()
+{
+	RECT wr;
+	if (GetWindowRect(m_hWnd, &wr) == true)
+	{
+
+		int x = wr.right - wr.left;
+		int y = wr.bottom - wr.top;
+
+		x *= 0.5f;
+		y *= 0.5f;
+
+		x += wr.left;
+		y += wr.top;
+
+		return Vector2(x, y);
+	}
+
+	return Vector2::Zero;
 }

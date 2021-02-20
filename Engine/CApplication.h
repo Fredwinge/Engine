@@ -37,4 +37,6 @@ private:
 	CModel* m_pTorvudModel;
 
 	IRenderCallback* pRenderCallback;
+
+	bool bCameraFreeFlight = false;
 };

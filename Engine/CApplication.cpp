@@ -77,17 +77,33 @@ void CApplication::Update()
 
 	m_pTorvudModel->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
 
-	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, deltaTime);
-	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
-
+//TEMP
 	if (m_Wnd.m_Keyboard.KeyIsPressed(VK_ESCAPE))
 	{
 		m_Wnd.ToggleCursorLock(true);
+		m_Wnd.HideCursor(true);
+
+		bCameraFreeFlight = true;
 	}
 	else if (m_Wnd.m_Keyboard.KeyIsPressed(VK_CONTROL))
 	{
 		m_Wnd.ToggleCursorLock(false);
+		m_Wnd.HideCursor(false);
+
+		bCameraFreeFlight = false;
 	}
+
+	if (bCameraFreeFlight == true)
+	{
+		Vector2 deltaMove = m_Wnd.m_Mouse.GetRawDelta() * 8.0f;
+		m_Camera.MoveCamera(&m_Wnd.m_Keyboard, deltaMove, deltaTime);
+		
+		m_Wnd.SetCursorPosition({ 0.5f, 0.5f });
+
+		m_Wnd.m_Mouse.ResetRawDelta();
+	}
+
+	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 }
 
 void CApplication::Render(CGraphics& rGfx)

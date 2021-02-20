@@ -10,18 +10,23 @@ class CCamera
 
 public:
 
-	DirectX::XMMATRIX GetMatrix() const noexcept;
+	CCamera();
+	~CCamera() = default;
+
+	DirectX::XMMATRIX GetMatrix() const { return m_Matrix; };
 
 	void Reset() noexcept;
 
 	//TODO: MOVE SOMEWHERE ELSE
-	void MoveCamera(CKeyboard* pKbd, float deltaTime);
+	void MoveCamera(CKeyboard* pKbd, Vector2 deltaMove, float deltaTime);
 
 private:
 
 	//DirectX::XMMATRIX m_mProjectionMatrix;
 
-	Vector3 m_vPos = { 0.0f, 0.0f, -20.0f };
+	DirectX::XMMATRIX m_Matrix;
+
+	Vector3 m_vPos = { 0.0f, 0.0f, 0.0f };
 	//float phi = 0.0f;
 	//float theta = 0.0f;
 
