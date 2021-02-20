@@ -164,6 +164,23 @@ Vector4 Vector4::operator/=(const float f)
 	return *this;
 }
 
+//VECTOR4 == VECTOR4
+bool Vector4::operator==(const Vector4& v)
+{
+	return x == v.x && y == v.y && z == v.z && w == v.w;
+}
+
+//VECTOR4 FUNCTIONS
+const float Vector4::Dot(const Vector4& v) const
+{
+	return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w);
+}
+
+const float Vector4::Dot(const Vector4& v1, const Vector4& v2)
+{
+	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z) + (v1.w * v2.w);
+}
+
 //////////////////////////
 //////////////////////////
 //VECTOR3
@@ -312,6 +329,23 @@ Vector3 Vector3::operator/=(const float f)
 	return *this;
 }
 
+//VECTOR3 == VECTOR3
+bool Vector3::operator==(const Vector3& v)
+{
+	return x == v.x && y == v.y && z == v.z;
+}
+
+//VECTOR3 FUNCTIONS
+const float Vector3::Dot(const Vector3& v) const
+{
+	return (x * v.x) + (y * v.y) + (z * v.z);
+}
+
+const float Vector3::Dot(const Vector3& v1, const Vector3& v2)
+{
+	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+}
+
 //////////////////////////
 //////////////////////////
 //VECTOR2
@@ -442,4 +476,21 @@ Vector2 Vector2::operator/=(const float f)
 	x /= f;
 	y /= f;
 	return *this;
+}
+
+//VECTOR2 == VECTOR2
+bool Vector2::operator==(const Vector2& v)
+{
+	return x == v.x && y == v.y;
+}
+
+//VECTOR2 FUNCTIONS
+const float Vector2::Dot(const Vector2& v) const
+{
+	return (x * v.x) + (y * v.y);
+}
+
+const float Vector2::Dot(const Vector2& v1, const Vector2& v2)
+{
+	return (v1.x * v2.x) + (v1.y * v2.y);
 }

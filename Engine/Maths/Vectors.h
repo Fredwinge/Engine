@@ -46,6 +46,12 @@ struct Vector4
 	Vector4 operator*=(const float f);
 	Vector4 operator/=(const float f);
 
+	bool operator==(const Vector4& v);
+
+	//Functions
+	const float			Dot(const Vector4& v) const;
+	static const float	Dot(const Vector4& v1, const Vector4& v2);
+
 	float x,y,z,w;
 
 	static const Vector4 Zero;
@@ -88,6 +94,12 @@ struct Vector3
 	Vector3 operator*=(const float f);
 	Vector3 operator/=(const float f);
 
+	bool operator==(const Vector3& v);
+
+	//Functions
+	const float			Dot(const Vector3& v) const;
+	static const float	Dot(const Vector3& v1, const Vector3& v2);
+
 	float x,y,z;
 
 	static const Vector3 Zero;
@@ -127,6 +139,12 @@ struct Vector2
 	Vector2 operator-=(const float f);
 	Vector2 operator*=(const float f);
 	Vector2 operator/=(const float f);
+
+	bool operator==(const Vector2& v);
+
+	//Functions
+	const float			Dot(const Vector2& v) const;
+	static const float	Dot(const Vector2& v1, const Vector2& v2);
 
 	float x,y;
 
