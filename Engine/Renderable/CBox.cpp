@@ -43,7 +43,6 @@ CBox::CBox(CGraphics& rGfx,
 		vertexBuffer.push_back(vData);
 	}
 	m_pRenderData = new RenderData(CIndexBuffer(rGfx, model.indices), CVertexBuffer(rGfx, vertexBuffer));
-	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
 

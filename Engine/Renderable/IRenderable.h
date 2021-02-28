@@ -24,9 +24,6 @@ public:
 
 protected:
 
-	void AddBind(std::unique_ptr<IBindable> bind); //noexcept;
-	void AddIndexBuffer(std::unique_ptr<class CIndexBuffer> ibuf) /*noexcept*/;
-
 	RenderData* m_pRenderData = nullptr;
 
 	IRenderCallback* m_pRenderCallback = nullptr;
@@ -34,5 +31,4 @@ protected:
 private:
 
 	const CIndexBuffer* m_pIndexBuffer = nullptr;
-	std::vector <std::unique_ptr<IBindable>> m_Binds;
 };

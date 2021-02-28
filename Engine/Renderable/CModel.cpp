@@ -22,7 +22,6 @@ CModel::CModel(CGraphics& rGfx, const char* path)
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, IndexBuffer);
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, VertexBuffer);
 	m_pRenderData = new RenderData(CIndexBuffer(rGfx, IndexBuffer), CVertexBuffer(rGfx, VertexBuffer));
-	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, IndexBuffer));
 	//BINDS
 	//Bind vertex buffer
 	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));

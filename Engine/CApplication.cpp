@@ -42,6 +42,10 @@ CApplication::CApplication()
 	OutputDebugString("\nSet boxes rendercallback");
 	m_pTorvudModel->SetRenderCallback(pRenderCallback);
 	OutputDebugString("\nSet torvud rendercallback");
+
+	//Temp
+	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
+	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 }
 
 CApplication::~CApplication()
