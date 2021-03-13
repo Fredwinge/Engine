@@ -4,6 +4,9 @@
 #include "Maths/Vectors.h"
 #include <Windows.h>
 
+//TODO: Add some core/system type header which contains practical typedefs and such
+typedef uint16_t uint16;
+
 void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
 {
 
@@ -19,11 +22,9 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	std::vector<Vector2> texcoords;
 	std::vector<Vector3> normals;
 
-	std::vector<unsigned short> indices;
-	std::vector<unsigned short> uv_indices;
-	std::vector<unsigned short> normal_indices;
-
-	std::vector<VertexData> VertexBuffer;
+	std::vector<uint16> vert_indices;
+	std::vector<uint16> uv_indices;
+	std::vector<uint16> normal_indices;
 
 	//Read file until end is reached
 	while (true)
@@ -66,30 +67,30 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 		else if (strcmp("f", lineHeader) == 0)
 		{
 			
-			UINT vertex_indices[3];
+			uint16 vIdx[3];
 
-			UINT uvIdx[3];
-			UINT nrmIdx[3];
+			uint16 uvIdx[3];
+			uint16 nrmIdx[3];
 
 			//TODO: Figure out format, since it seems to differ all over the place
 			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
-									&vertex_indices[0], &uvIdx[0], &nrmIdx[0],
-									&vertex_indices[1], &uvIdx[1], &nrmIdx[1],
-									&vertex_indices[2], &uvIdx[2], &nrmIdx[2]);
+									&vIdx[0], &uvIdx[0], &nrmIdx[0],
+									&vIdx[1], &uvIdx[1], &nrmIdx[1],
+									&vIdx[2], &uvIdx[2], &nrmIdx[2]);
 
 			if(matches != 9)
 				assert(false && "This ain't gonna work");
 
-			for (int i = 0; i < 3; ++i)
+			for (uint16 i = 0; i < 3; ++i)
 			{
 				//Subtract by 1 since OBJ indices start at 1 rather than 0
-				indices.push_back(vertex_indices[i] - 1);
+				vert_indices.push_back(vIdx[i] - 1);
 				uv_indices.push_back(uvIdx[i] - 1);
 				normal_indices.push_back(nrmIdx[i] - 1);
 			}
 			
-#pragma region Maybe useful for rework?
 			/*
+			//Maybe useful for rework
 			while (true)
 			{
 				UINT vertex_indices;
@@ -105,7 +106,7 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 				{
 					//assert(false && "This ain't gonna work");
 
-					//fscanf_s(pFile, "\n");
+					fscanf_s(pFile, "\n");
 					break;
 				}
 				else
@@ -116,32 +117,55 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 				}
 			}
 			*/
-
-#pragma endregion
+			
 
 		}
-
-
 	}
 
-	//TODO: Are indices and vertices correct?
-	//Look this up, looks right on screen, weird numbers in debugger
-	//Only for Torvud tough, suzzane is fine.
-	//Either way this can probably be done in a nicer way
-	for (int i = 0; i < indices.size(); ++i)
+	uint16 numDupes = 0;
+	std::vector<uint16> IndexBuffer;
+	std::vector<VertexData> VertexBuffer;
+
+	for (uint16 i = 0; i < vert_indices.size(); ++i)
 	{
 		VertexData VertexData;
-		VertexData.Position = vertices[indices[i]];
+		VertexData.Position = vertices[vert_indices[i]];
 		VertexData.TexCoord = texcoords[uv_indices[i]];
 		VertexData.Normal = normals[normal_indices[i]];
 
+		bool isDupe = false;
+		//Check if vertexData is a dupe
+		for (uint16 j = 0; j < VertexBuffer.size(); ++j)
+		{
+			if (VertexData.Position == VertexBuffer[j].Position &&
+				VertexData.TexCoord == VertexBuffer[j].TexCoord &&
+				VertexData.Normal == VertexBuffer[j].Normal)
+			{
+				IndexBuffer.push_back(j);
+				++numDupes;
+				isDupe = true;
+				break;
+			}
+		}
+
+		if (isDupe == true)
+			continue;
+
+		IndexBuffer.push_back(i - numDupes);
 		VertexBuffer.push_back(VertexData);
 	}
 
+	fclose(pFile);
+
+	*pVertexBuffer = VertexBuffer;
+	*pIndexBuffer = IndexBuffer;
+
 	//LOG FILE
-	/*
+	if(fopen_s(&pFile, path, "r") != 0)
+		assert(false && "failed to open file");
+
 	FILE* pLogFile;
-	fopen_s(&pLogFile, "ModelErrorLog.txt", "w+");
+	fopen_s(&pLogFile, "../ModelErrorLog.txt", "w+");
 
 	char fileBuffer[1024];
 
@@ -153,18 +177,6 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	fclose(pLogFile);
 	delete pLogFile;
 	//delete fileBuffer;
-	*/
-
-	//Vertices are already added in correct order
-    	std::vector<unsigned short> tempIndices;
-	for (int i = 0; i < VertexBuffer.size(); ++i)
-	{
-		tempIndices.push_back(i);
-	}
-
 	fclose(pFile);
-
-	*pVertexBuffer = VertexBuffer;
-	*pIndexBuffer = tempIndices;
 
 }

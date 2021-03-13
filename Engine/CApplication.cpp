@@ -28,7 +28,7 @@ CApplication::CApplication()
 	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 	OutputDebugString("\nSet view matrix");
 
-	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Data/Models/Torvud.obj");
+	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Assets/Models/Torvud.obj");
 	OutputDebugString("\ncreated torvud model");
 
 	pRenderCallback = new IRenderCallback(m_Wnd.Gfx());
