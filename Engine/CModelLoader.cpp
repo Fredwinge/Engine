@@ -6,6 +6,7 @@
 
 //TODO: Add some core/system type header which contains practical typedefs and such
 typedef uint16_t uint16;
+typedef uint32_t uint32;
 
 void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
 {
@@ -67,10 +68,10 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 		else if (strcmp("f", lineHeader) == 0)
 		{
 			
-			uint16 vIdx[3];
+			uint32 vIdx[3];
 
-			uint16 uvIdx[3];
-			uint16 nrmIdx[3];
+			uint32 uvIdx[3];
+			uint32 nrmIdx[3];
 
 			//TODO: Figure out format, since it seems to differ all over the place
 			int matches = fscanf_s(pFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
@@ -160,7 +161,8 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	*pVertexBuffer = VertexBuffer;
 	*pIndexBuffer = IndexBuffer;
 
-	//LOG FILE
+	//LOG FILE DATA
+	/*
 	if(fopen_s(&pFile, path, "r") != 0)
 		assert(false && "failed to open file");
 
@@ -178,5 +180,6 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	delete pLogFile;
 	//delete fileBuffer;
 	fclose(pFile);
+	*/
 
 }
