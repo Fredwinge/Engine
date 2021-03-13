@@ -9,6 +9,7 @@
 #include <memory>
 #include "GraphicsAssertMacros.h"
 #include "Maths\Vectors.h"
+#include "Core/Core.h"
 
 class CGraphics
 {

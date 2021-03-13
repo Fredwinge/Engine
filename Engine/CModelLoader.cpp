@@ -4,11 +4,7 @@
 #include "Maths/Vectors.h"
 #include <Windows.h>
 
-//TODO: Add some core/system type header which contains practical typedefs and such
-typedef uint16_t uint16;
-typedef uint32_t uint32;
-
-void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
+void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
 {
 
 	//"r" is for read

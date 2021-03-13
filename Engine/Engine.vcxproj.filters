@@ -31,6 +31,9 @@
     <Filter Include="RenderCallbacks">
       <UniqueIdentifier>{a7ad8cd6-6125-402d-960b-9ed37f44b894}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{ee3e81bc-846a-45c6-b435-4face0289a8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="Maths\Vectors.cpp">
       <Filter>Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\CCube.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="Renderable\EssentialRenderData.h">
       <Filter>Renderable</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,17 +32,22 @@ CBox::CBox(CGraphics& rGfx,
 		dx::XMFLOAT3 pos;
 	};
 
-	auto model = CCube::Make<Vector3>();
+	//auto model = CCube::Make<Vector3>();
 
-	//Wow, nice fix
-	std::vector<VertexData> vertexBuffer;
-	for (int i = 0; i < model.vertices.size(); ++i)
-	{
-		VertexData vData;
-		vData.Position = model.vertices[i];
-		vertexBuffer.push_back(vData);
-	}
-	m_pRenderData = new RenderData(CIndexBuffer(rGfx, model.indices), CVertexBuffer(rGfx, vertexBuffer));
+	////Wow, nice fix
+	//std::vector<VertexData> vertexBuffer;
+	//for (int i = 0; i < model.vertices.size(); ++i)
+	//{
+	//	VertexData vData;
+	//	vData.Position = model.vertices[i];
+	//	vertexBuffer.push_back(vData);
+	//}
+	std::vector<uint16> pIndexBuffer;
+	std::vector<VertexData> pVertexBuffer;
+
+	CCube::Create(&pVertexBuffer, &pIndexBuffer);
+
+	m_pRenderData = new RenderData(CVertexBuffer(rGfx, pVertexBuffer), CIndexBuffer(rGfx, pIndexBuffer));
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
 

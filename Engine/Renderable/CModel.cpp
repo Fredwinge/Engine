@@ -15,13 +15,13 @@ CModel::CModel(CGraphics& rGfx, const char* path)
 	namespace dx = DirectX;
 
 	std::vector<VertexData> VertexBuffer;
-	std::vector<unsigned short> IndexBuffer;
+	std::vector<uint16> IndexBuffer;
 
 	CModelLoader::LoadModel(path, &VertexBuffer, &IndexBuffer);
 
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, IndexBuffer);
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, VertexBuffer);
-	m_pRenderData = new RenderData(CIndexBuffer(rGfx, IndexBuffer), CVertexBuffer(rGfx, VertexBuffer));
+	m_pRenderData = new RenderData(CVertexBuffer(rGfx, VertexBuffer), CIndexBuffer(rGfx, IndexBuffer));
 	//BINDS
 	//Bind vertex buffer
 	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));

@@ -1,7 +1,7 @@
 #include "CIndexBuffer.h"
 #include "../GraphicsAssertMacros.h"
 
-CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& indices)
+CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<uint16>& indices)
 	:
 	m_IndexCount(indices.size())
 {
@@ -12,8 +12,8 @@ CIndexBuffer::CIndexBuffer(CGraphics& gfx, const std::vector<unsigned short>& in
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	indexBufferDesc.CPUAccessFlags = 0u;
 	indexBufferDesc.MiscFlags = 0u;
-	indexBufferDesc.ByteWidth = m_IndexCount * sizeof(unsigned short);
-	indexBufferDesc.StructureByteStride = sizeof(unsigned short);
+	indexBufferDesc.ByteWidth = m_IndexCount * sizeof(uint16);
+	indexBufferDesc.StructureByteStride = sizeof(uint16);
 	D3D11_SUBRESOURCE_DATA indexBufferSD = {};
 	indexBufferSD.pSysMem = indices.data();
 

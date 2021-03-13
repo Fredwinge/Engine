@@ -8,7 +8,7 @@
 
 struct RenderData
 {
-	RenderData(CIndexBuffer iBuffer, CVertexBuffer vBuffer)
+	RenderData(CVertexBuffer vBuffer, CIndexBuffer iBuffer)
 	{
 		pIndexBuffer = new CIndexBuffer(iBuffer);
 		pVertexBuffer = new CVertexBuffer(vBuffer);

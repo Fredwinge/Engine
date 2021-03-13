@@ -183,6 +183,7 @@
     <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
     <ClCompile Include="dxerr\dxerr.cpp" />
+    <ClCompile Include="Geometry\CCube.cpp" />
     <ClCompile Include="Maths\Vectors.cpp" />
     <ClCompile Include="Renderable\CBox.cpp" />
     <ClCompile Include="Renderable\IRenderable.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="CKeyboard.h" />
     <ClInclude Include="CModelLoader.h" />
     <ClInclude Include="CMouse.h" />
+    <ClInclude Include="Core\Core.h" />
     <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />
     <ClInclude Include="dxerr\dxerr.h" />
