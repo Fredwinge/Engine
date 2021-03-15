@@ -2,6 +2,9 @@
 #include <vector>
 #include <DirectXMath.h>
 
+//TODO: Remove / Rework classes that inherit from this one
+//Remove this class
+
 template<class T>
 class CIndexedTriangleList
 {
