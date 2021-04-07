@@ -24,6 +24,8 @@ struct RenderData
 };
 
 //TODO: put somewhere better?
+//TODO: Binormal / Tangent vectors
+//https://www.rastertek.com/dx10tut20.html have a look
 struct VertexData
 {
 	Vector3 Position = Vector3(0.0f, 0.0f, 0.0f);
