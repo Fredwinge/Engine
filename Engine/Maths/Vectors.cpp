@@ -1,4 +1,6 @@
 #include "Vectors.h"
+#include "Matrix.h"
+#include "CommonMath.h"
 
 //////////////////////////
 //////////////////////////
@@ -164,6 +166,28 @@ Vector4 Vector4::operator/=(const float f)
 	return *this;
 }
 
+//VECTOR4 * MATRIX
+const Vector4 Vector4::operator*(const Matrix& mt) const
+{
+	Vector4 vec;
+	vec.x = mt.Left.x * x	+ mt.Left.y * y + mt.Left.z * z + mt.Left.w * w;
+	vec.y = mt.Up.x * x		+ mt.Up.y * y	+ mt.Up.z * z	+ mt.Up.w * w;
+	vec.z = mt.At.x * x		+ mt.At.y * y	+ mt.At.z * z	+ mt.At.w * w;
+	vec.w = mt.Pos.x * x	+ mt.Pos.y * y	+ mt.Pos.z * z	+ mt.Pos.w * w;
+	return vec;
+}
+
+Vector4 Vector4::operator*=(const Matrix& mt)
+{
+	Vector4 vec;
+	vec.x = mt.Left.x * x	+ mt.Left.y * y + mt.Left.z * z + mt.Left.w * w;
+	vec.y = mt.Up.x * x		+ mt.Up.y * y	+ mt.Up.z * z	+ mt.Up.w * w;
+	vec.z = mt.At.x * x		+ mt.At.y * y	+ mt.At.z * z	+ mt.At.w * w;
+	vec.w = mt.Pos.x * x	+ mt.Pos.y * y	+ mt.Pos.z * z	+ mt.Pos.w * w;
+	*this = vec;
+	return *this;
+}
+
 //VECTOR4 == VECTOR4
 bool Vector4::operator==(const Vector4& v)
 {
@@ -179,6 +203,28 @@ const float Vector4::Dot(const Vector4& v) const
 const float Vector4::Dot(const Vector4& v1, const Vector4& v2)
 {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z) + (v1.w * v2.w);
+}
+
+void Vector4::Normalize()
+{
+	*this /= GetLength();
+}
+
+const Vector4 Vector4::GetNormalized() const
+{
+	return *this / GetLength();
+}
+
+const float Vector4::GetLength() const
+{
+	//TODO: More effiecent sqrt function?
+	return sqrtf(x * x + y * y + z * z + w * w);
+}
+
+const float Vector4::GetDistanceTo(const Vector4& v) const
+{
+	Vector4 diff = *this - v;
+	return diff.GetLength();
 }
 
 //////////////////////////
@@ -329,6 +375,22 @@ Vector3 Vector3::operator/=(const float f)
 	return *this;
 }
 
+//VECTOR3 * MATRIX
+const Vector3 Vector3::operator*(const Matrix& mt) const
+{
+	Vector4 mulVector(x, y, z, 1.0f);
+	mulVector *= mt;
+	return Vector3(mulVector.x, mulVector.y, mulVector.z) / mulVector.w;
+}
+
+Vector3 Vector3::operator*=(const Matrix& mt)
+{
+	Vector4 mulVector(x, y, z, 1.0f);
+	mulVector *= mt;
+	*this = Vector3(mulVector.x, mulVector.y, mulVector.z) / mulVector.w;
+	return *this;
+}
+
 //VECTOR3 == VECTOR3
 bool Vector3::operator==(const Vector3& v)
 {
@@ -344,6 +406,38 @@ const float Vector3::Dot(const Vector3& v) const
 const float Vector3::Dot(const Vector3& v1, const Vector3& v2)
 {
 	return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+}
+
+const Vector3 Vector3::Cross(const Vector3& v) const
+{
+	Vector3 cross;
+	cross.x = y * v.z - z * v.y;
+	cross.y = z * v.x - x * v.z;
+	cross.z = x * v.y - y * v.x;
+
+	return cross;
+}
+
+void Vector3::Normalize()
+{
+	*this /= GetLength();
+}
+
+const Vector3 Vector3::GetNormalized() const
+{
+	return *this / GetLength();
+}
+
+const float Vector3::GetLength() const
+{
+	//TODO: More effiecent sqrt function?
+	return sqrtf(x * x + y * y + z * z);
+}
+
+const float Vector3::GetDistanceTo(const Vector3& v) const
+{
+	Vector3 diff = *this - v;
+	return diff.GetLength();
 }
 
 //////////////////////////
@@ -493,4 +587,26 @@ const float Vector2::Dot(const Vector2& v) const
 const float Vector2::Dot(const Vector2& v1, const Vector2& v2)
 {
 	return (v1.x * v2.x) + (v1.y * v2.y);
+}
+
+void Vector2::Normalize()
+{
+	*this /= GetLength();
+}
+
+const Vector2 Vector2::GetNormalized() const
+{
+	return *this / GetLength();
+}
+
+const float Vector2::GetLength() const
+{
+	//TODO: More effiecent sqrt function?
+	return sqrtf(x * x + y * y);
+}
+
+const float Vector2::GetDistanceTo(const Vector2& v) const
+{
+	Vector2 diff = *this - v;
+	return diff.GetLength();
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -184,6 +184,7 @@
     <ClCompile Include="CWindow.cpp" />
     <ClCompile Include="dxerr\dxerr.cpp" />
     <ClCompile Include="Geometry\CCube.cpp" />
+    <ClCompile Include="Maths\Matrix.cpp" />
     <ClCompile Include="Maths\Vectors.cpp" />
     <ClCompile Include="Renderable\CBox.cpp" />
     <ClCompile Include="Renderable\IRenderable.cpp" />
@@ -223,6 +224,8 @@
     <ClInclude Include="Geometry\CSphere.h" />
     <ClInclude Include="Geometry\GeometricMath.h" />
     <ClInclude Include="GraphicsAssertMacros.h" />
+    <ClInclude Include="Maths\CommonMath.h" />
+    <ClInclude Include="Maths\Matrix.h" />
     <ClInclude Include="Maths\Vectors.h" />
     <ClInclude Include="Renderable\CBox.h" />
     <ClInclude Include="Renderable\EssentialRenderData.h" />

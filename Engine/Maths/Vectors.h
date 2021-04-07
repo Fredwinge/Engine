@@ -1,4 +1,5 @@
 #pragma once
+struct Matrix;
 
 //TODO: Figure out
 //1. Is it worth keeping operators for Vector + Float?
@@ -6,6 +7,8 @@
 
 //2. Should the vectors be split up into multiple .h's and .cpp's?
 //It might become too much of a clutterfest otherwise
+
+//3. Templateify this?
 
 struct Vector4
 {
@@ -46,11 +49,20 @@ struct Vector4
 	Vector4 operator*=(const float f);
 	Vector4 operator/=(const float f);
 
+	const Vector4 operator*(const Matrix& mt) const;
+	Vector4 operator*=(const Matrix& mt);
+
 	bool operator==(const Vector4& v);
 
 	//Functions
 	const float			Dot(const Vector4& v) const;
 	static const float	Dot(const Vector4& v1, const Vector4& v2);
+
+	void				Normalize();
+	const Vector4		GetNormalized() const;
+
+	const float			GetLength() const;
+	const float			GetDistanceTo(const Vector4& v) const;
 
 	float x,y,z,w;
 
@@ -94,11 +106,22 @@ struct Vector3
 	Vector3 operator*=(const float f);
 	Vector3 operator/=(const float f);
 
+	const Vector3 operator*(const Matrix& mt) const;
+	Vector3 operator*=(const Matrix& mt);
+
 	bool operator==(const Vector3& v);
 
 	//Functions
 	const float			Dot(const Vector3& v) const;
 	static const float	Dot(const Vector3& v1, const Vector3& v2);
+
+	const Vector3		Cross(const Vector3& v) const;
+
+	void				Normalize();
+	const Vector3		GetNormalized() const;
+	
+	const float			GetLength() const;
+	const float			GetDistanceTo(const Vector3& v) const;
 
 	float x,y,z;
 
@@ -145,6 +168,12 @@ struct Vector2
 	//Functions
 	const float			Dot(const Vector2& v) const;
 	static const float	Dot(const Vector2& v1, const Vector2& v2);
+
+	void				Normalize();
+	const Vector2		GetNormalized() const;
+
+	const float			GetLength() const;
+	const float			GetDistanceTo(const Vector2& v) const;
 
 	float x,y;
 
