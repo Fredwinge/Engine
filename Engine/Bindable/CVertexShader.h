@@ -5,7 +5,7 @@ class CVertexShader : public IBindable
 {
 public:
 
-	CVertexShader(CGraphics& gfx, LPCWSTR link);
+	CVertexShader(CGraphics& gfx, const char* shaderName);
 	CVertexShader(ID3D11VertexShader* pVertexShader);
 
 	void Bind(CGraphics& gfx) noexcept override;

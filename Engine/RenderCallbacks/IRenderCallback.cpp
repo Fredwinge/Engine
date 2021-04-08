@@ -2,8 +2,8 @@
 
 IRenderCallback::IRenderCallback(CGraphics& rGfx)
 {
-	m_pVertexShader = new CVertexShader(rGfx, L"../Debug/BaseVertexShader.cso");
-	m_pPixelShader = new CPixelShader(rGfx, L"../Debug/BasePixelShader.cso");
+	m_pVertexShader = new CVertexShader(rGfx, "BaseVertexShader.cso");
+	m_pPixelShader = new CPixelShader(rGfx, "BasePixelShader.cso");
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
 	{
