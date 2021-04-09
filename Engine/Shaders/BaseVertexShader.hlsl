@@ -16,17 +16,17 @@ struct VS_OUTPUT
 {
 	float4 position : SV_Position;
 	float2 uv		: TexCoord;
-	float3 normal	: NORMALOS;
+	float3 normal	: Normal;
 };
 
 VS_OUTPUT main(VS_INPUT IN)
 {
 
-	VS_OUTPUT vso;
+	VS_OUTPUT OUT;
 
-	vso.position = mul(float4(IN.position, 1.0f), transform);
-	vso.uv = IN.uv;
-	vso.normal = IN.normal;
+    OUT.position = mul(float4(IN.position, 1.0f), transform);
+    OUT.uv = IN.uv;
+    OUT.normal = IN.normal;
 
-	return vso;
+    return OUT;
 }

@@ -15,10 +15,10 @@
 #define GFX_DEVICE_REMOVED_ASSERT(hr) __GFX_ASSERT_DEVICE_REMOVED(__LINE__,__FILE__,(hr), m_InfoManager.GetMessages())
 #define GFX_ASSERT_INFO_ONLY(call) m_InfoManager.Set(); (call); {auto v = m_InfoManager.GetMessages(); if(v.empty() == false) { __GFX_ASSERT_INFO_ONLY(__LINE__,__FILE__,v);}}
 #else
-#define GFX_ASSERT(hr) GraphicsError(__LINE__,__FILE__,(hr))
+#define GFX_ASSERT(hr) __GFX_ASSERT(__LINE__,__FILE__,(hr))
 #define GFX_ASSERT_INFO(hrcall) GFX_ASSERT_NOINFO(hrcall)
 
-#define GFX_DEVICE_REMOVED_ASSERT(hr) GraphicsRemovedReason(__LINE__,__FILE__,(hr))
+#define GFX_DEVICE_REMOVED_ASSERT(hr) __GFX_ASSERT_DEVICE_REMOVED(__LINE__,__FILE__,(hr))
 #define GFX_ASSERT_INFO_ONLY(call) (call)
 #endif // !NDEBUG
 
