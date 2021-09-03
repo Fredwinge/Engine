@@ -1,5 +1,6 @@
 #pragma once
 struct Matrix;
+struct Vector3;
 
 //TODO: Figure out
 //1. Is it worth keeping operators for Vector + Float?
@@ -54,6 +55,8 @@ struct Vector4
 
 	bool operator==(const Vector4& v);
 
+	float& operator[] (const size_t i);
+
 	//Functions
 	const float			Dot(const Vector4& v) const;
 	static const float	Dot(const Vector4& v1, const Vector4& v2);
@@ -63,6 +66,9 @@ struct Vector4
 
 	const float			GetLength() const;
 	const float			GetDistanceTo(const Vector4& v) const;
+
+	const Vector3		GetXYZ() const;
+	void				SetXYZ(const Vector3& xyz);
 
 	float x,y,z,w;
 
@@ -109,7 +115,11 @@ struct Vector3
 	const Vector3 operator*(const Matrix& mt) const;
 	Vector3 operator*=(const Matrix& mt);
 
+	Vector3 operator-() const { return Vector3(-x, -y, -z); };
+
 	bool operator==(const Vector3& v);
+
+	float& operator[] (const size_t i);
 
 	//Functions
 	const float			Dot(const Vector3& v) const;
@@ -164,6 +174,8 @@ struct Vector2
 	Vector2 operator/=(const float f);
 
 	bool operator==(const Vector2& v);
+
+	float& operator[] (const size_t i);
 
 	//Functions
 	const float			Dot(const Vector2& v) const;

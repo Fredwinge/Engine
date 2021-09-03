@@ -1,4 +1,6 @@
 #include "Matrix.h"
+#include <assert.h>
+#include "CommonMath.h"
 
 const Matrix Matrix::Identity;
 
@@ -173,6 +175,13 @@ bool Matrix::operator==(const Matrix& mt)
 	return Left == mt.Left && Up == mt.Up && At == mt.At && Pos == mt.Pos;
 }
 
+Vector4& Matrix::operator[](const size_t i)
+{
+	assert(i < 4);
+
+	return *(&Left + i);
+}
+
 ////////////////////
 //MATRIX FUNCTIONS
 ////////////////////
@@ -201,63 +210,12 @@ const Matrix Matrix::GetTransposed() const
 
 //Based on: https://semath.info/src/inverse-cofactor-ex4.html
 //TODO: Is this the most performant / optimal way to do this?
-void Matrix::Inverse()
+void Matrix::Invert()
 {
 
 	float determinant = GetDeterminant();
 
-	Matrix adjugate;
-	//LEFT
-	adjugate.Left.x =	( (Up.y   * At.z * Pos.w) + (Up.z * At.w * Pos.y)   + (Up.w * At.y * Pos.z)
-						- (Up.w   * At.z * Pos.y) - (Up.z * At.y * Pos.w)   - (Up.y * At.w * Pos.z));
-
-	adjugate.Left.y =	(-(Left.y * At.z * Pos.w) - (Left.z * At.w * Pos.y) - (Left.w * At.y * Pos.z)
-						+ (Left.w * At.z * Pos.y) + (Left.z * At.y * Pos.w) + (Left.y * At.w * Pos.z));
-
-	adjugate.Left.z =	( (Left.y * Up.z * Pos.w) + (Left.z * Up.w * Pos.y) + (Left.w * Up.y * Pos.z)
-						- (Left.w * Up.z * Pos.y) - (Left.z * Up.y * Pos.w) - (Left.y * Up.w * Pos.z));
-
-	adjugate.Left.w =	(-(Left.y * Up.z * At.w)  - (Left.z * Up.w * At.y)  - (Left.w * Up.y * At.z)
-						+ (Left.w * Up.z * At.y)  + (Left.z * Up.y * At.w)  + (Left.y * Up.w * At.z));
-
-	//UP
-	adjugate.Up.x =		(-(Up.x * At.z * Pos.w)   - (Up.z * At.w * Pos.x)   - (Up.w * At.x * Pos.z)
-						+ (Up.w * At.z * Pos.x)   + (Up.z * At.x * Pos.w)   + (Up.x * At.w * Pos.z));
-
-	adjugate.Up.y =		( (Left.x * At.z * Pos.w) + (Left.z * At.w * Pos.x) + (Left.w * At.x * Pos.z)
-						- (Left.w * At.z * Pos.x) - (Left.z * At.x * Pos.w) - (Left.x * At.w * Pos.z));
-
-	adjugate.Up.z =		(-(Left.x * Up.z * Pos.w) - (Left.z * Up.w * Pos.x) - (Left.w * Up.x * Pos.z)
-						+ (Left.w * Up.z * Pos.x) + (Left.z * Up.x * Pos.w) + (Left.x * Up.w * Pos.z));
-
-	adjugate.Up.w =		( (Left.x * Up.z * At.w)  + (Left.z * Up.w * At.x)  + (Left.w * Up.x * At.z)
-						- (Left.w * Up.z * At.x)  - (Left.z * Up.x * At.w)  - (Left.x * Up.w * At.z));
-
-	//AT
-	adjugate.At.x =		( (Up.x * At.y * Pos.w)   + (Up.y * At.w * Pos.x)   + (Up.w * At.x * Pos.y)
-						- (Up.w * At.y * Pos.x)   - (Up.y * At.x * Pos.w)   - (Up.x * At.w * Pos.y));
-
-	adjugate.At.y =		(-(Left.x * At.y * Pos.w) - (Left.y * At.w * Pos.x) - (Left.w * At.x * Pos.y)
-						+ (Left.w * At.y * Pos.x) + (Left.y * At.x * Pos.w) + (Left.x * At.w * Pos.y));
-
-	adjugate.At.z =		( (Left.x * Up.y * Pos.w) + (Left.y * Up.w * Pos.x) + (Left.w * Up.x * Pos.y)
-						- (Left.w * Up.y * Pos.x) - (Left.y * Up.x * Pos.w) - (Left.x * Up.w * Pos.y));
-
-	adjugate.At.w =		(-(Left.x * Up.y * At.w)  - (Left.y * Up.w * At.x)  - (Left.w * Up.x * At.y)
-						+ (Left.w * Up.y * At.x)  + (Left.y * Up.x * At.w)  + (Left.x * Up.w * At.y));
-
-	//POS
-	adjugate.Pos.x =	(-(Up.x * At.y * Pos.z)   - (Up.y * At.z * Pos.x)   - (Up.z * At.x * Pos.y)
-						+ (Up.z * At.y * Pos.x)   + (Up.y * At.x * Pos.z)   + (Up.x * At.z * Pos.y));
-
-	adjugate.Pos.y =	( (Left.x * At.y * Pos.z) + (Left.y * At.z * Pos.x) + (Left.z * At.x * Pos.y)
-						- (Left.z * At.y * Pos.x) - (Left.y * At.x * Pos.z) - (Left.x * At.z * Pos.y));
-
-	adjugate.Pos.z =	(-(Left.x * Up.y * Pos.z) - (Left.y * Up.z * Pos.x) - (Left.z * Up.x * Pos.y)
-						+ (Left.z * Up.y * Pos.x) + (Left.y * Up.x * Pos.z) + (Left.x * Up.z * Pos.y));
-
-	adjugate.Pos.w =	( (Left.x * Up.y * At.z)  + (Left.y * Up.z * At.x)  + (Left.z * Up.x * At.y)
-						- (Left.z * Up.y * At.x)  - (Left.y * Up.x * At.z)  - (Left.x * Up.z * At.y));
+	Matrix adjugate = GetAdjugate();
 
 	*this = adjugate * (1.0f / determinant);
 
@@ -267,58 +225,7 @@ const Matrix Matrix::GetInverted() const
 {
 	float determinant = GetDeterminant();
 
-	Matrix adjugate;
-	//LEFT
-	adjugate.Left.x =	( (Up.y   * At.z * Pos.w) + (Up.z * At.w * Pos.y)   + (Up.w * At.y * Pos.z)
-						- (Up.w   * At.z * Pos.y) - (Up.z * At.y * Pos.w)   - (Up.y * At.w * Pos.z));
-
-	adjugate.Left.y =	(-(Left.y * At.z * Pos.w) - (Left.z * At.w * Pos.y) - (Left.w * At.y * Pos.z)
-						+ (Left.w * At.z * Pos.y) + (Left.z * At.y * Pos.w) + (Left.y * At.w * Pos.z));
-
-	adjugate.Left.z =	( (Left.y * Up.z * Pos.w) + (Left.z * Up.w * Pos.y) + (Left.w * Up.y * Pos.z)
-						- (Left.w * Up.z * Pos.y) - (Left.z * Up.y * Pos.w) - (Left.y * Up.w * Pos.z));
-
-	adjugate.Left.w =	(-(Left.y * Up.z * At.w)  - (Left.z * Up.w * At.y)  - (Left.w * Up.y * At.z)
-						+ (Left.w * Up.z * At.y)  + (Left.z * Up.y * At.w)  + (Left.y * Up.w * At.z));
-
-	//UP
-	adjugate.Up.x =		(-(Up.x * At.z * Pos.w)   - (Up.z * At.w * Pos.x)   - (Up.w * At.x * Pos.z)
-						+ (Up.w * At.z * Pos.x)   + (Up.z * At.x * Pos.w)   + (Up.x * At.w * Pos.z));
-
-	adjugate.Up.y =		( (Left.x * At.z * Pos.w) + (Left.z * At.w * Pos.x) + (Left.w * At.x * Pos.z)
-						- (Left.w * At.z * Pos.x) - (Left.z * At.x * Pos.w) - (Left.x * At.w * Pos.z));
-
-	adjugate.Up.z =		(-(Left.x * Up.z * Pos.w) - (Left.z * Up.w * Pos.x) - (Left.w * Up.x * Pos.z)
-						+ (Left.w * Up.z * Pos.x) + (Left.z * Up.x * Pos.w) + (Left.x * Up.w * Pos.z));
-
-	adjugate.Up.w =		( (Left.x * Up.z * At.w)  + (Left.z * Up.w * At.x)  + (Left.w * Up.x * At.z)
-						- (Left.w * Up.z * At.x)  - (Left.z * Up.x * At.w)  - (Left.x * Up.w * At.z));
-
-	//AT
-	adjugate.At.x =		( (Up.x * At.y * Pos.w)   + (Up.y * At.w * Pos.x)   + (Up.w * At.x * Pos.y)
-						- (Up.w * At.y * Pos.x)   - (Up.y * At.x * Pos.w)   - (Up.x * At.w * Pos.y));
-
-	adjugate.At.y =		(-(Left.x * At.y * Pos.w) - (Left.y * At.w * Pos.x) - (Left.w * At.x * Pos.y)
-						+ (Left.w * At.y * Pos.x) + (Left.y * At.x * Pos.w) + (Left.x * At.w * Pos.y));
-
-	adjugate.At.z =		( (Left.x * Up.y * Pos.w) + (Left.y * Up.w * Pos.x) + (Left.w * Up.x * Pos.y)
-						- (Left.w * Up.y * Pos.x) - (Left.y * Up.x * Pos.w) - (Left.x * Up.w * Pos.y));
-
-	adjugate.At.w =		(-(Left.x * Up.y * At.w)  - (Left.y * Up.w * At.x)  - (Left.w * Up.x * At.y)
-						+ (Left.w * Up.y * At.x)  + (Left.y * Up.x * At.w)  + (Left.x * Up.w * At.y));
-
-	//POS
-	adjugate.Pos.x =	(-(Up.x * At.y * Pos.z)   - (Up.y * At.z * Pos.x)   - (Up.z * At.x * Pos.y)
-						+ (Up.z * At.y * Pos.x)   + (Up.y * At.x * Pos.z)   + (Up.x * At.z * Pos.y));
-
-	adjugate.Pos.y =	( (Left.x * At.y * Pos.z) + (Left.y * At.z * Pos.x) + (Left.z * At.x * Pos.y)
-						- (Left.z * At.y * Pos.x) - (Left.y * At.x * Pos.z) - (Left.x * At.z * Pos.y));
-
-	adjugate.Pos.z =	(-(Left.x * Up.y * Pos.z) - (Left.y * Up.z * Pos.x) - (Left.z * Up.x * Pos.y)
-						+ (Left.z * Up.y * Pos.x) + (Left.y * Up.x * Pos.z) + (Left.x * Up.z * Pos.y));
-
-	adjugate.Pos.w =	( (Left.x * Up.y * At.z)  + (Left.y * Up.z * At.x)  + (Left.z * Up.x * At.y)
-						- (Left.z * Up.y * At.x)  - (Left.y * Up.x * At.z)  - (Left.x * Up.z * At.y));
+	Matrix adjugate = GetAdjugate();
 
 	return adjugate * (1.0f / determinant);
 }
@@ -333,4 +240,111 @@ const float Matrix::GetDeterminant() const
 					- (	Left.w	* Up.z * Pos.y) - (Left.z * Up.y * Pos.w) - (Left.y * Up.w * Pos.z)))
 		   - (Pos.x * ((Left.y	* Up.z * At.w)	+ (Left.z * Up.w * At.y)  + (Left.w * Up.y * At.z)
 					- (	Left.w	* Up.z * At.y)	- (Left.z * Up.y * At.w)  - (Left.y * Up.w * At.z)));
+}
+
+const Matrix Matrix::GetAdjugate() const
+{
+	Matrix adjugate;
+	//LEFT
+	adjugate.Left.x =	( (Up.y   * At.z * Pos.w) + (Up.z * At.w * Pos.y)   + (Up.w * At.y * Pos.z)
+						- (Up.w   * At.z * Pos.y) - (Up.z * At.y * Pos.w)   - (Up.y * At.w * Pos.z));
+
+	adjugate.Left.y =	(-(Left.y * At.z * Pos.w) - (Left.z * At.w * Pos.y) - (Left.w * At.y * Pos.z)
+						+ (Left.w * At.z * Pos.y) + (Left.z * At.y * Pos.w) + (Left.y * At.w * Pos.z));
+
+	adjugate.Left.z =	( (Left.y * Up.z * Pos.w) + (Left.z * Up.w * Pos.y) + (Left.w * Up.y * Pos.z)
+						- (Left.w * Up.z * Pos.y) - (Left.z * Up.y * Pos.w) - (Left.y * Up.w * Pos.z));
+
+	adjugate.Left.w =	(-(Left.y * Up.z * At.w)  - (Left.z * Up.w * At.y)  - (Left.w * Up.y * At.z)
+						+ (Left.w * Up.z * At.y)  + (Left.z * Up.y * At.w)  + (Left.y * Up.w * At.z));
+
+	//UP
+	adjugate.Up.x =		(-(Up.x * At.z * Pos.w)   - (Up.z * At.w * Pos.x)   - (Up.w * At.x * Pos.z)
+						+ (Up.w * At.z * Pos.x)   + (Up.z * At.x * Pos.w)   + (Up.x * At.w * Pos.z));
+
+	adjugate.Up.y =		( (Left.x * At.z * Pos.w) + (Left.z * At.w * Pos.x) + (Left.w * At.x * Pos.z)
+						- (Left.w * At.z * Pos.x) - (Left.z * At.x * Pos.w) - (Left.x * At.w * Pos.z));
+
+	adjugate.Up.z =		(-(Left.x * Up.z * Pos.w) - (Left.z * Up.w * Pos.x) - (Left.w * Up.x * Pos.z)
+						+ (Left.w * Up.z * Pos.x) + (Left.z * Up.x * Pos.w) + (Left.x * Up.w * Pos.z));
+
+	adjugate.Up.w =		( (Left.x * Up.z * At.w)  + (Left.z * Up.w * At.x)  + (Left.w * Up.x * At.z)
+						- (Left.w * Up.z * At.x)  - (Left.z * Up.x * At.w)  - (Left.x * Up.w * At.z));
+
+	//AT
+	adjugate.At.x =		( (Up.x * At.y * Pos.w)   + (Up.y * At.w * Pos.x)   + (Up.w * At.x * Pos.y)
+						- (Up.w * At.y * Pos.x)   - (Up.y * At.x * Pos.w)   - (Up.x * At.w * Pos.y));
+
+	adjugate.At.y =		(-(Left.x * At.y * Pos.w) - (Left.y * At.w * Pos.x) - (Left.w * At.x * Pos.y)
+						+ (Left.w * At.y * Pos.x) + (Left.y * At.x * Pos.w) + (Left.x * At.w * Pos.y));
+
+	adjugate.At.z =		( (Left.x * Up.y * Pos.w) + (Left.y * Up.w * Pos.x) + (Left.w * Up.x * Pos.y)
+						- (Left.w * Up.y * Pos.x) - (Left.y * Up.x * Pos.w) - (Left.x * Up.w * Pos.y));
+
+	adjugate.At.w =		(-(Left.x * Up.y * At.w)  - (Left.y * Up.w * At.x)  - (Left.w * Up.x * At.y)
+						+ (Left.w * Up.y * At.x)  + (Left.y * Up.x * At.w)  + (Left.x * Up.w * At.y));
+
+	//POS
+	adjugate.Pos.x =	(-(Up.x * At.y * Pos.z)   - (Up.y * At.z * Pos.x)   - (Up.z * At.x * Pos.y)
+						+ (Up.z * At.y * Pos.x)   + (Up.y * At.x * Pos.z)   + (Up.x * At.z * Pos.y));
+
+	adjugate.Pos.y =	( (Left.x * At.y * Pos.z) + (Left.y * At.z * Pos.x) + (Left.z * At.x * Pos.y)
+						- (Left.z * At.y * Pos.x) - (Left.y * At.x * Pos.z) - (Left.x * At.z * Pos.y));
+
+	adjugate.Pos.z =	(-(Left.x * Up.y * Pos.z) - (Left.y * Up.z * Pos.x) - (Left.z * Up.x * Pos.y)
+						+ (Left.z * Up.y * Pos.x) + (Left.y * Up.x * Pos.z) + (Left.x * Up.z * Pos.y));
+
+	adjugate.Pos.w =	( (Left.x * Up.y * At.z)  + (Left.y * Up.z * At.x)  + (Left.z * Up.x * At.y)
+						- (Left.z * Up.y * At.x)  - (Left.y * Up.x * At.z)  - (Left.x * Up.z * At.y));
+
+	return adjugate;
+}
+
+//TODO: Look up quaternions for rotations instead
+void Matrix::Rotate(const Vector3 rollPitchYaw)
+{
+	const Vector3 v = rollPitchYaw;
+
+	//ZYX order
+	Matrix xRot = Identity;
+	xRot.Up.SetXYZ(Vector3(0.0f, cos(v.x), -sin(v.x)));
+	xRot.At.SetXYZ(Vector3(0.0f, sin(v.x), cos(v.x)));
+
+	Matrix yRot = Identity;
+	yRot.Left.SetXYZ(Vector3(cos(v.y), 0.0f, sin(v.y)));
+	yRot.At.SetXYZ(Vector3(-sin(v.y), 0.0f, cos(v.y)));
+
+	Matrix zRot = Identity;
+	zRot.Left.SetXYZ(Vector3(cos(v.z), -sin(v.z), 0.0f));
+	zRot.Up.SetXYZ(Vector3(sin(v.z), cos(v.z), 0.0f));
+
+	Matrix rotation = zRot * yRot * xRot;
+
+	*this *= rotation;
+}
+
+//TODO: This is pretty fucking dumb
+void Matrix::SetRotation(const Vector3 rollPitchYaw)
+{
+	const Vector3 v = rollPitchYaw;
+	const Vector3 pos = Pos.GetXYZ();
+
+	//ZYX order
+	Matrix xRot = Identity;
+	xRot.Up.SetXYZ(Vector3(0.0f, cos(v.x), -sin(v.x)));
+	xRot.At.SetXYZ(Vector3(0.0f, sin(v.x), cos(v.x)));
+
+	Matrix yRot = Identity;
+	yRot.Left.SetXYZ(Vector3(cos(v.y), 0.0f, sin(v.y)));
+	yRot.At.SetXYZ(Vector3(-sin(v.y), 0.0f, cos(v.y)));
+
+	Matrix zRot = Identity;
+	zRot.Left.SetXYZ(Vector3(cos(v.z), -sin(v.z), 0.0f));
+	zRot.Up.SetXYZ(Vector3(sin(v.z), cos(v.z), 0.0f));
+
+	Matrix rotation = zRot * yRot * xRot;
+
+	Pos.SetXYZ(0);
+	*this *= rotation;
+	Pos.SetXYZ(pos);
 }

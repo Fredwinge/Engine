@@ -53,15 +53,22 @@ struct Matrix
 
 	bool operator==(const Matrix & mt);
 
+	Vector4& operator[] (const size_t i);
+
 	//Functions
 	void			Transpose();
 	const Matrix	GetTransposed() const;
 
-	void			Inverse();
+	void			Invert();
 	const Matrix	GetInverted() const;
 
 	const float		GetDeterminant() const;
 	const bool		IsInvertible() const	{ return GetDeterminant() != 0.0f; }
+
+	const Matrix	GetAdjugate() const;
+
+	void Rotate(const Vector3 rollPitchYaw);
+	void SetRotation(const Vector3 rollPitchYaw);
 
 	Vector4 Left;
 	Vector4 Up;

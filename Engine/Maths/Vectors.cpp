@@ -1,6 +1,7 @@
 #include "Vectors.h"
 #include "Matrix.h"
 #include "CommonMath.h"
+#include <assert.h>
 
 //////////////////////////
 //////////////////////////
@@ -194,6 +195,13 @@ bool Vector4::operator==(const Vector4& v)
 	return x == v.x && y == v.y && z == v.z && w == v.w;
 }
 
+//VECTOR4[]
+float& Vector4::operator[](const size_t i)
+{
+	assert(i < 4);
+	return *(&x + i);
+}
+
 //VECTOR4 FUNCTIONS
 const float Vector4::Dot(const Vector4& v) const
 {
@@ -225,6 +233,17 @@ const float Vector4::GetDistanceTo(const Vector4& v) const
 {
 	Vector4 diff = *this - v;
 	return diff.GetLength();
+}
+
+const Vector3 Vector4::GetXYZ() const				
+{ 
+	return Vector3(x, y, z); 
+}
+void Vector4::SetXYZ(const Vector3& xyz)			
+{ 
+	x = xyz.x; 
+	y = xyz.y; 
+	z = xyz.z; 
 }
 
 //////////////////////////
@@ -395,6 +414,13 @@ Vector3 Vector3::operator*=(const Matrix& mt)
 bool Vector3::operator==(const Vector3& v)
 {
 	return x == v.x && y == v.y && z == v.z;
+}
+
+//VECTOR3[]
+float& Vector3::operator[](const size_t i)
+{
+	assert(i < 3);
+	return *(&x + i);
 }
 
 //VECTOR3 FUNCTIONS
@@ -576,6 +602,13 @@ Vector2 Vector2::operator/=(const float f)
 bool Vector2::operator==(const Vector2& v)
 {
 	return x == v.x && y == v.y;
+}
+
+//VECTOR2[]
+float& Vector2::operator[](const size_t i)
+{
+	assert(i < 2);
+	return *(&x + i);
 }
 
 //VECTOR2 FUNCTIONS
