@@ -3,7 +3,7 @@
 #include "../GraphicsAssertMacros.h"
 #include "../Geometry/CCube.h"
 
-CBox::CBox(CGraphics& rGfx,
+CBox::CBox(CRenderer* pRenderer,
 	std::mt19937& rng,
 	std::uniform_real_distribution<float>&adist,
 	std::uniform_real_distribution<float>&ddist,
@@ -47,7 +47,7 @@ CBox::CBox(CGraphics& rGfx,
 
 	CCube::Create(&pVertexBuffer, &pIndexBuffer);
 
-	m_pRenderData = new RenderData(CVertexBuffer(rGfx, pVertexBuffer), CIndexBuffer(rGfx, pIndexBuffer));
+	m_pRenderData = new RenderData(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
 

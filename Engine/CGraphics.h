@@ -11,17 +11,17 @@
 #include "Maths\Vectors.h"
 #include "Core/Core.h"
 
-class CGraphics
+class CRenderer
 {
 	//Allow access to private variables for IBindable
 	//friend class IBindable;
 public:
 	
 	//We need a handle to our window to construct a Windows device object
-	CGraphics(HWND hWnd, Vector2 wndSize);
-	CGraphics(const CGraphics&) = delete;
-	CGraphics& operator=(const CGraphics&) = delete;
-	~CGraphics();
+	CRenderer(HWND hWnd, Vector2 wndSize);
+	CRenderer(const CRenderer&) = delete;
+	CRenderer& operator=(const CRenderer&) = delete;
+	~CRenderer();
 
 	void EndFrame();
 	void BeginFrame(float r = 0.7f, float g = 0.7f, float b = 1.0f) noexcept;

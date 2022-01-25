@@ -6,11 +6,11 @@ class CVertexBuffer : public IBindable
 public:
 	//Constructor needs to be in header for whatever reason
 	template<class V>
-	CVertexBuffer(CGraphics& gfx, const std::vector<V>& vertices)
+	CVertexBuffer(CRenderer* pRenderer, const std::vector<V>& vertices)
 		:
 		m_stride(sizeof(V))
 	{
-		GET_INFOMANAGER(gfx);
+		GET_INFOMANAGER(pRenderer);
 
 		D3D11_BUFFER_DESC vertexBufferDesc = {};
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -22,12 +22,12 @@ public:
 		D3D11_SUBRESOURCE_DATA vertexSubresourceData = {};
 		vertexSubresourceData.pSysMem = vertices.data();
 
-		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
+		GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &m_pVertexBuffer));
 	}
 
 	CVertexBuffer(ID3D11Buffer* pVertexBuffer);
 
-	void Bind(CGraphics& gfx) noexcept override;
+	void Bind(CRenderer* pRenderer) noexcept override;
 
 protected:
 

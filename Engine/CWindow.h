@@ -51,7 +51,8 @@ public:
 	void SetTitle(const std::string& title);
 	static Message ProcessMessages();
 
-	CGraphics& Gfx();
+	//TODO: Put this somewhere else, i don't like this
+	CRenderer* GetRenderer();
 
 	Vector2 GetSize() const noexcept { return m_Size; }
 
@@ -80,5 +81,5 @@ private:
 
 	Vector2 m_Size;
 
-	CGraphics* m_pGfx;
+	CRenderer* m_pRenderer;
 };

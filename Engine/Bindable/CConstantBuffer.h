@@ -3,6 +3,9 @@
 #include "../GraphicsAssertMacros.h"
 
 //TODO: Figure out what to do with this class
+//TODO: Remove template, figure out if update size needs to be the same as the original size,
+//if so, then there's little point to having it templateified, just use void* pData and store size,
+//so we can assert if the update size is correct
 
 template <typename C>
 class CConstantBuffer : public IBindable
@@ -10,20 +13,20 @@ class CConstantBuffer : public IBindable
 public:
 
 	//Functions have to be in the header since templates work that way (?)
-	void Update(CGraphics& gfx, const C& consts)
+	void Update(CRenderer* pRenderer, const C& consts)
 	{
-		GET_INFOMANAGER(gfx);
+		GET_INFOMANAGER(pRenderer);
 
 		D3D11_MAPPED_SUBRESOURCE mappedSubresource;
-		GFX_ASSERT_INFO(gfx.GetDeviceContext()->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
+		GFX_ASSERT_INFO(pRenderer->GetDeviceContext()->Map(m_pConstantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &mappedSubresource));
 		memcpy(mappedSubresource.pData, &consts, sizeof(consts));
 
-		gfx.GetDeviceContext()->Unmap(m_pConstantBuffer.Get(), 0u);
+		pRenderer->GetDeviceContext()->Unmap(m_pConstantBuffer.Get(), 0u);
 	}
 
-	CConstantBuffer(CGraphics& gfx, const C& consts)
+	CConstantBuffer(CRenderer* pRenderer, const C& consts)
 	{
-		GET_INFOMANAGER(gfx);
+		GET_INFOMANAGER(pRenderer);
 
 		D3D11_BUFFER_DESC cbufferDesc = {};
 		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -36,11 +39,11 @@ public:
 		D3D11_SUBRESOURCE_DATA csd = {};
 		csd.pSysMem = &consts;
 
-		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateBuffer(&cbufferDesc, &csd, &m_pConstantBuffer));
 	}
-	CConstantBuffer(CGraphics& gfx)
+	CConstantBuffer(CRenderer* pRenderer)
 	{
-		GET_INFOMANAGER(gfx);
+		GET_INFOMANAGER(pRenderer);
 
 		D3D11_BUFFER_DESC cbufferDesc = {};
 		cbufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -50,7 +53,7 @@ public:
 		cbufferDesc.ByteWidth = sizeof(C);
 		cbufferDesc.StructureByteStride = 0u;
 
-		GFX_ASSERT_INFO(gfx.GetDevice()->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
+		GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateBuffer(&cbufferDesc, nullptr, &m_pConstantBuffer));
 	}
 
 protected:
@@ -71,9 +74,9 @@ public:
 
 	using CConstantBuffer<C>::CConstantBuffer;
 
-	void Bind(CGraphics& gfx) noexcept override
+	void Bind(CRenderer* pRenderer) noexcept override
 	{
-		gfx.GetDeviceContext()->VSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
+		pRenderer->GetDeviceContext()->VSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
 	}
 };
 
@@ -86,8 +89,8 @@ public:
 
 	using CConstantBuffer<C>::CConstantBuffer;
 
-	void Bind(CGraphics& gfx) noexcept override
+	void Bind(CRenderer* pRenderer) noexcept override
 	{
-		gfx.GetDeviceContext()->PSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
+		pRenderer->GetDeviceContext()->PSSetConstantBuffers(0u, 1u, m_pConstantBuffer.GetAddressOf());
 	}
 };

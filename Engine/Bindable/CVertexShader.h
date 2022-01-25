@@ -5,10 +5,10 @@ class CVertexShader : public IBindable
 {
 public:
 
-	CVertexShader(CGraphics& gfx, const char* shaderName);
+	CVertexShader(CRenderer* pRenderer, const char* shaderName);
 	CVertexShader(ID3D11VertexShader* pVertexShader);
 
-	void Bind(CGraphics& gfx) noexcept override;
+	void Bind(CRenderer* pRenderer) noexcept override;
 	ID3DBlob* GetBytecode() const noexcept { return m_pBytecodeBlob.Get(); }
 
 protected:

@@ -20,9 +20,9 @@ inline std::wstring convert( const std::string& as )
 	return ret;
 }
 
-CVertexShader::CVertexShader(CGraphics& gfx, const char* shaderName)
+CVertexShader::CVertexShader(CRenderer* pRenderer, const char* shaderName)
 {
-	GET_INFOMANAGER(gfx);
+	GET_INFOMANAGER(pRenderer);
 
 	std::string path = OUTPUT_DIR;
 	path.append("Shaders\\");
@@ -32,7 +32,7 @@ CVertexShader::CVertexShader(CGraphics& gfx, const char* shaderName)
 	//D3DReadFileToBlob reads CSO files
 	GFX_ASSERT_INFO(D3DReadFileToBlob(wPath.c_str(), &m_pBytecodeBlob));
 
-	GFX_ASSERT_INFO(gfx.GetDevice()->CreateVertexShader(m_pBytecodeBlob->GetBufferPointer(), m_pBytecodeBlob->GetBufferSize(), nullptr, &m_pVertexShader));
+	GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateVertexShader(m_pBytecodeBlob->GetBufferPointer(), m_pBytecodeBlob->GetBufferSize(), nullptr, &m_pVertexShader));
 }
 
 CVertexShader::CVertexShader(ID3D11VertexShader* pVertexShader)
@@ -42,7 +42,7 @@ CVertexShader::CVertexShader(ID3D11VertexShader* pVertexShader)
 
 }
 
-void CVertexShader::Bind(CGraphics& gfx) noexcept
+void CVertexShader::Bind(CRenderer* pRenderer) noexcept
 {
-	gfx.GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
+	pRenderer->GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
 }

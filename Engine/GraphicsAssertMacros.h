@@ -25,9 +25,9 @@
 //Macro for importing infomanager into local scope
 //this.GetInfoManager(Graphics& gfx) must exist
 #ifndef NDEBUG
-#define GET_INFOMANAGER(gfx) HRESULT hr; CDXGIInfoManager& m_InfoManager = gfx.GetInfoManager()
+#define GET_INFOMANAGER(pRenderer) HRESULT hr; CDXGIInfoManager& m_InfoManager = pRenderer->GetInfoManager()
 #else
-#define GET_INFOMANAGER(gfx) HRESULT hr
+#define GET_INFOMANAGER(pRenderer) HRESULT hr
 #endif
 
 

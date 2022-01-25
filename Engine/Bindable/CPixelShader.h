@@ -5,10 +5,10 @@ class CPixelShader : public IBindable
 {
 public:
 
-	CPixelShader(CGraphics& gfx, const char* shaderName);
+	CPixelShader(CRenderer* pRenderer, const char* shaderName);
 	CPixelShader(ID3D11PixelShader* pPixelShader);
 
-	void Bind(CGraphics& gfx) noexcept override;
+	void Bind(CRenderer* pRenderer) noexcept override;
 
 protected:
 

@@ -121,15 +121,15 @@ CWindow::CWindow(int width, int height, const char* name)
 	OutputDebugString("\nWindow shown");
 
 	//Create graphics object
-	m_pGfx = new CGraphics(m_hWnd, m_Size);
+	m_pRenderer = new CRenderer(m_hWnd, m_Size);
 	OutputDebugString("\nCreated cgraphics");
 
 }
 
 CWindow::~CWindow()
 {
-	if(m_pGfx == nullptr)
-		delete m_pGfx;
+	if(m_pRenderer == nullptr)
+		delete m_pRenderer;
 
 	DestroyWindow(m_hWnd);
 }
@@ -174,12 +174,12 @@ CWindow::Message CWindow::ProcessMessages()
 }
 
 
-CGraphics& CWindow::Gfx()
+CRenderer* CWindow::GetRenderer()
 {
 
 	//m_pGfx should never be null but we error check for debugging purposes
 #ifndef NDEBUG
-	if (m_pGfx == nullptr)
+	if (m_pRenderer == nullptr)
 	{
 		std::ostringstream oss;
 		oss << "Windows Error [Gfx ptr was null]" << std::endl 
@@ -190,7 +190,7 @@ CGraphics& CWindow::Gfx()
 	}
 #endif // !NDEBUG
 
-	return *m_pGfx;
+	return m_pRenderer;
 }
 
 //Message handler for setup

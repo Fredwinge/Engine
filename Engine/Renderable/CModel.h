@@ -7,7 +7,7 @@ class CModel : public IRenderable
 public:
 
 	//TODO: Replace vectors with just ptrs?
-	CModel(CGraphics& rGfx, const char* path);
+	CModel(CRenderer* pRenderer, const char* path);
 
 	void Update(float deltaTime) override;
 	DirectX::XMMATRIX GetWorldMatrix() const override;

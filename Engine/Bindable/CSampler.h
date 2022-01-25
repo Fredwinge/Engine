@@ -5,10 +5,10 @@ class CSampler : public IBindable
 {
 public:
 
-	CSampler(CGraphics& gfx);
+	CSampler(CRenderer* pRenderer);
 	CSampler(ID3D11SamplerState* pSampler);
 
-	void Bind(CGraphics& gfx) noexcept override;
+	void Bind(CRenderer* pRenderer) noexcept override;
 
 private:
 

@@ -2,7 +2,7 @@
 #include "../Bindable/BindableBase.h"
 #include "../CModelLoader.h"
 
-CModel::CModel(CGraphics& rGfx, const char* path)
+CModel::CModel(CRenderer* pRenderer, const char* path)
 	:
 	r(0.0f),
 	roll(0.0f),
@@ -21,7 +21,7 @@ CModel::CModel(CGraphics& rGfx, const char* path)
 
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, IndexBuffer);
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, VertexBuffer);
-	m_pRenderData = new RenderData(CVertexBuffer(rGfx, VertexBuffer), CIndexBuffer(rGfx, IndexBuffer));
+	m_pRenderData = new RenderData(CVertexBuffer(pRenderer, VertexBuffer), CIndexBuffer(pRenderer, IndexBuffer));
 	//BINDS
 	//Bind vertex buffer
 	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));
@@ -64,6 +64,5 @@ DirectX::XMMATRIX CModel::GetWorldMatrix() const
 {
 	return DirectX::XMLoadFloat3x3(&mt) * 
 		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, -3.0f, -10.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
+		DirectX::XMMatrixTranslation(r, -3.0f, -10.0f);
 }

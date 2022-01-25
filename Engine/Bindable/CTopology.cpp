@@ -1,13 +1,13 @@
 #include "CTopology.h"
 
-CTopology::CTopology(CGraphics& gfx, D3D11_PRIMITIVE_TOPOLOGY type)
+CTopology::CTopology(CRenderer* pRenderer, D3D11_PRIMITIVE_TOPOLOGY type)
 	:
 	m_TopologyType(type)
 {
 
 }
 
-void CTopology::Bind(CGraphics& gfx) noexcept
+void CTopology::Bind(CRenderer* pRenderer) noexcept
 {
-	gfx.GetDeviceContext()->IASetPrimitiveTopology(m_TopologyType);
+	pRenderer->GetDeviceContext()->IASetPrimitiveTopology(m_TopologyType);
 }

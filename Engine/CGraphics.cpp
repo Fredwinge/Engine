@@ -11,7 +11,7 @@
 namespace dx = DirectX;
 
 
-CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
+CRenderer::CRenderer(HWND hWnd, Vector2 wndSize)
 	:
 	m_mProjectionMatrix(),
 	m_mViewMatrix()
@@ -36,7 +36,7 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;									//Describes options for handling the contents of the presentation buffer after presenting a surface
 	swapDesc.Flags = 0;																//Describes options for swapchain behaviour
 	
-	OutputDebugString("\ncreated swapchain desc");
+	OutputDebugString("\nCreated swapchain desc");
 
 	//Only set the debug flag if we're actually in debug mode
 	UINT uSwapCreateFlags = 0u;
@@ -75,7 +75,7 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 		__uuidof(ID3D11Resource),		//uuid of the interface which we want to recieve onto our subobject(???)
 		(LPVOID*)&pBackBuffer));		//** to the object we want to store the backbuffers address in
 	
-	OutputDebugString("\nget backbuffer");
+	OutputDebugString("\nGet backbuffer");
 
 	//Create render target view
 	GFX_ASSERT_INFO(m_pDevice->CreateRenderTargetView(
@@ -83,12 +83,12 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 		nullptr,						//Description for Render target view configuration. nullptr gives us a default one we will use for now
 		&m_pRenderTargetView));			//The *ID3D11RenderTargetView which stores the rendertarget
 	
-	OutputDebugString("\ncreate render target view");
+	OutputDebugString("\nCreate render target view");
 
 	//Release pBackBuffer since it's no longer needed
 	pBackBuffer->Release();
 
-	OutputDebugString("\nreleased backbuffer");
+	OutputDebugString("\nReleased backbuffer");
 
 	//Create Depth Stencil state
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
@@ -99,7 +99,7 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 
 	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilState(&depthStencilDesc, &m_pDepthStencilState));
 
-	OutputDebugString("\ncreated depth stencil state");
+	OutputDebugString("\nCreated depth stencil state");
 
 	//Bind depth stencil state to the pipeline
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
@@ -108,7 +108,7 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 	
 	depthStencilTxtDesc.SampleDesc.Count = 1;
 	depthStencilTxtDesc.SampleDesc.Quality = 0;
-	depthStencilTxtDesc.Format = DXGI_FORMAT_D32_FLOAT; //For depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
+	depthStencilTxtDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; //For depth stencil we would want DXGI_FORMAT_D24_UNORM_S8_UINT, since it's split between depth and stencil
 	depthStencilTxtDesc.Width = wndSize.x;
 	depthStencilTxtDesc.Height = wndSize.y;
 	depthStencilTxtDesc.ArraySize = 1;					//The amount of textures, we only need 1
@@ -118,16 +118,16 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 
 	GFX_ASSERT_INFO(m_pDevice->CreateTexture2D(&depthStencilTxtDesc, nullptr, &m_pDepthStencilTexture));
 
-	OutputDebugString("\ncreated depthstencil texture");
+	OutputDebugString("\nCreated depthstencil texture");
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
-	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0u;
 
 	GFX_ASSERT_INFO(m_pDevice->CreateDepthStencilView(m_pDepthStencilTexture, &depthStencilViewDesc, &m_pDepthStencilView));
 
-	OutputDebugString("\ncreated depthstencil view");
+	OutputDebugString("\nCreated depthstencil view");
 
 	//Configure viewport
 	D3D11_VIEWPORT viewPort;
@@ -148,7 +148,7 @@ CGraphics::CGraphics(HWND hWnd, Vector2 wndSize)
 
 }
 
-CGraphics::~CGraphics()
+CRenderer::~CRenderer()
 {
 	//Release pointers
 
@@ -175,7 +175,7 @@ CGraphics::~CGraphics()
 }
 
 
-void CGraphics::EndFrame()
+void CRenderer::EndFrame()
 {
 
 	HRESULT hr;
@@ -202,7 +202,7 @@ void CGraphics::EndFrame()
 	}
 }
 
-void CGraphics::BeginFrame(float r, float g, float b) noexcept
+void CRenderer::BeginFrame(float r, float g, float b) noexcept
 {
 
 	const float color[] = { r, g, b, 1.0f };
@@ -212,7 +212,7 @@ void CGraphics::BeginFrame(float r, float g, float b) noexcept
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }
 
-void CGraphics::DrawIndexed(unsigned int indexCount)
+void CRenderer::DrawIndexed(unsigned int indexCount)
 {
 	GFX_ASSERT_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
 }

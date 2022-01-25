@@ -6,7 +6,7 @@ class IBindable
 public:
 
 	//Bind is used to bind all the neccessary objects to the pipeline, such as vertex buffer etc.
-	virtual void Bind(CGraphics& gfx) noexcept = 0;
+	virtual void Bind(CRenderer* pRenderer) noexcept = 0;
 
 protected:
 

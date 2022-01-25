@@ -5,10 +5,10 @@ class CIndexBuffer : public IBindable
 {
 public:
 
-	CIndexBuffer(CGraphics& gfx, const std::vector<uint16>& indices);
+	CIndexBuffer(CRenderer* pRenderer, const std::vector<uint16>& indices);
 	CIndexBuffer(ID3D11Buffer* pIndexBuffer);
 
-	void Bind(CGraphics& gfx) noexcept override;
+	void Bind(CRenderer* pRenderer) noexcept override;
 
 	unsigned int GetCount() const noexcept { return m_IndexCount; }
 

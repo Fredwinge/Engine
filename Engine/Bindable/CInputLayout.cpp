@@ -1,11 +1,11 @@
 #include "CInputLayout.h"
 #include "../GraphicsAssertMacros.h"
 
-CInputLayout::CInputLayout(CGraphics& gfx, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob* pVertexShaderByteCode)
+CInputLayout::CInputLayout(CRenderer* pRenderer, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob* pVertexShaderByteCode)
 {
-	GET_INFOMANAGER(gfx);
+	GET_INFOMANAGER(pRenderer);
 
-	GFX_ASSERT_INFO(gfx.GetDevice()->CreateInputLayout(
+	GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateInputLayout(
 		layout.data(), 
 		layout.size(), 
 		pVertexShaderByteCode->GetBufferPointer(),
@@ -20,7 +20,7 @@ CInputLayout::CInputLayout(ID3D11InputLayout* pInputLayout)
 
 }
 
-void CInputLayout::Bind(CGraphics& gfx) noexcept
+void CInputLayout::Bind(CRenderer* pRenderer) noexcept
 {
-	gfx.GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
+	pRenderer->GetDeviceContext()->IASetInputLayout(m_pInputLayout.Get());
 }

@@ -6,7 +6,7 @@
 
 #include "../RenderCallbacks/IRenderCallback.h"
 
-void IRenderable::Render(CGraphics& gfx) /*const*/ //noexcept
+void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 {
 	/*
 	for (auto& b : m_Binds)
@@ -19,6 +19,6 @@ void IRenderable::Render(CGraphics& gfx) /*const*/ //noexcept
 	m_pRenderData->mWorldMatrix = GetWorldMatrix();
 
 	if (m_pRenderCallback != nullptr)
-		m_pRenderCallback->RenderCallback(gfx, m_pRenderData);
+		m_pRenderCallback->RenderCallback(pRenderer, m_pRenderData);
 
 }

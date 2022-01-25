@@ -8,8 +8,8 @@ CVertexBuffer::CVertexBuffer(ID3D11Buffer* pVertexBuffer)
 
 }
 
-void CVertexBuffer::Bind(CGraphics& gfx) noexcept
+void CVertexBuffer::Bind(CRenderer* pRenderer) noexcept
 {
 	const UINT offset = 0u;
-	gfx.GetDeviceContext()->IASetVertexBuffers(0u, 1u, m_pVertexBuffer.GetAddressOf(), &m_stride, &offset);
+	pRenderer->GetDeviceContext()->IASetVertexBuffers(0u, 1u, m_pVertexBuffer.GetAddressOf(), &m_stride, &offset);
 }

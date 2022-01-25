@@ -7,6 +7,7 @@
 class IRenderCallback;
 class IBindable;
 
+//TODO: Redesign
 class IRenderable
 {
 
@@ -17,7 +18,7 @@ public:
 	virtual ~IRenderable() = default;
 	
 	virtual DirectX::XMMATRIX GetWorldMatrix() const /*noexcept*/ = 0;
-	void Render(CGraphics& gfx);// const; //noexcept; // IS DEBUG
+	void Render(CRenderer* pRenderer);// const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
 
 	void SetRenderCallback(IRenderCallback* pRenderCallback) { m_pRenderCallback = pRenderCallback; }

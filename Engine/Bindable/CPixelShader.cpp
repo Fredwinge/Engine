@@ -20,9 +20,9 @@ inline std::wstring convert( const std::string& as )
 	return ret;
 }
 
-CPixelShader::CPixelShader(CGraphics& gfx, const char* shaderName)
+CPixelShader::CPixelShader(CRenderer* pRenderer, const char* shaderName)
 {
-	GET_INFOMANAGER(gfx);
+	GET_INFOMANAGER(pRenderer);
 
 	std::string path = OUTPUT_DIR;
 	path.append("Shaders\\");
@@ -34,7 +34,7 @@ CPixelShader::CPixelShader(CGraphics& gfx, const char* shaderName)
 	//D3DReadFileToBlob reads CSO files
 	GFX_ASSERT_INFO(D3DReadFileToBlob(wPath.c_str(), &pBlob));
 
-	GFX_ASSERT_INFO(gfx.GetDevice()->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &m_pPixelShader));
+	GFX_ASSERT_INFO(pRenderer->GetDevice()->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &m_pPixelShader));
 
 	pBlob->Release();
 }
@@ -46,7 +46,7 @@ CPixelShader::CPixelShader(ID3D11PixelShader* pPixelShader)
 
 }
 
-void CPixelShader::Bind(CGraphics& gfx) noexcept
+void CPixelShader::Bind(CRenderer* pRenderer) noexcept
 {
-	gfx.GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
+	pRenderer->GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
 }

@@ -7,7 +7,7 @@ class CBox : public IRenderable
 {
 public:
 
-	CBox(CGraphics& gfx, std::mt19937& rng,
+	CBox(CRenderer* pRenderer, std::mt19937& rng,
 		std::uniform_real_distribution<float>&adist,
 		std::uniform_real_distribution<float>&ddist,
 		std::uniform_real_distribution<float>&odist,
