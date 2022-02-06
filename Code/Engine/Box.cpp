@@ -1,4 +1,4 @@
-#include "CBox.h"
+#include "Box.h"
 #include "Bindable/BindableBase.h"
 #include "Geometry/CCube.h"
 

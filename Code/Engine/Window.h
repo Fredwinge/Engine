@@ -3,7 +3,7 @@
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 #include "Renderer.h"
-#include "Math\Vectors.h"
+#include "Math/Vectors.h"
 
 class CWindow
 {

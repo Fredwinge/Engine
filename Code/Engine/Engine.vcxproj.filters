@@ -13,12 +13,12 @@
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="WinMain.cpp" />
-    <ClCompile Include="CApplication.cpp" />
-    <ClCompile Include="CBox.cpp" />
-    <ClCompile Include="CCamera.cpp" />
-    <ClCompile Include="CModel.cpp" />
-    <ClCompile Include="CModelLoader.cpp" />
-    <ClCompile Include="CWindow.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometry\CCone.h">
@@ -39,12 +39,12 @@
     <ClInclude Include="Geometry\CSphere.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="CWindow.h" />
-    <ClInclude Include="CModelLoader.h" />
-    <ClInclude Include="CCamera.h" />
-    <ClInclude Include="CModel.h" />
-    <ClInclude Include="CBox.h" />
-    <ClInclude Include="CApplication.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="Application.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\TexturedPixelShader.hlsl">

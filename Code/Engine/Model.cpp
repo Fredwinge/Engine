@@ -1,6 +1,6 @@
-#include "CModel.h"
+#include "Model.h"
 #include "Bindable/BindableBase.h"
-#include "CModelLoader.h"
+#include "ModelLoader.h"
 
 CModel::CModel(CRenderer* pRenderer, const char* path)
 	:

@@ -1,7 +1,7 @@
 #include "Math\CommonMath.h"
-#include "CApplication.h"
+#include "Application.h"
 #include <sstream>
-#include "CBox.h"
+#include "Box.h"
 #include "Math\Matrix.h"
 
 CApplication::CApplication()

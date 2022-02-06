@@ -1,10 +1,10 @@
 #pragma once
-#include "CWindow.h"
+#include "Window.h"
 #include "Utils/Timer.h"
-#include "CCamera.h"
+#include "Camera.h"
 #include "Renderable\IRenderable.h"
 
-#include "CModel.h"
+#include "Model.h"
 #include "RenderCallbacks\IRenderCallback.h"
 
 class CApplication

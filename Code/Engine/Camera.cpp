@@ -1,4 +1,4 @@
-#include "CCamera.h"
+#include "Camera.h"
 #include "Math\Matrix.h"
 #include "Math/CommonMath.h"
 

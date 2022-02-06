@@ -1,4 +1,4 @@
-#include "CWindow.h"
+#include "Window.h"
 #include <sstream>
 #include "WindowsAssertMacros.h"
 //#include "resource.h"
