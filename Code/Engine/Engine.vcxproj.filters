@@ -67,9 +67,6 @@
     <ClInclude Include="Geometry\CSphere.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\GeometricMath.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="CCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -215,7 +215,6 @@
     <ClInclude Include="Geometry\CPlane.h" />
     <ClInclude Include="Geometry\CPrism.h" />
     <ClInclude Include="Geometry\CSphere.h" />
-    <ClInclude Include="Geometry\GeometricMath.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">

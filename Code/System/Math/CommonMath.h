@@ -1,7 +1,8 @@
 #pragma once
 #include <math.h>
 
-const double PI = 3.14159265359;
+constexpr float PI = 3.14159265f;
+constexpr double PI_D = 3.1415926535897932;
 
 template<typename T>
 inline T lerp(T a, T b, T t)
@@ -28,13 +29,13 @@ inline T clamp(T x, T low, T high)
 }
 
 template<typename T>
-inline T DegreesToRadians(T degree)
+inline T to_rad(T degree)
 {
-	return (degree * (PI / 180));
+	return (degree * (PI / 180.0f));
 }
 
 template<typename T>
-inline T RadiansToDegrees(T radian)
+inline T to_deg(T radian)
 {
-	return (radian * (180 / PI));
+	return (radian * (180.0f / PI));
 }

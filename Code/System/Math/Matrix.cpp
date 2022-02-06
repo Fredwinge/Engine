@@ -422,7 +422,7 @@ const Matrix Matrix::CreateProjectionFov(const float fov, const float aspectRati
 	assert(near < far);
 
 	float frustumRange = far / (far - near);
-	float height = 1.0f / tan(0.5f * DegreesToRadians(fov));
+	float height = 1.0f / tan(0.5f * to_rad(fov));
 
 	Matrix result = 0;
 
