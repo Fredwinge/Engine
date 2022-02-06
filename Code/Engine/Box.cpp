@@ -106,6 +106,6 @@ void CBox::Update(float deltaTime) /*noexcept*/
 	chi += dchi * deltaTime;
 
 	Matrix posMatrix = Matrix::Identity;
-	//posMatrix.Pos.x = r;
-	m_ModelMatrix *= Matrix::CreateRotation(Vec3(deltaTime, deltaTime, deltaTime)) * posMatrix * Matrix::CreateRotation(Vec3(deltaTime, deltaTime, deltaTime));
+	posMatrix.Pos.x = r;
+	m_ModelMatrix = Matrix::CreateRotation(Vec3(roll, pitch, yaw)) * posMatrix * Matrix::CreateRotation(Vec3(theta, phi, chi));
 }
