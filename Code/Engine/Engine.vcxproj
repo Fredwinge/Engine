@@ -200,8 +200,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="Primitives\CCube.cpp" />
     <ClCompile Include="Window.cpp" />
-    <ClCompile Include="Geometry\CCube.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,13 +210,13 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="Primitives\CCone.h" />
+    <ClInclude Include="Primitives\CCube.h" />
+    <ClInclude Include="Primitives\CIndexedTriangleList.h" />
+    <ClInclude Include="Primitives\CPlane.h" />
+    <ClInclude Include="Primitives\CPrism.h" />
+    <ClInclude Include="Primitives\CSphere.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="Geometry\CCone.h" />
-    <ClInclude Include="Geometry\CCube.h" />
-    <ClInclude Include="Geometry\CIndexedTriangleList.h" />
-    <ClInclude Include="Geometry\CPlane.h" />
-    <ClInclude Include="Geometry\CPrism.h" />
-    <ClInclude Include="Geometry\CSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">

@@ -1,7 +1,6 @@
 #pragma once
 #include "CIndexedTriangleList.h"
 #include <DirectXMath.h>
-#include "GeometricMath.h"
 
 class CSphere
 {

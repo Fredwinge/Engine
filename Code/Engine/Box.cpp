@@ -1,6 +1,6 @@
 #include "Box.h"
 #include "Bindable/BindableBase.h"
-#include "Geometry/CCube.h"
+#include "Primitives/CCube.h"
 
 CBox::CBox(CRenderer* pRenderer,
 	std::mt19937& rng,
@@ -21,15 +21,6 @@ CBox::CBox(CRenderer* pRenderer,
 	theta(adist(rng)),
 	phi(adist(rng))
 {
-
-	namespace dx = DirectX;
-
-	//BINDS
-	//Bind vertex buffer
-	struct Vertex
-	{
-		dx::XMFLOAT3 pos;
-	};
 
 	//auto model = CCube::Make<Vector3>();
 
