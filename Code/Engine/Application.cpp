@@ -76,17 +76,6 @@ int CApplication::Go()
 
 void CApplication::Update()
 {
-
-	Vector4 bump = { 0, 0, 1, 0 };
-	Matrix bk = { 0, -1, 0, 0,
-	0, 1, 0, 0,
-	0, 0, 0, 0,
-	0, 0, 0 ,0 };
-
-	bump *= bk;
-
-	bump.Normalize();
-
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
 	{
