@@ -1,6 +1,6 @@
 #include "IRenderCallback.h"
 //TODO: ugly include
-#include "../../Engine/CCamera.h"
+#include "../../Engine/Camera.h"
 
 IRenderCallback::IRenderCallback(CRenderer* pRenderer)
 {
