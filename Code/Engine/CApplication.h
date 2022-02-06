@@ -1,6 +1,6 @@
 #pragma once
 #include "CWindow.h"
-#include "Utils/CTimer.h"
+#include "Utils/Timer.h"
 #include "CCamera.h"
 #include "Renderable\IRenderable.h"
 

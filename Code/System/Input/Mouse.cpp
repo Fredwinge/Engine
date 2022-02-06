@@ -1,4 +1,4 @@
-#include "CMouse.h"
+#include "Mouse.h"
 #include <Windows.h>
 
 //Read mouse event from event queue

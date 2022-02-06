@@ -1,4 +1,4 @@
-#include "CTimer.h"
+#include "Timer.h"
 
 using namespace std::chrono;
 

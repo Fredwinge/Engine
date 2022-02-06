@@ -28,13 +28,13 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="WindowsAssertMacros.h" />
-    <ClInclude Include="Utils\CTimer.h">
+    <ClInclude Include="Utils\Timer.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Input\CKeyboard.h">
+    <ClInclude Include="Input\Keyboard.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="Input\CMouse.h">
+    <ClInclude Include="Input\Mouse.h">
       <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,13 +45,13 @@
     <ClCompile Include="Math\Vectors.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\CTimer.cpp">
+    <ClCompile Include="Utils\Timer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Input\CKeyboard.cpp">
+    <ClCompile Include="Input\Keyboard.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Input\CMouse.cpp">
+    <ClCompile Include="Input\Mouse.cpp">
       <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
