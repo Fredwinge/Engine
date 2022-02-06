@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
-#include <DirectXMath.h>
 #include <wrl.h>
 #include <vector>
 #include "CDXGIInfoManager.h"
@@ -10,6 +9,8 @@
 #include "GraphicsAssertMacros.h"
 #include "Maths\Vectors.h"
 #include "Core/Core.h"
+
+class CCamera;
 
 class CRenderer
 {
@@ -27,15 +28,9 @@ public:
 	void BeginFrame(float r = 0.7f, float g = 0.7f, float b = 1.0f) noexcept;
 	void DrawIndexed(unsigned int indexCount);
 
-	//Get - Set Matrixes
-	void SetProjection(DirectX::FXMMATRIX proj) noexcept	{ m_mProjectionMatrix = proj; }
-	DirectX::XMMATRIX GetProjection() const noexcept		{ return m_mProjectionMatrix; }
-
-	void SetView(DirectX::FXMMATRIX view) noexcept			{ m_mViewMatrix = view; }
-	DirectX::XMMATRIX GetView() const noexcept				{ return m_mViewMatrix; }
-
-	//TODO: Should probably use the camera class for storing view & projection
-	DirectX::XMMATRIX GetViewProjection() const noexcept	{ return m_mViewMatrix * m_mProjectionMatrix; }
+	//Get - Set Camera
+	const CCamera*	GetCamera()						{ return m_pCurrentCamera; }
+	void			SetCamera(CCamera* pCam)	{ m_pCurrentCamera = pCam; }
 
 
 	//Get functions for device & device context in case one wants to create bindables
@@ -70,9 +65,6 @@ private:
 	//Depth stencil state
 	ID3D11DepthStencilState* m_pDepthStencilState = nullptr;
 
-	//Projection matrix
-	DirectX::XMMATRIX m_mProjectionMatrix;
-
-	//View matrix
-	DirectX::XMMATRIX m_mViewMatrix;
+	//TODO: Should this really be here?
+	CCamera* m_pCurrentCamera = nullptr;
 };

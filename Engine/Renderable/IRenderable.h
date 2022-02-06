@@ -1,7 +1,7 @@
 #pragma once
 #include "../CGraphics.h"
-#include <DirectXMath.h>
 #include "EssentialRenderData.h"
+#include "../Maths/Matrix.h"
 //#include "../RenderCallbacks/IRenderCallback.h"
 
 class IRenderCallback;
@@ -17,7 +17,7 @@ public:
 	IRenderable(const IRenderable&) = delete;
 	virtual ~IRenderable() = default;
 	
-	virtual DirectX::XMMATRIX GetWorldMatrix() const /*noexcept*/ = 0;
+	virtual Matrix GetWorldMatrix() const /*noexcept*/ = 0;
 	void Render(CRenderer* pRenderer);// const; //noexcept; // IS DEBUG
 	virtual void Update(float deltaTime) /*noexcept*/ = 0;
 

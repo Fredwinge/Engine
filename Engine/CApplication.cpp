@@ -1,12 +1,15 @@
+#include "Maths\CommonMath.h"
 #include "CApplication.h"
 #include <sstream>
 #include "Renderable\CBox.h"
+#include "Maths\Matrix.h"
 
 CApplication::CApplication()
 	:
 	m_Wnd(800, 600, "Window Thingy")
 {
 
+	static constexpr size_t numRenderables = 180;
 	for (size_t i = 0; i < numRenderables; ++i)
 	{
 		std::mt19937 rng{ std::random_device{}() };
@@ -19,19 +22,21 @@ CApplication::CApplication()
 		//std::uniform_int_distribution<int> longdist{ 10,40 };
 		//std::uniform_int_distribution<int> typedist{ 0,3 };
 
-		m_pRenderables.push_back(std::make_unique<CBox>(m_Wnd.Gfx(), rng, adist, ddist, odist, rdist, bdist));
+		m_pRenderables.push_back(std::make_unique<CBox>(m_Wnd.GetRenderer(), rng, adist, ddist, odist, rdist, bdist));
 	}
 	OutputDebugString("\nCreated boxes");
 
-	m_Wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 0.75f, 0.5f, 100.0f));
-	OutputDebugString("\nSet projection matrix");
-	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
-	OutputDebugString("\nSet view matrix");
+	m_Camera.SetProjection(Matrix::CreateProjectionFov(75.0f, 800.0f / 600.0f, 0.5f, 100.0f));
+	OutputDebugString("\nSet camera projection");
 
-	m_pTorvudModel = new CModel(m_Wnd.Gfx(), "../Assets/Models/Torvud.obj");
+	m_Wnd.GetRenderer()->SetCamera(&m_Camera);
+	OutputDebugString("\nSet active camera");
+
+	//TODO: path macro
+	m_pTorvudModel = new CModel(m_Wnd.GetRenderer(), "../Assets/Models/Torvud.obj");
 	OutputDebugString("\ncreated torvud model");
 
-	pRenderCallback = new IRenderCallback(m_Wnd.Gfx());
+	pRenderCallback = new IRenderCallback(m_Wnd.GetRenderer());
 	OutputDebugString("\ncreated rendercallback");
 
 	for (auto& d : m_pRenderables)
@@ -45,7 +50,6 @@ CApplication::CApplication()
 
 	//Temp
 	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
-	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 }
 
 CApplication::~CApplication()
@@ -66,12 +70,22 @@ int CApplication::Go()
 		}
 
 		Update();
-		Render(m_Wnd.Gfx());
+		Render(m_Wnd.GetRenderer());
 	}
 }
 
 void CApplication::Update()
 {
+
+	Vector4 bump = { 0, 0, 1, 0 };
+	Matrix bk = { 0, -1, 0, 0,
+	0, 1, 0, 0,
+	0, 0, 0, 0,
+	0, 0, 0 ,0 };
+
+	bump *= bk;
+
+	bump.Normalize();
 
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
@@ -106,20 +120,18 @@ void CApplication::Update()
 
 		m_Wnd.m_Mouse.ResetRawDelta();
 	}
-
-	m_Wnd.Gfx().SetView(m_Camera.GetMatrix());
 }
 
-void CApplication::Render(CGraphics& rGfx)
+void CApplication::Render(CRenderer* pRenderer)
 {
-	rGfx.BeginFrame(sin(m_Timer.TimeElapsed()));
+	pRenderer->BeginFrame(sin(m_Timer.TimeElapsed()));
 
 	for (auto& d : m_pRenderables)
 	{
-		d->Render(rGfx);
+		d->Render(pRenderer);
 	}
 
-	m_pTorvudModel->Render(rGfx);
+	m_pTorvudModel->Render(pRenderer);
 
-	rGfx.EndFrame();
+	pRenderer->EndFrame();
 }

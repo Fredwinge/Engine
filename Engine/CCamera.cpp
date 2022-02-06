@@ -1,10 +1,11 @@
 #include "CCamera.h"
-
-namespace dx = DirectX;
+#include "Maths\Matrix.h"
+#include "Maths/CommonMath.h"
 
 CCamera::CCamera()
 {
-	m_Matrix = dx::XMMatrixIdentity();
+	m_viewMatrix = Matrix::Identity;
+	m_projMatrix = Matrix::Identity;
 }
 
 void CCamera::Reset() noexcept
@@ -27,8 +28,8 @@ void CCamera::MoveCamera(CKeyboard* pKbd, Vector2 deltaMove, float deltaTime)
 	if (pKbd == nullptr)
 		return;
 
-	pitch += deltaMove.y * 0.001f;
-	yaw += deltaMove.x * 0.001f;
+	pitch += deltaMove.y * 0.1f *deltaTime;
+	yaw += deltaMove.x * 0.1f * deltaTime;
 
 	const float moveDelta = 10.0f * deltaTime;
 
@@ -43,34 +44,42 @@ void CCamera::MoveCamera(CKeyboard* pKbd, Vector2 deltaMove, float deltaTime)
 	if (pKbd->KeyIsPressed('S'))
 		MoveDir.z -= moveDelta;
 
-	using namespace dx;
+	Vec4 forward = { 0,0,1, 0 };
+	Vector4 right = { 1,0,0,0  };
 
-	XMVECTOR DefaultForward = XMVectorSet(0.0f,0.0f,1.0f, 0.0f);
-	XMVECTOR DefaultRight = XMVectorSet(1.0f,0.0f,0.0f, 0.0f);
 
-	dx::XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, 0.0f);
-	dx::XMVECTOR camTarget = XMVector3TransformCoord(DefaultForward, camRotationMatrix );
-	camTarget = XMVector3Normalize(camTarget);
+	//Identical to transposed camRotationMatrix with this
+	Matrix rot = Matrix::Identity;
 
-	//XMMATRIX RotateYTempMatrix;
-	//RotateYTempMatrix = XMMatrixRotationY(yaw);
+	//Rotate function makes camera chug
+	rot.Rotate(Vector3((pitch), (yaw), 0));
 
-	XMVECTOR camRight = XMVector3TransformCoord(DefaultRight, camRotationMatrix);
-	
-	XMVECTOR camForward = XMVector3TransformCoord(DefaultForward, camRotationMatrix);
-	XMVECTOR camUp = XMVector3Cross(camForward, camRight);
+	Vector4 target = forward * rot;
+	target.Normalize();
 
-	XMVECTOR camPosition = dx::XMVectorSet(m_vPos.x, m_vPos.y, m_vPos.z, 1.0f);
-	camPosition += MoveDir.x * camRight;
-	camPosition += MoveDir.z * camForward;
+	forward *= rot;
+	right *= rot;
 
-	camTarget = camPosition + camTarget;    
+	m_vPos += (Vector4(right.GetXYZ(), 1) * MoveDir.x).GetXYZ();
+	m_vPos += (Vector4(forward.GetXYZ(), 1) * MoveDir.z).GetXYZ();
 
-	m_Matrix = XMMatrixLookAtLH( camPosition, camTarget, camUp );
+	target.x += m_vPos.x;
+	target.y += m_vPos.y;
+	target.z += m_vPos.z;
 
-	//TODO: STOP USING DIRECTXMATH, JESUS
-	m_vPos.x = XMVectorGetX(camPosition);
-	m_vPos.y = XMVectorGetY(camPosition);
-	m_vPos.z = XMVectorGetZ(camPosition);
+	Vector3 up = forward.GetXYZ().Cross(right.GetXYZ());
+
+	Vector3 zaxis = (target.GetXYZ() - m_vPos).GetNormalized();
+	Vector3 xaxis = (Vector3(0, 1, 0).Cross(zaxis)).GetNormalized();
+	Vector3 yaxis = zaxis.Cross(xaxis);
+
+	Matrix viewMatrix = {
+		Vector4(       xaxis.x,            yaxis.x,            zaxis.x,      0 ),
+		Vector4(       xaxis.y,            yaxis.y,            zaxis.y,      0 ),
+		Vector4(       xaxis.z,            yaxis.z,            zaxis.z,      0 ),
+		Vector4( -xaxis.Dot(m_vPos ), -yaxis.Dot( m_vPos ), -zaxis.Dot( m_vPos ), 1 )
+	};
+
+	SetView(viewMatrix);
 
 }

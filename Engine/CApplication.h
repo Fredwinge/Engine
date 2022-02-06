@@ -20,7 +20,7 @@ public:
 private:
 
 	void Update();
-	void Render(CGraphics& rGfx);
+	void Render(CRenderer* pRenderer);
 
 	CWindow m_Wnd;
 
@@ -30,7 +30,6 @@ private:
 
 	//Debugging variables
 	std::vector<std::unique_ptr<IRenderable>> m_pRenderables;
-	static constexpr size_t numRenderables = 180;
 
 	float m_fSpeedFactor = 1.0f;
 

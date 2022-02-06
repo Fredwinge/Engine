@@ -11,6 +11,16 @@
 
 const Vector4 Vector4::Zero = 0.0f;
 
+//CONSTRUCTOR
+Vector4::Vector4(Vector3 xyz, float w)
+	:
+	x(xyz.x),
+	y(xyz.y),
+	z(xyz.z),
+	w(w)
+{
+}
+
 //VECTOR4 + VECTOR4
 const Vector4 Vector4::operator+(const Vector4& v) const
 {

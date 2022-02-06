@@ -1,9 +1,10 @@
 #include "IRenderCallback.h"
+#include "../CCamera.h"
 
-IRenderCallback::IRenderCallback(CGraphics& rGfx)
+IRenderCallback::IRenderCallback(CRenderer* pRenderer)
 {
-	m_pVertexShader = new CVertexShader(rGfx, "BaseVertexShader.cso");
-	m_pPixelShader = new CPixelShader(rGfx, "BasePixelShader.cso");
+	m_pVertexShader = new CVertexShader(pRenderer, "BaseVertexShader.cso");
+	m_pPixelShader = new CPixelShader(pRenderer, "BasePixelShader.cso");
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
 	{
@@ -11,7 +12,7 @@ IRenderCallback::IRenderCallback(CGraphics& rGfx)
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 	};
-	m_pInputLayout = new CInputLayout(rGfx, inputElementDesc, m_pVertexShader->GetBytecode());
+	m_pInputLayout = new CInputLayout(pRenderer, inputElementDesc, m_pVertexShader->GetBytecode());
 }
 
 IRenderCallback::~IRenderCallback()
@@ -27,31 +28,35 @@ IRenderCallback::~IRenderCallback()
 		delete m_pInputLayout;
 }
 
-void IRenderCallback::RenderCallback(CGraphics& rGfx, RenderData* pRenderData)
+static float rotBonus = 0.0f;
+
+void IRenderCallback::RenderCallback(CRenderer* pRenderer, RenderData* pRenderData)
 {
 
-	ID3D11DeviceContext* pContext = rGfx.GetDeviceContext();
+	ID3D11DeviceContext* pContext = pRenderer->GetDeviceContext();
 
-	pRenderData->pVertexBuffer->Bind(rGfx);
+	pRenderData->pVertexBuffer->Bind(pRenderer);
 
-	m_pVertexShader->Bind(rGfx);
+	m_pVertexShader->Bind(pRenderer);
 
-	m_pInputLayout->Bind(rGfx);
+	m_pInputLayout->Bind(pRenderer);
 
-	rGfx.GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pRenderer->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	vrtCBuf cbuf;
 
-	cbuf.transformMatrix = DirectX::XMMatrixTranspose(pRenderData->mWorldMatrix * rGfx.GetViewProjection());
+	cbuf.worldViewProjection = pRenderData->m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
+	cbuf.worldViewProjection.Transpose();
 
-	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(rGfx, cbuf);
-	vertexCBuffer->Bind(rGfx);
 
-	pRenderData->pIndexBuffer->Bind(rGfx);
+	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(pRenderer, cbuf);
+	vertexCBuffer->Bind(pRenderer);
 
-	m_pPixelShader->Bind(rGfx);
+	pRenderData->pIndexBuffer->Bind(pRenderer);
 
-	rGfx.DrawIndexed(pRenderData->pIndexBuffer->GetCount());
+	m_pPixelShader->Bind(pRenderer);
+
+	pRenderer->DrawIndexed(pRenderData->pIndexBuffer->GetCount());
 
 
 	delete vertexCBuffer;

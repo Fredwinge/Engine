@@ -32,6 +32,14 @@ struct Matrix
 		Pos(wx, wy, wz, ww)
 	{}
 
+	Matrix(float val)
+		:
+		Left(val),
+		Up(val),
+		At(val),
+		Pos(val)
+	{}
+
 	//Operators
 	const Matrix operator+(const Matrix& mt) const;
 	const Matrix operator-(const Matrix& mt) const;
@@ -67,8 +75,17 @@ struct Matrix
 
 	const Matrix	GetAdjugate() const;
 
-	void Rotate(const Vector3 rollPitchYaw);
-	void SetRotation(const Vector3 rollPitchYaw);
+	//TODO: pitchyawroll correct?
+	void Rotate(const Vector3 PitchYawRoll);
+	void SetRotation(const Vector3 PitchYawRoll);
+	static const Matrix CreateRotation(const Vector3 PitchYawRoll);
+
+	//Dumb support function?
+	void RotatePreMultiply(const Vector3 PitchYawRoll);
+
+	//Projection matrixes are lefthanded by default
+	static const Matrix CreateProjection(const float widthRatio, const float heightRatio, const float near, const float far);
+	static const Matrix CreateProjectionFov(const float fov, const float aspectRatio, const float near, const float far);
 
 	Vector4 Left;
 	Vector4 Up;

@@ -103,7 +103,7 @@ CBox::CBox(CRenderer* pRenderer,
 	//Bind matrix constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
-	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, bdist(rng)));
+	m_ModelMatrix = Matrix::Identity;
 }
 
 void CBox::Update(float deltaTime) /*noexcept*/
@@ -114,12 +114,8 @@ void CBox::Update(float deltaTime) /*noexcept*/
 	theta += dtheta * deltaTime;
 	phi += dphi * deltaTime;
 	chi += dchi * deltaTime;
-}
 
-DirectX::XMMATRIX CBox::GetWorldMatrix() const /*noexcept*/
-{
-	return DirectX::XMLoadFloat3x3(&mt) * 
-		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, 0.0f, 0.f) *
-		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi);
+	Matrix posMatrix = Matrix::Identity;
+	//posMatrix.Pos.x = r;
+	m_ModelMatrix *= Matrix::CreateRotation(Vec3(deltaTime, deltaTime, deltaTime)) * posMatrix * Matrix::CreateRotation(Vec3(deltaTime, deltaTime, deltaTime));
 }

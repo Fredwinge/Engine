@@ -1,6 +1,7 @@
 #pragma once
 #include "IRenderable.h"
 #include "../Maths/Vectors.h"
+#include "../Maths/Matrix.h"
 
 class CModel : public IRenderable
 {
@@ -10,7 +11,7 @@ public:
 	CModel(CRenderer* pRenderer, const char* path);
 
 	void Update(float deltaTime) override;
-	DirectX::XMMATRIX GetWorldMatrix() const override;
+	Matrix GetWorldMatrix() const override { return m_ModelMatrix; }
 
 private:
 
@@ -27,6 +28,9 @@ private:
 	float chi;
 
 	//model transform
-	DirectX::XMFLOAT3X3 mt;
+	//DirectX::XMFLOAT3X3 mt;
+
+	//TODO: Inherit as base from somewhere
+	Matrix m_ModelMatrix;
 
 };

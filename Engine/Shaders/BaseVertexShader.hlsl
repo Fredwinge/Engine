@@ -2,7 +2,7 @@
 
 cbuffer CBuf
 {
-	float4x4 transform;
+	float4x4 worldViewProj;
 };
 
 struct VS_INPUT
@@ -23,8 +23,8 @@ VS_OUTPUT main(VS_INPUT IN)
 {
 
 	VS_OUTPUT OUT;
-
-    OUT.position = mul(float4(IN.position, 1.0f), transform);
+	
+    OUT.position = mul(float4(IN.position, 1.0f), worldViewProj);
     OUT.uv = IN.uv;
     OUT.normal = IN.normal;
 

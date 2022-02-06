@@ -1,5 +1,5 @@
 #pragma once
-#include <DirectXMath.h>
+#include "Maths\Matrix.h"
 #include "Maths/Vectors.h"
 #include "CKeyboard.h"
 
@@ -13,7 +13,12 @@ public:
 	CCamera();
 	~CCamera() = default;
 
-	DirectX::XMMATRIX GetMatrix() const { return m_Matrix; };
+	const Matrix GetView() const			{ return m_viewMatrix; }
+	const Matrix GetProjection() const		{ return m_projMatrix; }
+	const Matrix GetViewProjection() const	{ return m_viewMatrix * m_projMatrix; }
+
+	void SetView(const Matrix view)			{ m_viewMatrix = view; }
+	void SetProjection(const Matrix proj)	{ m_projMatrix = proj; }
 
 	void Reset() noexcept;
 
@@ -22,15 +27,12 @@ public:
 
 private:
 
-	//DirectX::XMMATRIX m_mProjectionMatrix;
-
-	DirectX::XMMATRIX m_Matrix;
-
 	Vector3 m_vPos = { 0.0f, 0.0f, -20.0f };
-	//float phi = 0.0f;
-	//float theta = 0.0f;
+
 
 	float pitch = 0.0f;
 	float yaw = 0.0f;
-	//float roll = 0.0f;
+
+	Matrix m_viewMatrix;
+	Matrix m_projMatrix;
 };

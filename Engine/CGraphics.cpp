@@ -1,6 +1,5 @@
 #include "CGraphics.h"
 #include "dxerr/dxerr.h"
-#include <DirectXMath.h>
 #include <sstream>
 #include "GraphicsAssertMacros.h"
 
@@ -8,13 +7,9 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 //namespace wrl = Microsoft::WRL;
-namespace dx = DirectX;
 
 
 CRenderer::CRenderer(HWND hWnd, Vector2 wndSize)
-	:
-	m_mProjectionMatrix(),
-	m_mViewMatrix()
 {
 
 	//Create swapchain description

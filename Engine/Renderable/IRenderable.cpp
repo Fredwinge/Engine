@@ -16,7 +16,7 @@ void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 
 	gfx.DrawIndexed(m_pIndexBuffer->GetCount());*/
 
-	m_pRenderData->mWorldMatrix = GetWorldMatrix();
+	m_pRenderData->m_WorldMatrix = GetWorldMatrix();
 
 	if (m_pRenderCallback != nullptr)
 		m_pRenderCallback->RenderCallback(pRenderer, m_pRenderData);

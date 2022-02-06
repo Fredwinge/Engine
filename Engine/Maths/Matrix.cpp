@@ -301,9 +301,9 @@ const Matrix Matrix::GetAdjugate() const
 }
 
 //TODO: Look up quaternions for rotations instead
-void Matrix::Rotate(const Vector3 rollPitchYaw)
+void Matrix::Rotate(const Vector3 PitchYawRoll)
 {
-	const Vector3 v = rollPitchYaw;
+	const Vector3 v = PitchYawRoll;
 
 	//ZYX order
 	Matrix xRot = Identity;
@@ -324,9 +324,9 @@ void Matrix::Rotate(const Vector3 rollPitchYaw)
 }
 
 //TODO: This is pretty fucking dumb
-void Matrix::SetRotation(const Vector3 rollPitchYaw)
+void Matrix::SetRotation(const Vector3 PitchYawRoll)
 {
-	const Vector3 v = rollPitchYaw;
+	const Vector3 v = PitchYawRoll;
 	const Vector3 pos = Pos.GetXYZ();
 
 	//ZYX order
@@ -348,3 +348,93 @@ void Matrix::SetRotation(const Vector3 rollPitchYaw)
 	*this *= rotation;
 	Pos.SetXYZ(pos);
 }
+
+const Matrix Matrix::CreateRotation(const Vector3 PitchYawRoll)
+{
+	const Vector3 v = PitchYawRoll;
+
+	//ZYX order
+	Matrix xRot = Identity;
+	xRot.Up.SetXYZ(Vector3(0.0f, cos(v.x), -sin(v.x)));
+	xRot.At.SetXYZ(Vector3(0.0f, sin(v.x), cos(v.x)));
+
+	Matrix yRot = Identity;
+	yRot.Left.SetXYZ(Vector3(cos(v.y), 0.0f, sin(v.y)));
+	yRot.At.SetXYZ(Vector3(-sin(v.y), 0.0f, cos(v.y)));
+
+	Matrix zRot = Identity;
+	zRot.Left.SetXYZ(Vector3(cos(v.z), -sin(v.z), 0.0f));
+	zRot.Up.SetXYZ(Vector3(sin(v.z), cos(v.z), 0.0f));
+
+	Matrix rotation = zRot * yRot * xRot;
+
+	return rotation;
+}
+
+void Matrix::RotatePreMultiply(const Vector3 PitchYawRoll)
+{
+	const Vector3 v = PitchYawRoll;
+
+	//ZYX order
+	Matrix xRot = Identity;
+	xRot.Up.SetXYZ(Vector3(0.0f, cos(v.x), -sin(v.x)));
+	xRot.At.SetXYZ(Vector3(0.0f, sin(v.x), cos(v.x)));
+
+	Matrix yRot = Identity;
+	yRot.Left.SetXYZ(Vector3(cos(v.y), 0.0f, sin(v.y)));
+	yRot.At.SetXYZ(Vector3(-sin(v.y), 0.0f, cos(v.y)));
+
+	Matrix zRot = Identity;
+	zRot.Left.SetXYZ(Vector3(cos(v.z), -sin(v.z), 0.0f));
+	zRot.Up.SetXYZ(Vector3(sin(v.z), cos(v.z), 0.0f));
+
+	Matrix rotation = zRot * yRot * xRot;
+
+	*this = rotation * *this;
+}
+
+const Matrix Matrix::CreateProjection(const float widthRatio, const float heightRatio, const float near, const float far)
+{
+	assert(widthRatio > 0.0f);
+	assert(heightRatio > 0.0f);
+	assert(near < far);
+
+	float nearTwo = near * 2.0f;
+	float frustumRange = far / (far - near);
+
+	Matrix result = 0;
+	result[0][0] = nearTwo / widthRatio;
+
+	result[1][1] = nearTwo / heightRatio;
+
+	result[2][2] = frustumRange;
+	result[2][3] = 1.0f;
+
+	result[3][2] = -frustumRange * near;
+
+	return result;
+}
+
+const Matrix Matrix::CreateProjectionFov(const float fov, const float aspectRatio, const float near, const float far)
+{
+	assert(fov > 0.0f);
+	assert(aspectRatio > 0.0f);
+	assert(near < far);
+
+	float frustumRange = far / (far - near);
+	float height = 1.0f / tan(0.5f * DegreesToRadians(fov));
+
+	Matrix result = 0;
+
+	result[0][0] = height / aspectRatio;
+
+	result[1][1] = height;
+
+	result[2][2] = frustumRange;
+	result[2][3] = 1.0f;
+
+	result[3][2] = -frustumRange * near;
+	
+	return result;
+}
+

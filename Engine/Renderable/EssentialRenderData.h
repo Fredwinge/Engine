@@ -1,7 +1,7 @@
 #pragma once
 #include "../Bindable/CIndexBuffer.h"
 #include "../Bindable/CVertexBuffer.h"
-#include <DirectXMath.h>
+#include "../Maths/Matrix.h"
 
 //TEMPORARY FILE
 //TODO: FIND A BETTER SETUP FOR THIS
@@ -13,14 +13,14 @@ struct RenderData
 		pIndexBuffer = new CIndexBuffer(iBuffer);
 		pVertexBuffer = new CVertexBuffer(vBuffer);
 
-		mWorldMatrix = DirectX::XMMATRIX::XMMATRIX();
+		m_WorldMatrix = Matrix::Identity;
 	}
 
 	CIndexBuffer* pIndexBuffer;
 	CVertexBuffer* pVertexBuffer;
 
 	//TODO: Actually model * world, rename?
-	DirectX::XMMATRIX mWorldMatrix;
+	Matrix m_WorldMatrix;
 };
 
 //TODO: put somewhere better?

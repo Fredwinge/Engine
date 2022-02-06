@@ -1,4 +1,5 @@
 #pragma once
+#include "../Maths/Matrix.h"
 #include "../CGraphics.h"
 #include "../Renderable/EssentialRenderData.h"
 #include "../Bindable/BindableBase.h"
@@ -9,11 +10,12 @@ class IRenderCallback
 
 public:
 
-	IRenderCallback(CGraphics& rGfx);
+	IRenderCallback(CRenderer* pRenderer);
 	~IRenderCallback();
 
 	//TODO: Change from IRenderable to something else
-	virtual void RenderCallback(CGraphics& rGfx, RenderData* pRenderData);
+	//TODO: Bad callback, change render system again
+	virtual void RenderCallback(CRenderer* pRenderer, RenderData* pRenderData);
 
 
 private:
@@ -26,7 +28,7 @@ private:
 
 	struct vrtCBuf
 	{
-		DirectX::XMMATRIX transformMatrix;
+		Matrix worldViewProjection;
 	};
 
 };

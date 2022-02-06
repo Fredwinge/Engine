@@ -28,6 +28,7 @@ struct Vector4
 		z(val),
 		w(val)
 	{}
+	Vector4(Vector3 xyz, float w);
 
 	//Operators
 	const Vector4 operator+(const Vector4& v) const;
@@ -121,6 +122,8 @@ struct Vector3
 
 	float& operator[] (const size_t i);
 
+	//const float operator*(const Vector3& v);
+
 	//Functions
 	const float			Dot(const Vector3& v) const;
 	static const float	Dot(const Vector3& v1, const Vector3& v2);
@@ -191,3 +194,7 @@ struct Vector2
 
 	static const Vector2 Zero;
 };
+
+typedef Vector4 Vec4;
+typedef Vector3 Vec3;
+typedef Vector2 Vec2;

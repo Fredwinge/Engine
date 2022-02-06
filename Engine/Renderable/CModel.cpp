@@ -52,17 +52,12 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	//Bind vertex constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
-	dx::XMStoreFloat3x3(&mt, dx::XMMatrixScaling(1.0f, 1.0f, 1.0f));
+	m_ModelMatrix = Matrix::Identity;
+	m_ModelMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
 }
 
 void CModel::Update(float deltaTime)
 {
-	yaw += 4.0f * deltaTime;
-}
-
-DirectX::XMMATRIX CModel::GetWorldMatrix() const
-{
-	return DirectX::XMLoadFloat3x3(&mt) * 
-		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, -3.0f, -10.0f);
+	yaw += deltaTime * 0.1f;
+	m_ModelMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
 }

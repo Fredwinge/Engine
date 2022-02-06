@@ -15,7 +15,7 @@ public:
 		std::uniform_real_distribution<float>&bdist);
 
 	void Update(float deltaTime) /*noexcept*/ override;
-	DirectX::XMMATRIX GetWorldMatrix() const /*noexcept*/ override;
+	Matrix GetWorldMatrix() const /*noexcept*/ override { return m_ModelMatrix; }
 
 private:
 	//Positional
@@ -35,5 +35,5 @@ private:
 	float dchi;
 
 	//model transform
-	DirectX::XMFLOAT3X3 mt;
+	Matrix m_ModelMatrix;
 };
