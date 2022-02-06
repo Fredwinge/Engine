@@ -1,7 +1,7 @@
 #pragma once
-#include "Math\Matrix.h"
+#include "Math/Matrix.h"
 #include "Math/Vectors.h"
-#include "CKeyboard.h"
+#include "Input/CKeyboard.h"
 
 //TODO: rework
 

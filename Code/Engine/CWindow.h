@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
-#include "CKeyboard.h"
-#include "CMouse.h"
+#include "Input/CKeyboard.h"
+#include "Input/CMouse.h"
 #include "CGraphics.h"
 #include "Math\Vectors.h"
 

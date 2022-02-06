@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{530a767b-b368-408b-9289-ae8f281692be}</UniqueIdentifier>
     </Filter>
@@ -17,38 +9,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CModelLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\CCube.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="CBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="CApplication.cpp" />
+    <ClCompile Include="CBox.cpp" />
+    <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CModel.cpp" />
+    <ClCompile Include="CModelLoader.cpp" />
+    <ClCompile Include="CWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\CCone.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -67,18 +39,12 @@
     <ClInclude Include="Geometry\CSphere.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="CCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CModelLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="CWindow.h" />
+    <ClInclude Include="CModelLoader.h" />
+    <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CModel.h" />
+    <ClInclude Include="CBox.h" />
+    <ClInclude Include="CApplication.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\TexturedPixelShader.hlsl">
