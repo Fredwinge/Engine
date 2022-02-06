@@ -1,5 +1,5 @@
 #pragma once
-#include "../Maths/Matrix.h"
+#include "Math/Matrix.h"
 #include "../CGraphics.h"
 #include "../Renderable/EssentialRenderData.h"
 #include "../Bindable/BindableBase.h"

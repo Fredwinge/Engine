@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Math">
+      <UniqueIdentifier>{2d572f3d-cdcf-4faf-a10d-8ea373084de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{d8768144-27b4-4e18-a4f2-f5dff94cf902}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Math\CommonMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vectors.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyboard.h" />
+    <ClInclude Include="CMouse.h" />
+    <ClInclude Include="CTimer.h" />
+    <ClInclude Include="WindowsAssertMacros.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Math\Matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vectors.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyboard.cpp" />
+    <ClCompile Include="CMouse.cpp" />
+    <ClCompile Include="CTimer.cpp" />
+  </ItemGroup>
+</Project>

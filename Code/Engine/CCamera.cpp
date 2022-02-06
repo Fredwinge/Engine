@@ -1,6 +1,6 @@
 #include "CCamera.h"
-#include "Maths\Matrix.h"
-#include "Maths/CommonMath.h"
+#include "Math\Matrix.h"
+#include "Math/CommonMath.h"
 
 CCamera::CCamera()
 {

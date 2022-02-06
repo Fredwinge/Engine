@@ -1,7 +1,7 @@
 #pragma once
-#include "IRenderable.h"
-#include "../Maths/Vectors.h"
-#include "../Maths/Matrix.h"
+#include "Renderable/IRenderable.h"
+#include "Math/Vectors.h"
+#include "Math/Matrix.h"
 
 class CModel : public IRenderable
 {

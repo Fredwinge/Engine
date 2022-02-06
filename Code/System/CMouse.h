@@ -1,6 +1,6 @@
 #pragma once
 #include <queue>
-#include "Maths\Vectors.h"
+#include "Math\Vectors.h"
 
 //TODO: Should rework this class, there's a lot of trash
 class CMouse

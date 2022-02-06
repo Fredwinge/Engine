@@ -1,7 +1,6 @@
 #include "CBox.h"
-#include "../Bindable/BindableBase.h"
-#include "../GraphicsAssertMacros.h"
-#include "../Geometry/CCube.h"
+#include "Bindable/BindableBase.h"
+#include "Geometry/CCube.h"
 
 CBox::CBox(CRenderer* pRenderer,
 	std::mt19937& rng,

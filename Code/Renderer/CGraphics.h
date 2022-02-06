@@ -7,7 +7,7 @@
 #include "CDXGIInfoManager.h"
 #include <memory>
 #include "GraphicsAssertMacros.h"
-#include "Maths\Vectors.h"
+#include "Math\Vectors.h"
 #include "Core/Core.h"
 
 class CCamera;

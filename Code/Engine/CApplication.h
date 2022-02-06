@@ -4,7 +4,7 @@
 #include "CCamera.h"
 #include "Renderable\IRenderable.h"
 
-#include "Renderable\CModel.h"
+#include "CModel.h"
 #include "RenderCallbacks\IRenderCallback.h"
 
 class CApplication

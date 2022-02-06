@@ -1,7 +1,7 @@
 #pragma once
 #include "../Bindable/CIndexBuffer.h"
 #include "../Bindable/CVertexBuffer.h"
-#include "../Maths/Matrix.h"
+#include "Math/Matrix.h"
 
 //TEMPORARY FILE
 //TODO: FIND A BETTER SETUP FOR THIS

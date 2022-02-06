@@ -72,24 +72,24 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)DXTex\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Bin\</IntDir>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)DXTex\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Bin\</IntDir>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)DXTex\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Bin\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)DXTex\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Bin\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -103,6 +103,7 @@
       <OpenMPSupport>false</OpenMPSupport>
       <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalIncludeDirectories>$(SolutionDir)Code\Renderer;$(SolutionDir)Code\System;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,13 +128,14 @@
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <OpenMPSupport>false</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalIncludeDirectories>$(SolutionDir)Code\Renderer;$(SolutionDir)Code\System;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(ProjectDir)..\Libs\DXTex\$(Platform)\$(Configuration)\DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(SolutionDir)Libs\DXTex\$(Platform)\$(Configuration)\DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -151,6 +153,7 @@
       <OmitFramePointers>false</OmitFramePointers>
       <CompileAsWinRT>false</CompileAsWinRT>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalIncludeDirectories>$(SolutionDir)Code\Renderer;$(SolutionDir)Code\System;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,13 +178,14 @@
       <OpenMPSupport>false</OpenMPSupport>
       <OmitFramePointers>false</OmitFramePointers>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <AdditionalIncludeDirectories>$(SolutionDir)Code\Renderer;$(SolutionDir)Code\System;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(ProjectDir)..\Libs\DXTex\$(Platform)\$(Configuration)\DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(SolutionDir)Libs\DXTex\$(Platform)\$(Configuration)\DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -189,59 +193,22 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bindable\CIndexBuffer.cpp" />
-    <ClCompile Include="Bindable\CInputLayout.cpp" />
-    <ClCompile Include="Bindable\CPixelShader.cpp" />
-    <ClCompile Include="Bindable\CSampler.cpp" />
-    <ClCompile Include="Bindable\CTexture.cpp" />
-    <ClCompile Include="Bindable\CTopology.cpp" />
-    <ClCompile Include="Bindable\CVertexBuffer.cpp" />
-    <ClCompile Include="Bindable\CVertexShader.cpp" />
-    <ClCompile Include="Bindable\IBindable.cpp" />
     <ClCompile Include="CApplication.cpp" />
+    <ClCompile Include="CBox.cpp" />
     <ClCompile Include="CCamera.cpp" />
-    <ClCompile Include="CDXGIInfoManager.cpp" />
-    <ClCompile Include="CGraphics.cpp" />
-    <ClCompile Include="CImage.cpp" />
-    <ClCompile Include="CKeyboard.cpp" />
+    <ClCompile Include="CModel.cpp" />
     <ClCompile Include="CModelLoader.cpp" />
-    <ClCompile Include="CMouse.cpp" />
-    <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="CWindow.cpp" />
-    <ClCompile Include="dxerr\dxerr.cpp" />
     <ClCompile Include="Geometry\CCube.cpp" />
-    <ClCompile Include="Maths\Matrix.cpp" />
-    <ClCompile Include="Maths\Vectors.cpp" />
-    <ClCompile Include="Renderable\CBox.cpp" />
-    <ClCompile Include="Renderable\IRenderable.cpp" />
-    <ClCompile Include="Renderable\CModel.cpp" />
-    <ClCompile Include="RenderCallbacks\IRenderCallback.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bindable\BindableBase.h" />
-    <ClInclude Include="Bindable\CConstantBuffer.h" />
-    <ClInclude Include="Bindable\CIndexBuffer.h" />
-    <ClInclude Include="Bindable\CInputLayout.h" />
-    <ClInclude Include="Bindable\CPixelShader.h" />
-    <ClInclude Include="Bindable\CSampler.h" />
-    <ClInclude Include="Bindable\CTexture.h" />
-    <ClInclude Include="Bindable\CTopology.h" />
-    <ClInclude Include="Bindable\CVertexBuffer.h" />
-    <ClInclude Include="Bindable\CVertexShader.h" />
-    <ClInclude Include="Bindable\IBindable.h" />
     <ClInclude Include="CApplication.h" />
+    <ClInclude Include="CBox.h" />
     <ClInclude Include="CCamera.h" />
-    <ClInclude Include="CDXGIInfoManager.h" />
-    <ClInclude Include="CGraphics.h" />
-    <ClInclude Include="CImage.h" />
-    <ClInclude Include="CKeyboard.h" />
+    <ClInclude Include="CModel.h" />
     <ClInclude Include="CModelLoader.h" />
-    <ClInclude Include="CMouse.h" />
-    <ClInclude Include="Core\Core.h" />
-    <ClInclude Include="CTimer.h" />
     <ClInclude Include="CWindow.h" />
-    <ClInclude Include="dxerr\dxerr.h" />
     <ClInclude Include="Geometry\CCone.h" />
     <ClInclude Include="Geometry\CCube.h" />
     <ClInclude Include="Geometry\CIndexedTriangleList.h" />
@@ -249,16 +216,6 @@
     <ClInclude Include="Geometry\CPrism.h" />
     <ClInclude Include="Geometry\CSphere.h" />
     <ClInclude Include="Geometry\GeometricMath.h" />
-    <ClInclude Include="GraphicsAssertMacros.h" />
-    <ClInclude Include="Maths\CommonMath.h" />
-    <ClInclude Include="Maths\Matrix.h" />
-    <ClInclude Include="Maths\Vectors.h" />
-    <ClInclude Include="Renderable\CBox.h" />
-    <ClInclude Include="Renderable\EssentialRenderData.h" />
-    <ClInclude Include="Renderable\IRenderable.h" />
-    <ClInclude Include="Renderable\CModel.h" />
-    <ClInclude Include="RenderCallbacks\IRenderCallback.h" />
-    <ClInclude Include="WindowsAssertMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">
@@ -321,6 +278,14 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Renderer\Renderer.vcxproj">
+      <Project>{752a6c60-089c-43f9-a633-71dedcd1fd17}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\System\System.vcxproj">
+      <Project>{9f141056-7deb-4bb7-a9ba-65c52639163f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

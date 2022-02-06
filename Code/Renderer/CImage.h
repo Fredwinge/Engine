@@ -1,5 +1,6 @@
 #pragma once
-#include <DirectXTex.h>
+//TODO: Ugly
+#include "../External/DXTex/include/DirectXTex.h"
 
 class CImage
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
-#include "../Renderable/EssentialRenderData.h"
-#include "../Maths/Vectors.h"
+#include "Renderable/EssentialRenderData.h"
+#include "Math/Vectors.h"
 
 //	C		U		B		E
 

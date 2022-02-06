@@ -1,6 +1,6 @@
 #pragma once
-#include "Maths\Matrix.h"
-#include "Maths/Vectors.h"
+#include "Math\Matrix.h"
+#include "Math/Vectors.h"
 #include "CKeyboard.h"
 
 //TODO: rework

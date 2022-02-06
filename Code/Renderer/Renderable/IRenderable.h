@@ -1,7 +1,7 @@
 #pragma once
 #include "../CGraphics.h"
 #include "EssentialRenderData.h"
-#include "../Maths/Matrix.h"
+#include "Math/Matrix.h"
 //#include "../RenderCallbacks/IRenderCallback.h"
 
 class IRenderCallback;

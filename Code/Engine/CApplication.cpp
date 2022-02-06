@@ -1,8 +1,8 @@
-#include "Maths\CommonMath.h"
+#include "Math\CommonMath.h"
 #include "CApplication.h"
 #include <sstream>
-#include "Renderable\CBox.h"
-#include "Maths\Matrix.h"
+#include "CBox.h"
+#include "Math\Matrix.h"
 
 CApplication::CApplication()
 	:
@@ -33,7 +33,7 @@ CApplication::CApplication()
 	OutputDebugString("\nSet active camera");
 
 	//TODO: path macro
-	m_pTorvudModel = new CModel(m_Wnd.GetRenderer(), "../Assets/Models/Torvud.obj");
+	m_pTorvudModel = new CModel(m_Wnd.GetRenderer(), "../../Assets/Models/Torvud.obj");
 	OutputDebugString("\ncreated torvud model");
 
 	pRenderCallback = new IRenderCallback(m_Wnd.GetRenderer());

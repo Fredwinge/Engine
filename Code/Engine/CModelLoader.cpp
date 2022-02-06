@@ -1,7 +1,7 @@
 #include "CModelLoader.h"
 #include <stdio.h>
 #include <assert.h>
-#include "Maths/Vectors.h"
+#include "Math/Vectors.h"
 #include <Windows.h>
 
 void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
