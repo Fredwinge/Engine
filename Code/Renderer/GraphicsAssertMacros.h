@@ -53,7 +53,7 @@ inline void __GFX_ASSERT(int line, const char* file, HRESULT hr, std::vector<std
 	DXGetErrorDescriptionA(hr, buf, sizeof(buf));
 
 	std::ostringstream oss;
-	oss << "GFX Error" << std::endl
+	oss << "Render Error" << std::endl
 		<< "[Error Code] 0x" << std::hex << std::uppercase << hr
 		<< std::dec << " (" << (unsigned long)hr << ")" << std::endl
 		<< "[Error String] " << DXGetErrorStringA(hr) << std::endl
@@ -88,7 +88,7 @@ inline void __GFX_ASSERT_INFO_ONLY(int line, const char* file, std::vector<std::
 	}
 
 	std::ostringstream oss;
-	oss << "Graphics Info Error" << std::endl
+	oss << "Render Info Error" << std::endl
 		<< "\n[Error Info]\n" << errorInfo << std::endl << std::endl
 		<< "[File] " << file << std::endl << "[Line] " << line;
 
@@ -116,7 +116,7 @@ inline void __GFX_ASSERT_DEVICE_REMOVED(int line, const char* file, HRESULT hr, 
 	DXGetErrorDescriptionA(hr, buf, sizeof(buf));
 
 	std::ostringstream oss;
-	oss << "Graphics Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)" << std::endl
+	oss << "Render Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)" << std::endl
 		<< "[Error Code] 0x" << std::hex << std::uppercase << hr
 		<< std::dec << " (" << (unsigned long)hr << ")" << std::endl
 		<< "[Error String] " << DXGetErrorStringA(hr) << std::endl
@@ -129,6 +129,6 @@ inline void __GFX_ASSERT_DEVICE_REMOVED(int line, const char* file, HRESULT hr, 
 	}
 	oss << "[File] " << file << std::endl << "[Line] " << line;
 
-	MessageBoxA(nullptr, oss.str().c_str(), "Graphics Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)", MB_OK | MB_ICONEXCLAMATION);
+	MessageBoxA(nullptr, oss.str().c_str(), "Render Error [Device Removed] (DXGI_ERROR_DEVICE_REMOVED)", MB_OK | MB_ICONEXCLAMATION);
 	exit(1);
 }

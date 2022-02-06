@@ -1,5 +1,6 @@
-#include "CTexture.h"
-#include "../GraphicsAssertMacros.h"
+#include "Texture.h"
+#include "GraphicsAssertMacros.h"
+#include "Image.h"
 
 CTexture::CTexture(CRenderer* pRenderer, const wchar_t* fileName)
 {

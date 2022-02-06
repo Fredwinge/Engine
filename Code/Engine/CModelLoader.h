@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Renderable/EssentialRenderData.h"
-#include "CGraphics.h"
+#include "Renderer.h"
 
 class CModelLoader
 {

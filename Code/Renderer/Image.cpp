@@ -1,4 +1,4 @@
-#include "CImage.h"
+#include "Image.h"
 #include <sstream>
 
 //for converting wchar_t* to char* //somewhat ugly, maybe find a 'better' solution?

@@ -1,5 +1,5 @@
 #pragma once
-#include "../CGraphics.h"
+#include "Renderer.h"
 #include "EssentialRenderData.h"
 #include "Math/Matrix.h"
 //#include "../RenderCallbacks/IRenderCallback.h"

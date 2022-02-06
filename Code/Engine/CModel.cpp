@@ -12,7 +12,6 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	phi(0.0f),
 	chi(0.0f)
 {
-	namespace dx = DirectX;
 
 	std::vector<VertexData> VertexBuffer;
 	std::vector<uint16> IndexBuffer;

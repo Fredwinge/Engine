@@ -1,6 +1,5 @@
 #pragma once
 #include "IBindable.h"
-#include "../CImage.h"
 
 class CTexture : public IBindable
 {

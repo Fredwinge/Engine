@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
-#include "CGraphics.h"
+#include "Renderer.h"
 #include "Math\Vectors.h"
 
 class CWindow

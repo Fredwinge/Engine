@@ -1,6 +1,6 @@
 #pragma once
-#include "../Bindable/CIndexBuffer.h"
-#include "../Bindable/CVertexBuffer.h"
+#include "Bindable/IndexBuffer.h"
+#include "Bindable/VertexBuffer.h"
 #include "Math/Matrix.h"
 
 //TEMPORARY FILE

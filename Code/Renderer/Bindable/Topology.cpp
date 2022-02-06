@@ -1,4 +1,4 @@
-#include "CTopology.h"
+#include "Topology.h"
 
 CTopology::CTopology(CRenderer* pRenderer, D3D11_PRIMITIVE_TOPOLOGY type)
 	:

@@ -1,5 +1,5 @@
-#include "CDXGIInfoManager.h"
-#include "CGraphics.h"
+#include "DXGIInfoManager.h"
+#include "Renderer.h"
 #include <dxgidebug.h>
 #include <memory>
 #include "GraphicsAssertMacros.h"

@@ -1,4 +1,4 @@
-#include "CSampler.h"
+#include "Sampler.h"
 #include "../GraphicsAssertMacros.h"
 
 CSampler::CSampler(CRenderer* pRenderer)

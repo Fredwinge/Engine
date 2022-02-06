@@ -4,10 +4,10 @@
 #include <d3dcompiler.h>
 #include <wrl.h>
 #include <vector>
-#include "CDXGIInfoManager.h"
 #include <memory>
+#include "DXGIInfoManager.h"
 #include "GraphicsAssertMacros.h"
-#include "Math\Vectors.h"
+#include "Math/Vectors.h"
 #include "Core/Core.h"
 
 class CCamera;

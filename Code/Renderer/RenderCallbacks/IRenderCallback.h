@@ -1,6 +1,6 @@
 #pragma once
 #include "Math/Matrix.h"
-#include "../CGraphics.h"
+#include "Renderer.h"
 #include "../Renderable/EssentialRenderData.h"
 #include "../Bindable/BindableBase.h"
 #include "../Renderable/IRenderable.h"

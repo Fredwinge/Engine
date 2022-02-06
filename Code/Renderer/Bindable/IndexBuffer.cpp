@@ -1,4 +1,4 @@
-#include "CIndexBuffer.h"
+#include "IndexBuffer.h"
 #include "../GraphicsAssertMacros.h"
 
 CIndexBuffer::CIndexBuffer(CRenderer* pRenderer, const std::vector<uint16>& indices)

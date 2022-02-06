@@ -1,4 +1,4 @@
-#include "CVertexShader.h"
+#include "PixelShader.h"
 #include "../GraphicsAssertMacros.h"
 
 //TODO: Ugly, fix this
@@ -20,7 +20,7 @@ inline std::wstring convert( const std::string& as )
 	return ret;
 }
 
-CVertexShader::CVertexShader(CRenderer* pRenderer, const char* shaderName)
+CPixelShader::CPixelShader(CRenderer* pRenderer, const char* shaderName)
 {
 	GET_INFOMANAGER(pRenderer);
 
@@ -29,20 +29,24 @@ CVertexShader::CVertexShader(CRenderer* pRenderer, const char* shaderName)
 	path.append(shaderName);
 	std::wstring wPath = convert(path);
 
+	ID3DBlob* pBlob;
+
 	//D3DReadFileToBlob reads CSO files
-	GFX_ASSERT_INFO(D3DReadFileToBlob(wPath.c_str(), &m_pBytecodeBlob));
+	GFX_ASSERT_INFO(D3DReadFileToBlob(wPath.c_str(), &pBlob));
 
-	GFX_ASSERT_INFO(pRenderer->GetDevice()->CreateVertexShader(m_pBytecodeBlob->GetBufferPointer(), m_pBytecodeBlob->GetBufferSize(), nullptr, &m_pVertexShader));
+	GFX_ASSERT_INFO(pRenderer->GetDevice()->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &m_pPixelShader));
+
+	pBlob->Release();
 }
 
-CVertexShader::CVertexShader(ID3D11VertexShader* pVertexShader)
+CPixelShader::CPixelShader(ID3D11PixelShader* pPixelShader)
 	:
-	m_pVertexShader(pVertexShader)
+	m_pPixelShader(pPixelShader)
 {
 
 }
 
-void CVertexShader::Bind(CRenderer* pRenderer) noexcept
+void CPixelShader::Bind(CRenderer* pRenderer) noexcept
 {
-	pRenderer->GetDeviceContext()->VSSetShader(m_pVertexShader.Get(), nullptr, 0);
+	pRenderer->GetDeviceContext()->PSSetShader(m_pPixelShader.Get(), nullptr, 0);
 }

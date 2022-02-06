@@ -1,4 +1,4 @@
-#include "CInputLayout.h"
+#include "InputLayout.h"
 #include "../GraphicsAssertMacros.h"
 
 CInputLayout::CInputLayout(CRenderer* pRenderer, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob* pVertexShaderByteCode)

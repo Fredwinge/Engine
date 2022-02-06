@@ -1,12 +1,10 @@
-#include "CGraphics.h"
+#include "Renderer.h"
 #include "dxerr/dxerr.h"
 #include <sstream>
 #include "GraphicsAssertMacros.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
-
-//namespace wrl = Microsoft::WRL;
 
 
 CRenderer::CRenderer(HWND hWnd, Vector2 wndSize)

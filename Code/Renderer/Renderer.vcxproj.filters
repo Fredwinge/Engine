@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CGraphics.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="dxerr\dxerr.cpp">
       <Filter>dxerr</Filter>
     </ClCompile>
-    <ClCompile Include="CDXGIInfoManager.cpp" />
-    <ClCompile Include="Bindable\CIndexBuffer.cpp">
+    <ClCompile Include="DXGIInfoManager.cpp" />
+    <ClCompile Include="Bindable\IndexBuffer.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CInputLayout.cpp">
+    <ClCompile Include="Bindable\InputLayout.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CPixelShader.cpp">
+    <ClCompile Include="Bindable\PixelShader.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CSampler.cpp">
+    <ClCompile Include="Bindable\Sampler.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CTexture.cpp">
+    <ClCompile Include="Bindable\Texture.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CTopology.cpp">
+    <ClCompile Include="Bindable\Topology.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CVertexBuffer.cpp">
+    <ClCompile Include="Bindable\VertexBuffer.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Bindable\CVertexShader.cpp">
+    <ClCompile Include="Bindable\VertexShader.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
     <ClCompile Include="Bindable\IBindable.cpp">
@@ -39,43 +39,43 @@
     <ClCompile Include="RenderCallbacks\IRenderCallback.cpp">
       <Filter>RenderCallbacks</Filter>
     </ClCompile>
-    <ClCompile Include="CImage.cpp" />
+    <ClCompile Include="Image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGraphics.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="dxerr\dxerr.h">
       <Filter>dxerr</Filter>
     </ClInclude>
-    <ClInclude Include="CDXGIInfoManager.h" />
+    <ClInclude Include="DXGIInfoManager.h" />
     <ClInclude Include="GraphicsAssertMacros.h" />
     <ClInclude Include="Bindable\BindableBase.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CConstantBuffer.h">
+    <ClInclude Include="Bindable\ConstantBuffer.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CIndexBuffer.h">
+    <ClInclude Include="Bindable\IndexBuffer.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CInputLayout.h">
+    <ClInclude Include="Bindable\InputLayout.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CPixelShader.h">
+    <ClInclude Include="Bindable\PixelShader.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CSampler.h">
+    <ClInclude Include="Bindable\Sampler.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CTexture.h">
+    <ClInclude Include="Bindable\Texture.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CTopology.h">
+    <ClInclude Include="Bindable\Topology.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CVertexBuffer.h">
+    <ClInclude Include="Bindable\VertexBuffer.h">
       <Filter>Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Bindable\CVertexShader.h">
+    <ClInclude Include="Bindable\VertexShader.h">
       <Filter>Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Bindable\IBindable.h">
@@ -90,7 +90,7 @@
     <ClInclude Include="RenderCallbacks\IRenderCallback.h">
       <Filter>RenderCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="CImage.h" />
+    <ClInclude Include="Image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dxerr\DXTrace.inl">

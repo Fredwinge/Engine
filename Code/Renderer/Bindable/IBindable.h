@@ -1,5 +1,5 @@
 #pragma once
-#include "../CGraphics.h"
+#include "Renderer.h"
 
 class IBindable
 {

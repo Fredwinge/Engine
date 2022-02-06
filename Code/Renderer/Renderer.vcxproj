@@ -19,37 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bindable\CIndexBuffer.cpp" />
-    <ClCompile Include="Bindable\CInputLayout.cpp" />
-    <ClCompile Include="Bindable\CPixelShader.cpp" />
-    <ClCompile Include="Bindable\CSampler.cpp" />
-    <ClCompile Include="Bindable\CTexture.cpp" />
-    <ClCompile Include="Bindable\CTopology.cpp" />
-    <ClCompile Include="Bindable\CVertexBuffer.cpp" />
-    <ClCompile Include="Bindable\CVertexShader.cpp" />
+    <ClCompile Include="Bindable\IndexBuffer.cpp" />
+    <ClCompile Include="Bindable\InputLayout.cpp" />
+    <ClCompile Include="Bindable\PixelShader.cpp" />
+    <ClCompile Include="Bindable\Sampler.cpp" />
+    <ClCompile Include="Bindable\Texture.cpp" />
+    <ClCompile Include="Bindable\Topology.cpp" />
+    <ClCompile Include="Bindable\VertexBuffer.cpp" />
+    <ClCompile Include="Bindable\VertexShader.cpp" />
     <ClCompile Include="Bindable\IBindable.cpp" />
-    <ClCompile Include="CDXGIInfoManager.cpp" />
-    <ClCompile Include="CGraphics.cpp" />
-    <ClCompile Include="CImage.cpp" />
+    <ClCompile Include="DXGIInfoManager.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="dxerr\dxerr.cpp" />
     <ClCompile Include="Renderable\IRenderable.cpp" />
     <ClCompile Include="RenderCallbacks\IRenderCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bindable\BindableBase.h" />
-    <ClInclude Include="Bindable\CConstantBuffer.h" />
-    <ClInclude Include="Bindable\CIndexBuffer.h" />
-    <ClInclude Include="Bindable\CInputLayout.h" />
-    <ClInclude Include="Bindable\CPixelShader.h" />
-    <ClInclude Include="Bindable\CSampler.h" />
-    <ClInclude Include="Bindable\CTexture.h" />
-    <ClInclude Include="Bindable\CTopology.h" />
-    <ClInclude Include="Bindable\CVertexBuffer.h" />
-    <ClInclude Include="Bindable\CVertexShader.h" />
+    <ClInclude Include="Bindable\ConstantBuffer.h" />
+    <ClInclude Include="Bindable\IndexBuffer.h" />
+    <ClInclude Include="Bindable\InputLayout.h" />
+    <ClInclude Include="Bindable\PixelShader.h" />
+    <ClInclude Include="Bindable\Sampler.h" />
+    <ClInclude Include="Bindable\Texture.h" />
+    <ClInclude Include="Bindable\Topology.h" />
+    <ClInclude Include="Bindable\VertexBuffer.h" />
+    <ClInclude Include="Bindable\VertexShader.h" />
     <ClInclude Include="Bindable\IBindable.h" />
-    <ClInclude Include="CDXGIInfoManager.h" />
-    <ClInclude Include="CGraphics.h" />
-    <ClInclude Include="CImage.h" />
+    <ClInclude Include="DXGIInfoManager.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="dxerr\dxerr.h" />
     <ClInclude Include="GraphicsAssertMacros.h" />
     <ClInclude Include="Renderable\EssentialRenderData.h" />

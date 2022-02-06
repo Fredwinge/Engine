@@ -1,10 +1,10 @@
 #include "IRenderable.h"
-#include "../GraphicsAssertMacros.h"
-#include "../Bindable/CIndexBuffer.h"
+#include "GraphicsAssertMacros.h"
+#include "Bindable/IndexBuffer.h"
 #include <cassert>
 #include <typeinfo> //Checkup
 
-#include "../RenderCallbacks/IRenderCallback.h"
+#include "RenderCallbacks/IRenderCallback.h"
 
 void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 {

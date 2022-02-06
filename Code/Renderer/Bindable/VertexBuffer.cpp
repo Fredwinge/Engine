@@ -1,5 +1,5 @@
-#include "CVertexBuffer.h"
-#include "../GraphicsAssertMacros.h"
+#include "VertexBuffer.h"
+#include "GraphicsAssertMacros.h"
 
 CVertexBuffer::CVertexBuffer(ID3D11Buffer* pVertexBuffer)
 	:
