@@ -10,8 +10,10 @@ class CModelLoader
 
 private:
 
-	//TODO: Figure out a good way to rework this, if necessary
-	//Add rework so LoadModel becomes a base function which splits into different ones depending on file type
+	//TODO: Having all this as static is not pretty, should rework this
+	//perhaps we can generate qtangents + binormals here aswell?
 	static void LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer);
+
+	static void LoadModelOBJ(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer);
 	
 };

@@ -7,6 +7,22 @@
 void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
 {
 
+	const char* fileExt = strrchr(path, '.');
+
+	//TODO: should we take capitalization into consideration? _stricmp?
+	if (strcmp(fileExt, ".obj") == 0)
+	{
+		LoadModelOBJ(path, pVertexBuffer, pIndexBuffer);
+	}
+	else
+	{
+		assert(false && "Model filetype not supported!");
+	}
+}
+
+void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
+{
+
 	//"r" is for read
 	FILE* pFile;// = fopen(path, "r");
 	//fopen_s is a more secure version of fopen, also returns error strings which may
