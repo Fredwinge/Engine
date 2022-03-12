@@ -13,6 +13,8 @@ public:
 
 private:
 
-	std::chrono::steady_clock::time_point m_lastTime;	//Last time mark was called
-	std::chrono::steady_clock::time_point m_startTime;	//Time when initialized
+	typedef std::chrono::steady_clock::time_point TimePoint;
+
+	TimePoint m_lastTime;	//Last time mark was called
+	TimePoint m_startTime;	//Time when initialized
 };

@@ -76,9 +76,9 @@ inline void __GFX_ASSERT_INFO_ONLY(int line, const char* file, std::vector<std::
 	std::string errorInfo;
 
 	//Join all info messages with newline into a single string
-	for (const auto& m : infoMsgs)
+	for (const auto& msg : infoMsgs)
 	{
-		errorInfo += m;
+		errorInfo += msg;
 		errorInfo.push_back('\n');
 	}
 	//Remove final newline if it exists

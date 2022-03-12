@@ -13,16 +13,15 @@ CDXGIInfoManager::CDXGIInfoManager()
 	typedef HRESULT(WINAPI* DXGIGetDebugInterface)(REFIID, void**);
 
 	//Load the dll that contains the function DXGIGetDebugInterface
-	const auto hModDxgiDebug = LoadLibraryExA("dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+	const HMODULE hModDxgiDebug = LoadLibraryExA("dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 	if (hModDxgiDebug == nullptr)
 	{
 		WND_LAST_ERROR();
 	}
 
 	//Get address of DXGIGetDebugInterface in dll
-	const auto DxgiGetDebugInterface = reinterpret_cast<DXGIGetDebugInterface>(
-		reinterpret_cast<void*>(GetProcAddress(hModDxgiDebug, "DXGIGetDebugInterface"))
-		);
+	const DXGIGetDebugInterface DxgiGetDebugInterface = reinterpret_cast<DXGIGetDebugInterface>(
+														reinterpret_cast<void*>(GetProcAddress(hModDxgiDebug, "DXGIGetDebugInterface")));
 	if (DxgiGetDebugInterface == nullptr)
 	{
 		WND_LAST_ERROR();
@@ -52,12 +51,14 @@ std::vector<std::string> CDXGIInfoManager::GetMessages() const
 	for (UINT64 i = m_NextLine; i < endLine; ++i)
 	{
 		HRESULT hr;
-		SIZE_T messageLength;
+		SIZE_T messageLength = 0;
 		//Get the size of message i in bytes
 		GFX_ASSERT_NOINFO(m_pDXGIInfoQueue->GetMessage(DXGI_DEBUG_ALL, i, nullptr, &messageLength));
+
 		//Allocate memory for message
 		auto bytes = std::make_unique<byte[]>(messageLength);
-		auto pMessage = reinterpret_cast<DXGI_INFO_QUEUE_MESSAGE*>(bytes.get());
+		DXGI_INFO_QUEUE_MESSAGE* pMessage = reinterpret_cast<DXGI_INFO_QUEUE_MESSAGE*>(bytes.get());
+
 		//Get the message and push its description into the vector
 		GFX_ASSERT_NOINFO(m_pDXGIInfoQueue->GetMessage(DXGI_DEBUG_ALL, i, pMessage, &messageLength));
 		messages.emplace_back(pMessage->pDescription);

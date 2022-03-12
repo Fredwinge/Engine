@@ -11,7 +11,7 @@ CTimer::CTimer()
 //Get time elapsed since this function was last called
 float CTimer::Mark()
 {
-	const auto old = m_lastTime;
+	const TimePoint old = m_lastTime;
 	m_lastTime = steady_clock::now();
 
 	const duration<float> frameTime = m_lastTime - old;
