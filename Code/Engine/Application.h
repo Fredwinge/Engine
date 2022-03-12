@@ -15,7 +15,7 @@ public:
 	~CApplication();
 
 	//Main message loop
-	int Go();
+	int Run();
 
 private:
 

@@ -59,7 +59,7 @@ CApplication::~CApplication()
 	delete pRenderCallback;
 }
 
-int CApplication::Go()
+int CApplication::Run()
 {
 	while (true)
 	{

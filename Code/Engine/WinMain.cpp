@@ -4,7 +4,7 @@
 int CALLBACK WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
-	CApplication{}.Go();
+	CApplication{}.Run();
 	
 	return 0;
 }
