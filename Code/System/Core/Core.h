@@ -1,6 +1,11 @@
 #pragma once
 //The purpose of this file is to be a common header which contains practical typedefs, macros and such
 
+typedef char int8;
+typedef short int16;
+typedef int int32;
+typedef long long int64;
+
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
