@@ -25,14 +25,16 @@ public:
 	//TODO: MOVE SOMEWHERE ELSE
 	void MoveCamera(CKeyboard* pKbd, Vector2 deltaMove, float deltaTime);
 
+	void SetPosition(const Vector3 pos)				{ m_vPos = pos; }
+	void SetRotation(const Vector3 PitchYawRoll)	{ m_vPitchYawRoll = PitchYawRoll; }
+
 private:
 
 	Vector3 m_vPos = { 0.0f, 0.0f, -20.0f };
-
-
-	float pitch = 0.0f;
-	float yaw = 0.0f;
+	Vector3 m_vPitchYawRoll = Vector3::Zero;
 
 	Matrix m_viewMatrix;
 	Matrix m_projMatrix;
+
+	Matrix m_worldMatrix;
 };

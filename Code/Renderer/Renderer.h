@@ -29,7 +29,7 @@ public:
 	void DrawIndexed(unsigned int indexCount);
 
 	//Get - Set Camera
-	const CCamera*	GetCamera()						{ return m_pCurrentCamera; }
+	const CCamera*	GetCamera()					{ return m_pCurrentCamera; }
 	void			SetCamera(CCamera* pCam)	{ m_pCurrentCamera = pCam; }
 
 

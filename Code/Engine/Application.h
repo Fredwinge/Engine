@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Utils/Timer.h"
-#include "Camera.h"
+#include "Utils/Camera.h"
 #include "Renderable\IRenderable.h"
 
 #include "Model.h"

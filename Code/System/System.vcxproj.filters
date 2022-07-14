@@ -37,6 +37,9 @@
     <ClInclude Include="Input\Mouse.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\Camera.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\Matrix.cpp">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="Input\Mouse.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Camera.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
