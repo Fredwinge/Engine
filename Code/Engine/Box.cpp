@@ -34,7 +34,7 @@ CBox::CBox(CRenderer* pRenderer,
 	//	vertexBuffer.push_back(vData);
 	//}
 	std::vector<tIndex> pIndexBuffer;
-	std::vector<VertexData> pVertexBuffer;
+	std::vector<SVertexData> pVertexBuffer;
 
 	CCube::Create(&pVertexBuffer, &pIndexBuffer);
 	m_pRenderMesh = new CRenderMesh(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));

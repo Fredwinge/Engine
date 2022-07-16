@@ -4,7 +4,7 @@
 #include "Math/Vectors.h"
 #include <Windows.h>
 
-void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
+void CModelLoader::LoadModel(const char* path, std::vector<SVertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
 {
 
 	const char* fileExt = strrchr(path, '.');
@@ -20,7 +20,7 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	}
 }
 
-void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<tIndex>* pIndexBuffer)
+void CModelLoader::LoadModelOBJ(const char* path, std::vector<SVertexData>* pVertexBuffer, std::vector<tIndex>* pIndexBuffer)
 {
 
 	//"r" is for read
@@ -137,11 +137,11 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVert
 
 	uint16 numDupes = 0;
 	std::vector<tIndex> IndexBuffer;
-	std::vector<VertexData> VertexBuffer;
+	std::vector<SVertexData> VertexBuffer;
 
 	for (uint16 i = 0; i < vert_indices.size(); ++i)
 	{
-		VertexData VertexData;
+		SVertexData VertexData;
 		VertexData.Position = vertices[vert_indices[i]];
 		VertexData.TexCoord = texcoords[uv_indices[i]];
 		VertexData.Normal = normals[normal_indices[i]];

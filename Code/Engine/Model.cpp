@@ -14,7 +14,7 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	chi(0.0f)
 {
 
-	std::vector<VertexData> VertexBuffer;
+	std::vector<SVertexData> VertexBuffer;
 	std::vector<uint16> IndexBuffer;
 
 	CModelLoader::LoadModel(path, &VertexBuffer, &IndexBuffer);

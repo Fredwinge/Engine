@@ -36,18 +36,6 @@ CApplication::CApplication()
 	m_pTorvudModel = new CModel(m_Wnd.GetRenderer(), "../../Assets/Models/Torvud.obj");
 	OutputDebugString("\ncreated torvud model");
 
-	pRenderCallback = new IRenderCallback(m_Wnd.GetRenderer());
-	OutputDebugString("\ncreated rendercallback");
-
-	for (auto& d : m_pRenderables)
-	{
-		d->SetRenderCallback(pRenderCallback);
-	}
-
-	OutputDebugString("\nSet boxes rendercallback");
-	m_pTorvudModel->SetRenderCallback(pRenderCallback);
-	OutputDebugString("\nSet torvud rendercallback");
-
 	//Temp
 	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
 }
@@ -55,8 +43,6 @@ CApplication::CApplication()
 CApplication::~CApplication()
 {
 	delete m_pTorvudModel;
-
-	delete pRenderCallback;
 }
 
 int CApplication::Run()
@@ -64,6 +50,8 @@ int CApplication::Run()
 	while (true)
 	{
 
+		//TODO: This should be in some sort of CSystem class, returning an error message which can be parsed.
+		//This file shouldn't belong in 'Engine' but in some sort of Launcher/Game project instead.
 		if (CWindow::ProcessMessages() == CWindow::Message::APPLICATION_QUIT)
 		{
 			return -1;
@@ -74,8 +62,15 @@ int CApplication::Run()
 	}
 }
 
+static const uint32 s_iFPSCap = 144;
+static const float s_fFrameDif = 1.0f / s_iFPSCap;
+
 void CApplication::Update()
 {
+	//TODO: This should be in a better spot
+	while (m_Timer.Peek() < s_fFrameDif)
+		Sleep(1);
+
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
 	{

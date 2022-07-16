@@ -1,6 +1,6 @@
 #include "CCube.h"
 
-std::vector<VertexData> CCube::s_VertexBuffer;
+std::vector<SVertexData> CCube::s_VertexBuffer;
 std::vector<unsigned short> CCube::s_IndexBuffer;
 
 bool CCube::s_bCubeCreated = false;
@@ -9,7 +9,7 @@ void CCube::CreateBuffers()
 {
 	const float side = 0.5f;
 	//RIGHT FACE
-	VertexData face[4];
+	SVertexData face[4];
 	Vector3 faceNormal = Vector3(side, 0.0f, 0.0f);
 
 	face[0].Position = Vector3(side, -side, -side);

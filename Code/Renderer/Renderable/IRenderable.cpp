@@ -4,8 +4,6 @@
 #include <cassert>
 #include <typeinfo> //Checkup
 
-#include "RenderCallbacks/IRenderCallback.h"
-
 void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 {
 
@@ -19,8 +17,6 @@ void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 
 	gfx.DrawIndexed(m_pIndexBuffer->GetCount());*/
 
-	//m_pRenderData->m_WorldMatrix = GetWorldMatrix();
-
 	pRenderer->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	if (m_pRenderMesh)
@@ -28,9 +24,6 @@ void IRenderable::Render(CRenderer* pRenderer) /*const*/ //noexcept
 
 	if (m_pMaterial)
 		m_pMaterial->BindMaterial(pRenderer);
-
-	if (m_pRenderCallback != nullptr)
-		m_pRenderCallback->RenderCallback(pRenderer, m_pRenderData);
 
 	pRenderer->DrawIndexed(m_pRenderMesh->GetIdxCount());
 

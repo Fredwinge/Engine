@@ -17,7 +17,7 @@ public:
 
 private:
 
-	std::vector<VertexData> m_VertexBuffer;
+	std::vector<SVertexData> m_VertexBuffer;
 
 	//TODO: MAKE A BETTER SOLUTION
 	//Positional
@@ -28,9 +28,6 @@ private:
 	float theta;
 	float phi;
 	float chi;
-
-	//model transform
-	//DirectX::XMFLOAT3X3 mt;
 
 	//TODO: Inherit as base from somewhere
 	Matrix m_WorldMatrix;

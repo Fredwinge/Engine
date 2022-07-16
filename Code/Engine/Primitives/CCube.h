@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include "Renderable/EssentialRenderData.h"
+#include "VertexData.h"
 #include "Math/Vectors.h"
 
 //	C		U		B		E
@@ -11,7 +11,7 @@ class CCube
 {
 public:
 
-	static void Create(std::vector<VertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
+	static void Create(std::vector<SVertexData>* pVertexBuffer, std::vector<unsigned short>* pIndexBuffer)
 	{
 		//namespace dx = DirectX;
 
@@ -61,7 +61,7 @@ private:
 	static void CreateBuffers();
 
 	//Keep these static so we don't remake the same buffers multiple times
-	static std::vector<VertexData> s_VertexBuffer;
+	static std::vector<SVertexData> s_VertexBuffer;
 	static std::vector<unsigned short> s_IndexBuffer;
 
 	static bool s_bCubeCreated;
