@@ -128,6 +128,8 @@ void CBox::RenderInternal(CRenderer* pRenderer)
 	cbuf.worldViewProjection.Transpose();
 
 
-	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(pRenderer, cbuf);
+	CConstantBuffer* vertexCBuffer = new CConstantBuffer(pRenderer, CConstantBuffer::ETYPE_VERTEX, &cbuf, sizeof(vrtCBuf));
 	vertexCBuffer->Bind(pRenderer);
+
+	delete vertexCBuffer;
 }
