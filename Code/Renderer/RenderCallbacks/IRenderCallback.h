@@ -20,15 +20,15 @@ public:
 
 private:
 
-	CVertexShader* m_pVertexShader;
+	//CVertexShader* m_pVertexShader;
 
-	CInputLayout* m_pInputLayout;
+	//CInputLayout* m_pInputLayout;
 
-	CPixelShader* m_pPixelShader;
+	//CPixelShader* m_pPixelShader;
 
-	struct vrtCBuf
-	{
-		Matrix worldViewProjection;
-	};
+	//struct vrtCBuf
+	//{
+	//	Matrix worldViewProjection;
+	//};
 
 };

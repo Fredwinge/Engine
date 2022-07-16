@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "Bindable/BindableBase.h"
 #include "ModelLoader.h"
+#include "Utils\Camera.h"
 
 CModel::CModel(CRenderer* pRenderer, const char* path)
 	:
@@ -17,10 +18,13 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	std::vector<uint16> IndexBuffer;
 
 	CModelLoader::LoadModel(path, &VertexBuffer, &IndexBuffer);
+	m_pRenderMesh = new CRenderMesh(CVertexBuffer(pRenderer, VertexBuffer), CIndexBuffer(pRenderer, IndexBuffer));
 
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, IndexBuffer);
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, VertexBuffer);
-	m_pRenderData = new RenderData(CVertexBuffer(pRenderer, VertexBuffer), CIndexBuffer(pRenderer, IndexBuffer));
+	//m_pRenderData = new RenderData(CVertexBuffer(pRenderer, VertexBuffer), CIndexBuffer(pRenderer, IndexBuffer));
+
+	m_pMaterial = new CMaterial(pRenderer, "BaseVertexShader.cso", "BasePixelShader.cso");
 	//BINDS
 	//Bind vertex buffer
 	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, VertexBuffer));
@@ -51,12 +55,30 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	//Bind vertex constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
-	m_ModelMatrix = Matrix::Identity;
-	m_ModelMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
+	m_WorldMatrix = Matrix::Identity;
+	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
 }
 
 void CModel::Update(float deltaTime)
 {
 	yaw += deltaTime * 0.1f;
-	m_ModelMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
+	m_WorldMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
+}
+
+//TODO: Do better than this
+struct vrtCBuf
+{
+	Matrix worldViewProjection;
+};
+
+void CModel::RenderInternal(CRenderer* pRenderer)
+{
+	vrtCBuf cbuf;
+
+	cbuf.worldViewProjection = m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
+	cbuf.worldViewProjection.Transpose();
+
+
+	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(pRenderer, cbuf);
+	vertexCBuffer->Bind(pRenderer);
 }

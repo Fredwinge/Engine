@@ -11,7 +11,9 @@ public:
 	CModel(CRenderer* pRenderer, const char* path);
 
 	void Update(float deltaTime) override;
-	Matrix GetWorldMatrix() const override { return m_ModelMatrix; }
+	Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
+
+	void RenderInternal(CRenderer* pRenderer) override; //TODO: Implement
 
 private:
 
@@ -31,6 +33,6 @@ private:
 	//DirectX::XMFLOAT3X3 mt;
 
 	//TODO: Inherit as base from somewhere
-	Matrix m_ModelMatrix;
+	Matrix m_WorldMatrix;
 
 };

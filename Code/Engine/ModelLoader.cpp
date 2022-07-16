@@ -20,7 +20,7 @@ void CModelLoader::LoadModel(const char* path, std::vector<VertexData>* pVertexB
 	}
 }
 
-void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
+void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVertexBuffer, std::vector<tIndex>* pIndexBuffer)
 {
 
 	//"r" is for read
@@ -35,9 +35,9 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVert
 	std::vector<Vector2> texcoords;
 	std::vector<Vector3> normals;
 
-	std::vector<uint16> vert_indices;
-	std::vector<uint16> uv_indices;
-	std::vector<uint16> normal_indices;
+	std::vector<tIndex> vert_indices;
+	std::vector<tIndex> uv_indices;
+	std::vector<tIndex> normal_indices;
 
 	//Read file until end is reached
 	while (true)
@@ -94,7 +94,7 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVert
 			if(matches != 9)
 				assert(false && "This ain't gonna work");
 
-			for (uint16 i = 0; i < 3; ++i)
+			for (uint32 i = 0; i < 3; ++i)
 			{
 				//Subtract by 1 since OBJ indices start at 1 rather than 0
 				vert_indices.push_back(vIdx[i] - 1);
@@ -136,7 +136,7 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<VertexData>* pVert
 	}
 
 	uint16 numDupes = 0;
-	std::vector<uint16> IndexBuffer;
+	std::vector<tIndex> IndexBuffer;
 	std::vector<VertexData> VertexBuffer;
 
 	for (uint16 i = 0; i < vert_indices.size(); ++i)

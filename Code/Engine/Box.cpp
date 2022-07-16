@@ -1,6 +1,7 @@
 #include "Box.h"
 #include "Bindable/BindableBase.h"
 #include "Primitives/CCube.h"
+#include "Utils\Camera.h"
 
 CBox::CBox(CRenderer* pRenderer,
 	std::mt19937& rng,
@@ -32,12 +33,15 @@ CBox::CBox(CRenderer* pRenderer,
 	//	vData.Position = model.vertices[i];
 	//	vertexBuffer.push_back(vData);
 	//}
-	std::vector<uint16> pIndexBuffer;
+	std::vector<tIndex> pIndexBuffer;
 	std::vector<VertexData> pVertexBuffer;
 
 	CCube::Create(&pVertexBuffer, &pIndexBuffer);
+	m_pRenderMesh = new CRenderMesh(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
 
-	m_pRenderData = new RenderData(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
+	//m_pRenderData = new RenderData(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
+
+	m_pMaterial = new CMaterial(pRenderer, "BaseVertexShader.cso", "BasePixelShader.cso");
 	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
 	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
 
@@ -93,7 +97,7 @@ CBox::CBox(CRenderer* pRenderer,
 	//Bind matrix constant buffer
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
-	m_ModelMatrix = Matrix::Identity;
+	m_WorldMatrix = Matrix::Identity;
 }
 
 void CBox::Update(float deltaTime) /*noexcept*/
@@ -107,5 +111,23 @@ void CBox::Update(float deltaTime) /*noexcept*/
 
 	Matrix posMatrix = Matrix::Identity;
 	posMatrix.Pos.x = r;
-	m_ModelMatrix = Matrix::CreateRotation(Vec3(roll, pitch, yaw)) * posMatrix * Matrix::CreateRotation(Vec3(theta, phi, chi));
+	m_WorldMatrix = Matrix::CreateRotation(Vec3(roll, pitch, yaw)) * posMatrix * Matrix::CreateRotation(Vec3(theta, phi, chi));
+}
+
+//TODO: Do better than this
+struct vrtCBuf
+{
+	Matrix worldViewProjection;
+};
+
+void CBox::RenderInternal(CRenderer* pRenderer)
+{
+	vrtCBuf cbuf;
+
+	cbuf.worldViewProjection = m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
+	cbuf.worldViewProjection.Transpose();
+
+
+	CVertexConstantBuffer<vrtCBuf>* vertexCBuffer = new CVertexConstantBuffer<vrtCBuf>(pRenderer, cbuf);
+	vertexCBuffer->Bind(pRenderer);
 }

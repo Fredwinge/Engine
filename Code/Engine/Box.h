@@ -15,7 +15,9 @@ public:
 		std::uniform_real_distribution<float>&bdist);
 
 	void Update(float deltaTime) /*noexcept*/ override;
-	Matrix GetWorldMatrix() const /*noexcept*/ override { return m_ModelMatrix; }
+	Matrix GetWorldMatrix() const /*noexcept*/ override { return m_WorldMatrix; }
+
+	void RenderInternal(CRenderer* pRenderer) override; //TODO: Implement
 
 private:
 	//Positional
@@ -34,6 +36,6 @@ private:
 	float dphi;
 	float dchi;
 
-	//model transform
-	Matrix m_ModelMatrix;
+	//world matrix
+	Matrix m_WorldMatrix;
 };

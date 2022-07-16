@@ -2,6 +2,7 @@
 #include <vector>
 #include "Renderable/EssentialRenderData.h"
 #include "Renderer.h"
+#include "RenderMesh.h"
 
 class CModelLoader
 {

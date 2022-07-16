@@ -40,6 +40,8 @@
       <Filter>RenderCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="RenderMesh.cpp" />
+    <ClCompile Include="Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
@@ -91,6 +93,8 @@
       <Filter>RenderCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Image.h" />
+    <ClInclude Include="RenderMesh.h" />
+    <ClInclude Include="Material.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dxerr\DXTrace.inl">

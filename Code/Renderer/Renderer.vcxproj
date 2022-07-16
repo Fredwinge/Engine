@@ -28,6 +28,8 @@
     <ClCompile Include="Bindable\VertexBuffer.cpp" />
     <ClCompile Include="Bindable\VertexShader.cpp" />
     <ClCompile Include="Bindable\IBindable.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="RenderMesh.cpp" />
     <ClCompile Include="DXGIInfoManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -47,6 +49,8 @@
     <ClInclude Include="Bindable\VertexBuffer.h" />
     <ClInclude Include="Bindable\VertexShader.h" />
     <ClInclude Include="Bindable\IBindable.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="RenderMesh.h" />
     <ClInclude Include="DXGIInfoManager.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Image.h" />
