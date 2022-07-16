@@ -11,23 +11,13 @@ public:
 	CModel(CRenderer* pRenderer, const char* path);
 
 	void Update(float deltaTime) override;
-	Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
+	const Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
 
-	void RenderInternal(CRenderer* pRenderer) override; //TODO: Implement
+	void RenderInternal(CRenderer* pRenderer) override;
 
 private:
 
 	std::vector<SVertexData> m_VertexBuffer;
-
-	//TODO: MAKE A BETTER SOLUTION
-	//Positional
-	float r;
-	float roll;
-	float pitch;
-	float yaw;
-	float theta;
-	float phi;
-	float chi;
 
 	//TODO: Inherit as base from somewhere
 	Matrix m_WorldMatrix;

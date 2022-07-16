@@ -17,7 +17,7 @@ public:
 	IRenderable(const IRenderable&) = delete;
 	virtual ~IRenderable() = default;
 	
-	virtual Matrix GetWorldMatrix() const = 0;
+	virtual const Matrix GetWorldMatrix() const = 0;
 	void Render(CRenderer* pRenderer);
 	virtual void Update(float deltaTime) = 0;
 

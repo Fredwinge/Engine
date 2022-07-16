@@ -20,87 +20,15 @@ CBox::CBox(CRenderer* pRenderer,
 	dchi(odist(rng)),
 	chi(adist(rng)),
 	theta(adist(rng)),
-	phi(adist(rng))
+	phi(adist(rng)),
+	m_WorldMatrix(Matrix::Identity)
 {
-
-	//auto model = CCube::Make<Vector3>();
-
-	////Wow, nice fix
-	//std::vector<VertexData> vertexBuffer;
-	//for (int i = 0; i < model.vertices.size(); ++i)
-	//{
-	//	VertexData vData;
-	//	vData.Position = model.vertices[i];
-	//	vertexBuffer.push_back(vData);
-	//}
-	std::vector<tIndex> pIndexBuffer;
-	std::vector<SVertexData> pVertexBuffer;
-
-	CCube::Create(&pVertexBuffer, &pIndexBuffer);
-	m_pRenderMesh = new CRenderMesh(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
-
-	//m_pRenderData = new RenderData(CVertexBuffer(pRenderer, pVertexBuffer), CIndexBuffer(pRenderer, pIndexBuffer));
+	CCube::Create(pRenderer, &m_pRenderMesh);
 
 	m_pMaterial = new CMaterial(pRenderer, "BaseVertexShader.cso", "BasePixelShader.cso");
-	//m_pRenderData->pVertexBuffer = new CVertexBuffer(rGfx, vertexBuffer);
-	//m_pRenderData->pIndexBuffer = new CIndexBuffer(rGfx, model.indices);
-
-	/*AddBind(std::make_unique<CVertexBuffer>(rGfx, model.vertices));
-
-	//Bind vertex shader
-	auto pVertexShader = std::make_unique<CVertexShader>(rGfx, L"../Debug/PrimitiveVertexShader.cso");
-	auto pVertexShaderByteCode = pVertexShader->GetBytecode();
-	AddBind(std::move(pVertexShader));
-
-	//Bind pixel shader
-	AddBind(std::make_unique<CPixelShader>(rGfx, L"../Debug/PrimitivePixelShader.cso"));
-
-	//Bind index buffer
-	AddIndexBuffer(std::make_unique<CIndexBuffer>(rGfx, model.indices));
-
-	//Bind pixel constant buffer
-	struct PixelCBuffer
-	{
-		struct
-		{
-			float r;
-			float g;
-			float b;
-			float a;
-		} face_colors[8];
-	};
-	const PixelCBuffer PxCBuffer =
-	{
-		{
-			{1.0f, 0.0f, 1.0f, 1.0f},
-			{1.0f, 0.0f, 0.0f, 1.0f},
-			{0.0f, 1.0f, 0.0f, 1.0f},
-			{0.0f, 1.0f, 1.0f, 1.0f},
-			{1.0f, 1.0f, 0.0f, 1.0f},
-			{0.0f, 0.0f, 1.0f, 1.0f},
-			{1.0f, 1.0f, 1.0f, 1.0f},
-			{1.0f, 0.0f, 1.0f, 1.0f},
-		}
-	};
-	AddBind(std::make_unique<CPixelConstantBuffer<PixelCBuffer>>(rGfx, PxCBuffer));
-
-	//Bind input layout
-	const std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementDesc =
-	{
-		{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-	};
-	AddBind(std::make_unique<CInputLayout>(rGfx, inputElementDesc, pVertexShaderByteCode));
-
-	//Bind topology
-	AddBind(std::make_unique<CTopology>(rGfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-
-	//Bind matrix constant buffer
-	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
-
-	m_WorldMatrix = Matrix::Identity;
 }
 
-void CBox::Update(float deltaTime) /*noexcept*/
+void CBox::Update(float deltaTime)
 {
 	roll += droll * deltaTime;
 	pitch += dpitch * deltaTime;

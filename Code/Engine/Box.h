@@ -14,10 +14,10 @@ public:
 		std::uniform_real_distribution<float>&rdist,
 		std::uniform_real_distribution<float>&bdist);
 
-	void Update(float deltaTime) /*noexcept*/ override;
-	Matrix GetWorldMatrix() const /*noexcept*/ override { return m_WorldMatrix; }
+	void Update(float deltaTime) override;
+	const Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
 
-	void RenderInternal(CRenderer* pRenderer) override; //TODO: Implement
+	void RenderInternal(CRenderer* pRenderer) override;
 
 private:
 	//Positional

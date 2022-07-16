@@ -4,14 +4,6 @@
 #include "Utils\Camera.h"
 
 CModel::CModel(CRenderer* pRenderer, const char* path)
-	:
-	r(0.0f),
-	roll(0.0f),
-	pitch(0.0f),
-	yaw(0.0f),
-	theta(0.0f),
-	phi(0.0f),
-	chi(0.0f)
 {
 
 	std::vector<SVertexData> VertexBuffer;
@@ -61,7 +53,6 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 
 void CModel::Update(float deltaTime)
 {
-	yaw += deltaTime * 0.1f;
 	m_WorldMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
 }
 

@@ -1,12 +1,14 @@
 #include "CCube.h"
 
-std::vector<SVertexData> CCube::s_VertexBuffer;
-std::vector<unsigned short> CCube::s_IndexBuffer;
+CRenderMesh* CCube::s_pRenderMesh = nullptr;
 
 bool CCube::s_bCubeCreated = false;
 
-void CCube::CreateBuffers()
+void CCube::CreateBuffers(CRenderer* pRenderer)
 {
+	std::vector<SVertexData> vertexBuffer;
+	std::vector<tIndex> indexBuffer;
+
 	const float side = 0.5f;
 	//RIGHT FACE
 	SVertexData face[4];
@@ -31,7 +33,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	//LEFT FACE
@@ -56,7 +58,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	//TOP FACE
@@ -81,7 +83,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	//DOWN FACE
@@ -106,7 +108,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	//FORWARD FACE
@@ -131,7 +133,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	//BACKWARD FACE
@@ -156,7 +158,7 @@ void CCube::CreateBuffers()
 	//Push
 	for (int i = 0; i < 4; ++i)
 	{
-		s_VertexBuffer.push_back(face[i]);
+		vertexBuffer.push_back(face[i]);
 	}
 
 	uint16 Indices[36] =
@@ -171,6 +173,8 @@ void CCube::CreateBuffers()
 
 	for (int i = 0; i < 36; ++i)
 	{
-		s_IndexBuffer.push_back(Indices[i]);
+		indexBuffer.push_back(Indices[i]);
 	}
+
+	s_pRenderMesh = new CRenderMesh(CVertexBuffer(pRenderer, vertexBuffer), CIndexBuffer(pRenderer, indexBuffer));
 }
