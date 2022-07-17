@@ -3,6 +3,7 @@
 #include "Utils/Timer.h"
 #include "Utils/Camera.h"
 #include "Renderable\IRenderable.h"
+#include "RenderPipeline.h"
 
 #include "Model.h"
 
@@ -35,4 +36,7 @@ private:
 	CModel* m_pTorvudModel;
 
 	bool bCameraFreeFlight = false;
+
+	//TODO: Move somewhere else
+	CRenderPipeline* m_pRenderPipeline;
 };

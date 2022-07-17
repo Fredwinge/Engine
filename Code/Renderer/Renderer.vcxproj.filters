@@ -39,6 +39,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="RenderMesh.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="RenderPipeline.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="RenderMesh.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="VertexData.h" />
+    <ClInclude Include="RenderPipeline.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dxerr\DXTrace.inl">

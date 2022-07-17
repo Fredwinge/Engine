@@ -38,11 +38,15 @@ CApplication::CApplication()
 
 	//Temp
 	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
+
+	m_pRenderPipeline = new CRenderPipeline(m_Wnd.GetRenderer());
 }
 
 CApplication::~CApplication()
 {
 	delete m_pTorvudModel;
+
+	delete m_pRenderPipeline;
 }
 
 int CApplication::Run()
@@ -108,14 +112,20 @@ void CApplication::Update()
 
 void CApplication::Render(CRenderer* pRenderer)
 {
-	pRenderer->BeginFrame(sin(m_Timer.TimeElapsed()));
+	//pRenderer->BeginFrame(sin(m_Timer.TimeElapsed()));
 
 	for (auto& d : m_pRenderables)
 	{
-		d->Render(pRenderer);
+		//d->Render(pRenderer);
+		m_pRenderPipeline->AddToQueue(d.get(), CRenderPipeline::OPAQUE_PASS);
 	}
 
-	m_pTorvudModel->Render(pRenderer);
+	//m_pTorvudModel->Render(pRenderer);
+	m_pRenderPipeline->AddToQueue(m_pTorvudModel, CRenderPipeline::OPAQUE_PASS);
 
-	pRenderer->EndFrame();
+	m_pRenderPipeline->RenderScene();
+
+	m_pRenderPipeline->ClearQueue();
+
+	//pRenderer->EndFrame();
 }
