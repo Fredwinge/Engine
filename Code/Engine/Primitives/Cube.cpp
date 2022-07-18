@@ -1,10 +1,8 @@
-#include "CCube.h"
+#include "Cube.h"
 
 CRenderMesh* CCube::s_pRenderMesh = nullptr;
 
-bool CCube::s_bCubeCreated = false;
-
-void CCube::CreateBuffers(CRenderer* pRenderer)
+void CCube::CreateMesh(CRenderer* pRenderer)
 {
 	std::vector<SVertexData> vertexBuffer;
 	std::vector<tIndex> indexBuffer;
@@ -13,6 +11,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 	//RIGHT FACE
 	SVertexData face[4];
 	Vector3 faceNormal = Vector3(side, 0.0f, 0.0f);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(side, -side, -side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);
@@ -38,6 +37,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 
 	//LEFT FACE
 	faceNormal = Vector3(-side, 0.0f, 0.0f);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(-side, -side, -side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);
@@ -63,6 +63,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 
 	//TOP FACE
 	faceNormal = Vector3(0.0f, side, 0.0f);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(-side, side, -side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);
@@ -88,6 +89,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 
 	//DOWN FACE
 	faceNormal = Vector3(0.0f, -side, 0.0f);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(-side, -side, -side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);
@@ -113,6 +115,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 
 	//FORWARD FACE
 	faceNormal = Vector3(0.0f, 0.0f, side);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(-side, -side, side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);
@@ -138,6 +141,7 @@ void CCube::CreateBuffers(CRenderer* pRenderer)
 
 	//BACKWARD FACE
 	faceNormal = Vector3(0.0f, 0.0f, -side);
+	faceNormal.Normalize();
 
 	face[0].Position = Vector3(-side, -side, -side);
 	face[0].TexCoord = Vector2(0.0f, 0.0f);

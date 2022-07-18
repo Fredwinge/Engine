@@ -15,7 +15,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="Window.cpp" />
-    <ClCompile Include="Primitives\CCube.cpp">
+    <ClCompile Include="Primitives\Cube.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,7 +28,7 @@
     <ClInclude Include="Primitives\CCone.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\CCube.h">
+    <ClInclude Include="Primitives\Cube.h">
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\CIndexedTriangleList.h">

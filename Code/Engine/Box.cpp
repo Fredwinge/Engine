@@ -1,7 +1,7 @@
 #include "Box.h"
 #include "Bindable/BindableBase.h"
-#include "Primitives/CCube.h"
-#include "Utils\Camera.h"
+#include "Primitives/Cube.h"
+#include "Utils/Camera.h"
 
 CBox::CBox(CRenderer* pRenderer,
 	std::mt19937& rng,

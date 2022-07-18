@@ -13,10 +13,9 @@ public:
 
 	static void Create(CRenderer* pRenderer, CRenderMesh** pRenderMesh)
 	{
-		if (s_bCubeCreated == false)
+		if (!s_pRenderMesh)
 		{
-			CreateBuffers(pRenderer);
-			s_bCubeCreated = true;
+			CreateMesh(pRenderer);
 		}
 
 		*pRenderMesh = s_pRenderMesh;
@@ -24,9 +23,7 @@ public:
 
 private:
 
-	static void CreateBuffers(CRenderer* pRenderer);
+	static void CreateMesh(CRenderer* pRenderer);
 
 	static CRenderMesh* s_pRenderMesh;
-
-	static bool s_bCubeCreated;
 };
