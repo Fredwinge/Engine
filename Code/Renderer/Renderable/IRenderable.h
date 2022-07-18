@@ -17,7 +17,9 @@ public:
 	IRenderable(const IRenderable&) = delete;
 	virtual ~IRenderable() = default;
 	
+	//TODO: We shouldn't have the set here.
 	virtual const Matrix GetWorldMatrix() const = 0;
+	virtual void SetWorldMatrix(Matrix m) = 0;
 	void Render(CRenderer* pRenderer);
 	virtual void Update(float deltaTime) = 0;
 

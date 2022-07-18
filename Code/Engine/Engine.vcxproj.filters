@@ -34,7 +34,7 @@
     <ClInclude Include="Primitives\CIndexedTriangleList.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\CPlane.h">
+    <ClInclude Include="Primitives\Plane.h">
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\CPrism.h">

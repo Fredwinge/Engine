@@ -7,11 +7,14 @@ class CModel : public IRenderable
 {
 public:
 
-	//TODO: Replace vectors with just ptrs?
 	CModel(CRenderer* pRenderer, const char* path);
 
+	//TODO: Temporary constructor, figure out if this should stay
+	CModel(CRenderer* pRenderer, CRenderMesh* pMesh);
+
 	void Update(float deltaTime) override;
-	const Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
+	const Matrix GetWorldMatrix() const override	{ return m_WorldMatrix; }
+	void SetWorldMatrix(Matrix m) override			{ m_WorldMatrix = m; };
 
 	void RenderInternal(CRenderer* pRenderer) override;
 

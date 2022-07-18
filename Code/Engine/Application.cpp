@@ -4,6 +4,8 @@
 #include "Box.h"
 #include "Math\Matrix.h"
 
+#include "Primitives\Plane.h"
+
 CApplication::CApplication()
 	:
 	m_Wnd(800, 600, "Window Thingy")
@@ -25,6 +27,13 @@ CApplication::CApplication()
 		m_pRenderables.push_back(std::make_unique<CBox>(m_Wnd.GetRenderer(), rng, adist, ddist, odist, rdist, bdist));
 	}
 	OutputDebugString("\nCreated boxes");
+
+	CRenderMesh* pPlaneMesh;
+	CPlane<1, 1>::Create(m_Wnd.GetRenderer(), &pPlaneMesh);
+	m_pRenderables.push_back(std::make_unique<CModel>(m_Wnd.GetRenderer(), pPlaneMesh));
+	Matrix planeMatrix = m_pRenderables.back().get()->GetWorldMatrix();
+	planeMatrix.Pos.SetXYZ(Vec3(0.0f, -10.0f, -10.0f));
+	m_pRenderables.back().get()->SetWorldMatrix(planeMatrix);
 
 	m_Camera.SetProjection(Matrix::CreateProjectionFov(75.0f, 800.0f / 600.0f, 0.5f, 100.0f));
 	OutputDebugString("\nSet camera projection");
@@ -81,7 +90,9 @@ void CApplication::Update()
 		d->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
 	}
 
-	m_pTorvudModel->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
+	Matrix torvudMatrix = m_pTorvudModel->GetWorldMatrix();
+	torvudMatrix.RotatePreMultiply(Vec3(0.0f, m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
+	m_pTorvudModel->SetWorldMatrix(torvudMatrix);
 
 //TEMP
 	if (m_Wnd.m_Keyboard.KeyIsPressed(VK_ESCAPE))

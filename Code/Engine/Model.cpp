@@ -51,9 +51,19 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
 }
 
+CModel::CModel(CRenderer* pRenderer, CRenderMesh* pRenderMesh)
+{
+	m_pRenderMesh = pRenderMesh;
+
+	m_pMaterial = new CMaterial(pRenderer, "BaseVertexShader.cso", "BasePixelShader.cso");
+
+	m_WorldMatrix = Matrix::Identity;
+	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
+}
+
 void CModel::Update(float deltaTime)
 {
-	m_WorldMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
+	//m_WorldMatrix.RotatePreMultiply(Vec3(0.0f, deltaTime, 0.0f));
 }
 
 //TODO: Do better than this

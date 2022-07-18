@@ -211,7 +211,7 @@
     <ClInclude Include="Primitives\CCone.h" />
     <ClInclude Include="Primitives\CCube.h" />
     <ClInclude Include="Primitives\CIndexedTriangleList.h" />
-    <ClInclude Include="Primitives\CPlane.h" />
+    <ClInclude Include="Primitives\Plane.h" />
     <ClInclude Include="Primitives\CPrism.h" />
     <ClInclude Include="Primitives\CSphere.h" />
     <ClInclude Include="Window.h" />

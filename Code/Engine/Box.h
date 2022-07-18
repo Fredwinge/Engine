@@ -15,7 +15,8 @@ public:
 		std::uniform_real_distribution<float>&bdist);
 
 	void Update(float deltaTime) override;
-	const Matrix GetWorldMatrix() const override { return m_WorldMatrix; }
+	const Matrix GetWorldMatrix() const override	{ return m_WorldMatrix; }
+	void SetWorldMatrix(Matrix m) override			{ m_WorldMatrix = m; };
 
 	void RenderInternal(CRenderer* pRenderer) override;
 
