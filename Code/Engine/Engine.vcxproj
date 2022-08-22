@@ -213,7 +213,7 @@
     <ClInclude Include="Primitives\CIndexedTriangleList.h" />
     <ClInclude Include="Primitives\Plane.h" />
     <ClInclude Include="Primitives\CPrism.h" />
-    <ClInclude Include="Primitives\CSphere.h" />
+    <ClInclude Include="Primitives\Sphere.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

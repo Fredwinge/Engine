@@ -40,7 +40,7 @@
     <ClInclude Include="Primitives\CPrism.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\CSphere.h">
+    <ClInclude Include="Primitives\Sphere.h">
       <Filter>Primitives</Filter>
     </ClInclude>
   </ItemGroup>
