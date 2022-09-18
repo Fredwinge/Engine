@@ -200,7 +200,6 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="Primitives\Cube.cpp" />
-    <ClCompile Include="Window.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +213,6 @@
     <ClInclude Include="Primitives\Plane.h" />
     <ClInclude Include="Primitives\CPrism.h" />
     <ClInclude Include="Primitives\Sphere.h" />
-    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\BasePixelShader.hlsl">

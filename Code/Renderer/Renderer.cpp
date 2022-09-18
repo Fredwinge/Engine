@@ -7,7 +7,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 
-CRenderer::CRenderer(HWND hWnd, Vector2 wndSize)
+CRenderer::CRenderer(const HWND hWnd, const Vector2 wndSize)
 {
 
 	//Create swapchain description

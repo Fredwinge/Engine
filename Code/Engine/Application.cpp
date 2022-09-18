@@ -7,9 +7,12 @@
 #include "Primitives\Plane.h"
 
 CApplication::CApplication()
-	:
-	m_Wnd(800, 600, "Window Thingy")
 {
+
+	m_pSystem = new CSystem();
+	CWindow* pWindow = m_pSystem->GetWindow();
+	m_pRenderer = new CRenderer(pWindow->GetHandle(), pWindow->GetSize());
+	m_pRenderPipeline = new CRenderPipeline(m_pRenderer);
 
 	static constexpr size_t numRenderables = 180;
 	for (size_t i = 0; i < numRenderables; ++i)
@@ -24,13 +27,13 @@ CApplication::CApplication()
 		//std::uniform_int_distribution<int> longdist{ 10,40 };
 		//std::uniform_int_distribution<int> typedist{ 0,3 };
 
-		m_pRenderables.push_back(std::make_unique<CBox>(m_Wnd.GetRenderer(), rng, adist, ddist, odist, rdist, bdist));
+		m_pRenderables.push_back(std::make_unique<CBox>(m_pRenderer, rng, adist, ddist, odist, rdist, bdist));
 	}
 	OutputDebugString("\nCreated boxes");
 
 	CRenderMesh* pPlaneMesh;
-	CPlane<1, 1>::Create(m_Wnd.GetRenderer(), &pPlaneMesh);
-	m_pRenderables.push_back(std::make_unique<CModel>(m_Wnd.GetRenderer(), pPlaneMesh));
+	CPlane<1, 1>::Create(m_pRenderer, &pPlaneMesh);
+	m_pRenderables.push_back(std::make_unique<CModel>(m_pRenderer, pPlaneMesh));
 	Matrix planeMatrix = m_pRenderables.back().get()->GetWorldMatrix();
 	planeMatrix.Pos.SetXYZ(Vec3(0.0f, -10.0f, -10.0f));
 	m_pRenderables.back().get()->SetWorldMatrix(planeMatrix);
@@ -38,17 +41,15 @@ CApplication::CApplication()
 	m_Camera.SetProjection(Matrix::CreateProjectionFov(75.0f, 800.0f / 600.0f, 0.5f, 100.0f));
 	OutputDebugString("\nSet camera projection");
 
-	m_Wnd.GetRenderer()->SetCamera(&m_Camera);
+	m_pRenderer->SetCamera(&m_Camera);
 	OutputDebugString("\nSet active camera");
 
 	//TODO: path macro
-	m_pTorvudModel = new CModel(m_Wnd.GetRenderer(), "../../Assets/Models/Torvud.obj");
+	m_pTorvudModel = new CModel(m_pRenderer, "../../Assets/Models/Torvud.obj");
 	OutputDebugString("\ncreated torvud model");
 
 	//Temp
-	m_Camera.MoveCamera(&m_Wnd.m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
-
-	m_pRenderPipeline = new CRenderPipeline(m_Wnd.GetRenderer());
+	m_Camera.MoveCamera(&pWindow->m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
 }
 
 CApplication::~CApplication()
@@ -63,15 +64,14 @@ int CApplication::Run()
 	while (true)
 	{
 
-		//TODO: This should be in some sort of CSystem class, returning an error message which can be parsed.
-		//This file shouldn't belong in 'Engine' but in some sort of Launcher/Game project instead.
-		if (CWindow::ProcessMessages() == CWindow::Message::APPLICATION_QUIT)
+		//TODO: This file shouldn't belong in 'Engine' but in some sort of Launcher/Game project instead.
+		if (m_pSystem->Update() == CSystem::SysMessage::SYSTEM_QUIT)
 		{
 			return -1;
 		}
-
+		
 		Update();
-		Render(m_Wnd.GetRenderer());
+		Render();
 	}
 }
 
@@ -84,44 +84,46 @@ void CApplication::Update()
 	while (m_Timer.Peek() < s_fFrameDif)
 		Sleep(1);
 
+	CWindow* pWindow = m_pSystem->GetWindow();
+
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
 	{
-		d->Update(m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
+		d->Update(pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
 	}
 
 	Matrix torvudMatrix = m_pTorvudModel->GetWorldMatrix();
-	torvudMatrix.RotatePreMultiply(Vec3(0.0f, m_Wnd.m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
+	torvudMatrix.RotatePreMultiply(Vec3(0.0f, pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
 	m_pTorvudModel->SetWorldMatrix(torvudMatrix);
 
 //TEMP
-	if (m_Wnd.m_Keyboard.KeyIsPressed(VK_ESCAPE))
+	if (pWindow->m_Keyboard.KeyIsPressed(VK_ESCAPE))
 	{
-		m_Wnd.ToggleCursorLock(true);
-		m_Wnd.HideCursor(true);
+		pWindow->ToggleCursorLock(true);
+		pWindow->HideCursor(true);
 
 		bCameraFreeFlight = true;
 	}
-	else if (m_Wnd.m_Keyboard.KeyIsPressed(VK_CONTROL))
+	else if (pWindow->m_Keyboard.KeyIsPressed(VK_CONTROL))
 	{
-		m_Wnd.ToggleCursorLock(false);
-		m_Wnd.HideCursor(false);
+		pWindow->ToggleCursorLock(false);
+		pWindow->HideCursor(false);
 
 		bCameraFreeFlight = false;
 	}
 
 	if (bCameraFreeFlight == true)
 	{
-		Vector2 deltaMove = m_Wnd.m_Mouse.GetRawDelta() * 8.0f;
-		m_Camera.MoveCamera(&m_Wnd.m_Keyboard, deltaMove, deltaTime);
+		Vector2 deltaMove = pWindow->m_Mouse.GetRawDelta() * 8.0f;
+		m_Camera.MoveCamera(&pWindow->m_Keyboard, deltaMove, deltaTime);
 		
-		m_Wnd.SetCursorPosition({ 0.5f, 0.5f });
+		pWindow->SetCursorPosition({ 0.5f, 0.5f });
 
-		m_Wnd.m_Mouse.ResetRawDelta();
+		pWindow->m_Mouse.ResetRawDelta();
 	}
 }
 
-void CApplication::Render(CRenderer* pRenderer)
+void CApplication::Render()
 {
 	//pRenderer->BeginFrame(sin(m_Timer.TimeElapsed()));
 

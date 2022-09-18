@@ -13,6 +13,9 @@
     <Filter Include="Input">
       <UniqueIdentifier>{48d31669-b667-4a49-ba2c-36a229c2caa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{3fe4a840-b430-4e5c-b46e-629549241716}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\CommonMath.h">
@@ -40,6 +43,10 @@
     <ClInclude Include="Utils\Camera.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="System.h" />
+    <ClInclude Include="Windows\Window.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\Matrix.cpp">
@@ -59,6 +66,10 @@
     </ClCompile>
     <ClCompile Include="Utils\Camera.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="Windows\Window.cpp">
+      <Filter>Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,13 +14,11 @@
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
-    <ClCompile Include="Window.cpp" />
     <ClCompile Include="Primitives\Cube.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Box.h" />

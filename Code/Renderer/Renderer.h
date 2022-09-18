@@ -19,7 +19,7 @@ class CRenderer
 public:
 	
 	//We need a handle to our window to construct a Windows device object
-	CRenderer(HWND hWnd, Vector2 wndSize);
+	CRenderer(const HWND hWnd, const Vector2 wndSize);
 	CRenderer(const CRenderer&) = delete;
 	CRenderer& operator=(const CRenderer&) = delete;
 	~CRenderer();

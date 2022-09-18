@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
-#include "Renderer.h"
 #include "Math/Vectors.h"
 
 class CWindow
@@ -19,6 +18,7 @@ public:
 
 private:
 
+	//TODO: Rework this, i don't like it.
 	//Singleton manages registration/cleanup of window class
 	class WindowClass
 	{
@@ -49,10 +49,9 @@ public:
 	CWindow& operator=(const CWindow&) = delete;
 
 	void SetTitle(const std::string& title);
-	static Message ProcessMessages();
+	Message ProcessMessages();
 
-	//TODO: Put this somewhere else, i don't like this
-	CRenderer* GetRenderer();
+	HWND GetHandle() { return m_hWnd; }
 
 	Vector2 GetSize() const noexcept { return m_Size; }
 
@@ -80,6 +79,4 @@ private:
 	HWND m_hWnd;
 
 	Vector2 m_Size;
-
-	CRenderer* m_pRenderer;
 };

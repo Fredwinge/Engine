@@ -25,17 +25,21 @@
     <ClInclude Include="Math\CommonMath.h" />
     <ClInclude Include="Math\Matrix.h" />
     <ClInclude Include="Math\Vectors.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Utils\Camera.h" />
     <ClInclude Include="Utils\Timer.h" />
     <ClInclude Include="WindowsAssertMacros.h" />
+    <ClInclude Include="Windows\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Input\Keyboard.cpp" />
     <ClCompile Include="Input\Mouse.cpp" />
     <ClCompile Include="Math\Matrix.cpp" />
     <ClCompile Include="Math\Vectors.cpp" />
+    <ClCompile Include="System.cpp" />
     <ClCompile Include="Utils\Camera.cpp" />
     <ClCompile Include="Utils\Timer.cpp" />
+    <ClCompile Include="Windows\Window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

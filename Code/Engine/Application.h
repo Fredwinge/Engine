@@ -1,5 +1,5 @@
 #pragma once
-#include "Window.h"
+#include "System.h"
 #include "Utils/Timer.h"
 #include "Utils/Camera.h"
 #include "Renderable\IRenderable.h"
@@ -20,9 +20,9 @@ public:
 private:
 
 	void Update();
-	void Render(CRenderer* pRenderer);
+	void Render();
 
-	CWindow m_Wnd;
+	CSystem* m_pSystem;
 
 	CTimer m_Timer;
 
@@ -39,4 +39,5 @@ private:
 
 	//TODO: Move somewhere else
 	CRenderPipeline* m_pRenderPipeline;
+	CRenderer* m_pRenderer;
 };
