@@ -2,13 +2,18 @@
 #include "dxerr/dxerr.h"
 #include <sstream>
 #include "GraphicsAssertMacros.h"
+#include <assert.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
 
 CRenderer::CRenderer(const HWND hWnd, const Vector2 wndSize)
+	:
+	m_uDirtyBinds(0u)
 {
+	ZeroMemory(m_aBoundRenderTargets, sizeof(m_aBoundRenderTargets));
+	ZeroMemory(m_aBoundDepthStencilViews, sizeof(m_aBoundDepthStencilViews));
 
 	//Create swapchain description
 	DXGI_SWAP_CHAIN_DESC swapDesc = {};
@@ -211,10 +216,49 @@ void CRenderer::BeginFrame(float r, float g, float b) noexcept
 
 void CRenderer::DrawIndexed(unsigned int indexCount)
 {
+	if (m_uDirtyBinds != BIND_NONE)
+		ResolveDirtyBinds();
+
 	GFX_ASSERT_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
 }
 
 void CRenderer::SetDefaultRenderTarget()
 {
 	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
+	//BindRenderTarget(0, m_pRenderTargetView, m_pDepthStencilView);
+}
+
+//TODO: Move elsewhere?
+void CRenderer::ResolveDirtyBinds()
+{
+	//TODO: FIX ALL THE WARNINGS CAUSED BY THIS
+	if (m_uDirtyBinds & BIND_RENDERTARGET)
+	{
+		m_pDeviceContext->OMSetRenderTargets(MAX_RENDERTARGET_COUNT, m_aBoundRenderTargets, *m_aBoundDepthStencilViews);
+	}
+
+	if (m_uDirtyBinds & BIND_SHADERRESOURCE)
+	{
+		//TODO: Configure startslot?
+		m_pDeviceContext->PSSetShaderResources(0, MAX_SHADERESOURCE_COUNT, m_aBoundShaderResources);
+	}
+
+	m_uDirtyBinds = BIND_NONE;
+}
+
+void CRenderer::BindRenderTarget(uint8 uSlot, ID3D11RenderTargetView* pRTV, ID3D11DepthStencilView* pDSV)
+{
+	assert(uSlot < MAX_RENDERTARGET_COUNT);
+	m_aBoundRenderTargets[uSlot] = pRTV;
+	m_aBoundDepthStencilViews[uSlot] = pDSV;
+
+	m_uDirtyBinds |= BIND_RENDERTARGET;
+}
+
+void CRenderer::BindShaderResource(uint8 uSlot, ID3D11ShaderResourceView* pSRV)
+{
+	assert(uSlot < MAX_SHADERESOURCE_COUNT);
+	m_aBoundShaderResources[uSlot] = pSRV;
+
+	m_uDirtyBinds |= BIND_SHADERRESOURCE;
 }

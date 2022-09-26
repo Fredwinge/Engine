@@ -6,6 +6,7 @@ CRenderPipeline::CRenderPipeline(CRenderer* pRenderer)
 	m_pSceneRenderer(pRenderer)
 {
 	m_pRenderTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
+	m_pZTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
 	m_pSampler = new CSampler(pRenderer);
 	m_pMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "PostProcessPixel.cso");
 	m_pMesh = nullptr;
@@ -33,6 +34,9 @@ void CRenderPipeline::RenderScene()
 	m_pRenderTarget->ClearRenderTarget(m_pSceneRenderer, Vec4(sin(m_Timer.TimeElapsed()), 0.7f, 1.0f, 1.0f));
 	m_pRenderTarget->Bind(m_pSceneRenderer, 0u);
 
+	m_pZTarget->ClearRenderTarget(m_pSceneRenderer);
+	m_pZTarget->Bind(m_pSceneRenderer, 1u);
+
 
 	for (size_t i = 0; i < m_RenderQueue[OPAQUE_PASS].size(); ++i)
 	{
@@ -42,11 +46,10 @@ void CRenderPipeline::RenderScene()
 	
 	//Post process
 	m_pSceneRenderer->SetDefaultRenderTarget();
-	ID3D11ShaderResourceView* ShaderResources[1] = { m_pRenderTarget->GetShaderResourceView() };
+	m_pSceneRenderer->BindShaderResource(0u, m_pRenderTarget->GetShaderResourceView());
 	m_pMaterial->BindMaterial(m_pSceneRenderer);
 	m_pMesh->BindBuffers(m_pSceneRenderer);
 	m_pSampler->Bind(m_pSceneRenderer);
-	m_pSceneRenderer->GetDeviceContext()->PSSetShaderResources(0, 1, ShaderResources);
 	
 	m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
 

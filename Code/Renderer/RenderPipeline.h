@@ -35,4 +35,6 @@ private:
 	CMaterial* m_pMaterial;
 	CRenderMesh* m_pMesh;
 
+	CRenderTarget* m_pZTarget;
+
 };

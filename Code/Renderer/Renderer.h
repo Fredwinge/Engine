@@ -70,4 +70,33 @@ private:
 
 	//TODO: Should this really be here?
 	CCamera* m_pCurrentCamera = nullptr;
+
+	//TODO: Move this elsewhere?
+public:
+
+	void ResolveDirtyBinds();
+
+	//Bind resources
+	void BindRenderTarget(uint8 uSlot, ID3D11RenderTargetView* pRTV, ID3D11DepthStencilView* pDSV);
+	void BindShaderResource(uint8 uSlot, ID3D11ShaderResourceView* pSRV);
+
+private:
+
+	enum
+	{
+		BIND_NONE = 0x0,
+		BIND_RENDERTARGET = 0x1,
+		BIND_SHADERRESOURCE = 0x2
+	};
+
+	uint64 m_uDirtyBinds;
+
+#define MAX_RENDERTARGET_COUNT 8
+
+	ID3D11RenderTargetView* m_aBoundRenderTargets[MAX_RENDERTARGET_COUNT];
+	ID3D11DepthStencilView* m_aBoundDepthStencilViews[MAX_RENDERTARGET_COUNT];
+
+#define MAX_SHADERESOURCE_COUNT 128		//TODO: lmao
+
+	ID3D11ShaderResourceView* m_aBoundShaderResources[MAX_SHADERESOURCE_COUNT];
 };

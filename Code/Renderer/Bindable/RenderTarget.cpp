@@ -79,7 +79,7 @@ CRenderTarget::~CRenderTarget()
 
 void CRenderTarget::Bind(CRenderer* pRenderer, uint8 uSlot)
 {
-	pRenderer->GetDeviceContext()->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
+	pRenderer->BindRenderTarget(uSlot, m_pRenderTargetView, m_pDepthStencilView);
 }
 
 void CRenderTarget::ClearRenderTarget(CRenderer* pRenderer, Vec4 rgba)
