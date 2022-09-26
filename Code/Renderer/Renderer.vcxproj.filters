@@ -40,6 +40,9 @@
     <ClCompile Include="RenderMesh.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="RenderPipeline.cpp" />
+    <ClCompile Include="Bindable\RenderTarget.cpp">
+      <Filter>Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
@@ -89,6 +92,9 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="VertexData.h" />
     <ClInclude Include="RenderPipeline.h" />
+    <ClInclude Include="Bindable\RenderTarget.h">
+      <Filter>Bindable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="dxerr\DXTrace.inl">

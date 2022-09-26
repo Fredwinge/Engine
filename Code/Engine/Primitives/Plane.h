@@ -24,8 +24,8 @@ private:
 		constexpr uint32 numDivX = DivX;
 		constexpr uint32 numDivZ = DivZ;
 
-		constexpr float sizeX = 10.0f;
-		constexpr float sizeZ = 10.0f;
+		constexpr float sizeX = 2.0f;
+		constexpr float sizeZ = 2.0f;
 
 		constexpr uint32 numVertsX = numDivX + 1;
 		constexpr uint32 numVertsZ = numDivZ + 1;
@@ -48,7 +48,7 @@ private:
 					const float posX = float(x) * divSizeX;
 					SVertexData vertex;
 					vertex.Position = bottomLeft + Vec3(posX, 0.0f, posZ);
-					vertex.TexCoord = Vec2(posX / halfSideX, posZ / halfSideZ);
+					vertex.TexCoord = Vec2(posX / sizeX, -posZ / sizeZ);
 					vertex.Normal = Vec3(0.0f, 1.0f, 0.0f);
 
 					vertices.push_back(vertex);

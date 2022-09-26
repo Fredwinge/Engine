@@ -28,6 +28,8 @@ public:
 	void BeginFrame(float r = 0.7f, float g = 0.7f, float b = 1.0f) noexcept;
 	void DrawIndexed(unsigned int indexCount);
 
+	void SetDefaultRenderTarget();
+
 	//Get - Set Camera
 	const CCamera*	GetCamera()					{ return m_pCurrentCamera; }
 	void			SetCamera(CCamera* pCam)	{ m_pCurrentCamera = pCam; }
@@ -56,6 +58,7 @@ private:
 	//Used for issuing rendering commands and configuring the pipeline
 	ID3D11DeviceContext* m_pDeviceContext = nullptr;
 
+	//TODO: Replace with CRenderTarget
 	//Render target view
 	ID3D11RenderTargetView* m_pRenderTargetView = nullptr;
 	//Depth stencil view

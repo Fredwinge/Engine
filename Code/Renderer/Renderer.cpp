@@ -122,6 +122,7 @@ CRenderer::CRenderer(const HWND hWnd, const Vector2 wndSize)
 
 	OutputDebugString("\nCreated depthstencil view");
 
+	//TODO: Classify?
 	//Configure viewport
 	D3D11_VIEWPORT viewPort;
 	viewPort.Width = wndSize.x;
@@ -203,9 +204,17 @@ void CRenderer::BeginFrame(float r, float g, float b) noexcept
 
 	//Gotta clear the depth stencil every frame as well
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0u);
+
+	//TODO: temporary reset, should handle this elsewhere
+	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
 }
 
 void CRenderer::DrawIndexed(unsigned int indexCount)
 {
 	GFX_ASSERT_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
+}
+
+void CRenderer::SetDefaultRenderTarget()
+{
+	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
 }

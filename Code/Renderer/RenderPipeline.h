@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderable\IRenderable.h"
 #include "Utils\Timer.h"
+#include "Bindable/RenderTarget.h"
 
 class CRenderPipeline
 {
@@ -27,5 +28,11 @@ private:
 	CRenderer* m_pSceneRenderer;
 
 	CTimer m_Timer;
+
+	//Post process tests
+	CSampler* m_pSampler;
+	CRenderTarget* m_pRenderTarget;
+	CMaterial* m_pMaterial;
+	CRenderMesh* m_pMesh;
 
 };
