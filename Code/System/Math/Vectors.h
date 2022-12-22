@@ -55,6 +55,7 @@ struct Vector4
 	Vector4 operator*=(const Matrix& mt);
 
 	bool operator==(const Vector4& v);
+	bool operator!=(const Vector4& v);
 
 	float& operator[] (const size_t i);
 
@@ -119,10 +120,9 @@ struct Vector3
 	Vector3 operator-() const { return Vector3(-x, -y, -z); };
 
 	bool operator==(const Vector3& v);
+	bool operator!=(const Vector3& v);
 
 	float& operator[] (const size_t i);
-
-	//const float operator*(const Vector3& v);
 
 	//Functions
 	const float			Dot(const Vector3& v) const;
@@ -133,6 +133,7 @@ struct Vector3
 	void				Normalize();
 	const Vector3		GetNormalized() const;
 	
+	//TODO: Change to Length() and Distance()?
 	const float			GetLength() const;
 	const float			GetDistanceTo(const Vector3& v) const;
 
@@ -177,6 +178,7 @@ struct Vector2
 	Vector2 operator/=(const float f);
 
 	bool operator==(const Vector2& v);
+	bool operator!=(const Vector2& v);
 
 	float& operator[] (const size_t i);
 

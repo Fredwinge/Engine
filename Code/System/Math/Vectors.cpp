@@ -205,6 +205,12 @@ bool Vector4::operator==(const Vector4& v)
 	return x == v.x && y == v.y && z == v.z && w == v.w;
 }
 
+//VECTOR4 != VECTOR4
+bool Vector4::operator!=(const Vector4& v)
+{
+	return !(x == v.x && y == v.y && z == v.z && w == v.w);
+}
+
 //VECTOR4[]
 float& Vector4::operator[](const size_t i)
 {
@@ -426,6 +432,12 @@ bool Vector3::operator==(const Vector3& v)
 	return x == v.x && y == v.y && z == v.z;
 }
 
+//VECTOR3 != VECTOR3
+bool Vector3::operator!=(const Vector3& v)
+{
+	return !(x == v.x && y == v.y && z == v.z);
+}
+
 //VECTOR3[]
 float& Vector3::operator[](const size_t i)
 {
@@ -612,6 +624,12 @@ Vector2 Vector2::operator/=(const float f)
 bool Vector2::operator==(const Vector2& v)
 {
 	return x == v.x && y == v.y;
+}
+
+//VECTOR2 != VECTOR2
+bool Vector2::operator!=(const Vector2& v)
+{
+	return !(x == v.x && y == v.y);
 }
 
 //VECTOR2[]
