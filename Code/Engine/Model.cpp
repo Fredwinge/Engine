@@ -48,7 +48,7 @@ CModel::CModel(CRenderer* pRenderer, const char* path)
 	AddBind(std::make_unique<CTransformCBuf>(rGfx, *this));*/
 
 	m_WorldMatrix = Matrix::Identity;
-	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
+	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, 3.0f, -10.0f));
 }
 
 CModel::CModel(CRenderer* pRenderer, CRenderMesh* pRenderMesh)
@@ -58,7 +58,7 @@ CModel::CModel(CRenderer* pRenderer, CRenderMesh* pRenderMesh)
 	m_pMaterial = new CMaterial(pRenderer, "BaseVertexShader.cso", "BasePixelShader.cso");
 
 	m_WorldMatrix = Matrix::Identity;
-	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, -3.0f, -10.0f));
+	m_WorldMatrix.Pos.SetXYZ(Vec3(0.0f, 3.0f, -10.0f));
 }
 
 void CModel::Update(float deltaTime)
@@ -69,15 +69,24 @@ void CModel::Update(float deltaTime)
 //TODO: Do better than this
 struct vrtCBuf
 {
+	Matrix world;
+
+	//TODO: REALLY should do better than this
 	Matrix worldViewProjection;
+	Matrix worldView;
+	Matrix InvWorld;
 };
 
 void CModel::RenderInternal(CRenderer* pRenderer)
 {
 	vrtCBuf cbuf;
 
+	cbuf.world = m_WorldMatrix.GetTransposed();
 	cbuf.worldViewProjection = m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
 	cbuf.worldViewProjection.Transpose();
+	cbuf.worldView = m_WorldMatrix * pRenderer->GetCamera()->GetView();
+	cbuf.worldView.Transpose();
+	cbuf.InvWorld = m_WorldMatrix.GetInverted().GetTransposed();
 
 
 	CConstantBuffer* vertexCBuffer = new CConstantBuffer(pRenderer, CConstantBuffer::ETYPE_VERTEX, &cbuf, sizeof(vrtCBuf));

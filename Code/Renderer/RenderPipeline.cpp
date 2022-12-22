@@ -7,8 +7,10 @@ CRenderPipeline::CRenderPipeline(CRenderer* pRenderer)
 {
 	m_pRenderTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
 	m_pZTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
+	m_pPosTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
 	m_pSampler = new CSampler(pRenderer);
 	m_pMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "PostProcessPixel.cso");
+	m_pDirectionalMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "BasicDirectional.cso");
 	m_pMesh = nullptr;
 	CPlane<1, 1>::Create(pRenderer, &m_pMesh);
 }
@@ -37,21 +39,37 @@ void CRenderPipeline::RenderScene()
 	m_pZTarget->ClearRenderTarget(m_pSceneRenderer);
 	m_pZTarget->Bind(m_pSceneRenderer, 1u);
 
+	m_pPosTarget->ClearRenderTarget(m_pSceneRenderer);
+	m_pPosTarget->Bind(m_pSceneRenderer, 2u);
+
 
 	for (size_t i = 0; i < m_RenderQueue[OPAQUE_PASS].size(); ++i)
 	{
 		m_RenderQueue[OPAQUE_PASS][i]->Render(m_pSceneRenderer);
 	}
+	
+	//TODO: Add support for multiple lights, instead of hardcoding the shader.
+	//Basic deferred directional
+	{
+		m_pSceneRenderer->SetDefaultRenderTarget();
+		m_pSceneRenderer->BindShaderResource(0u, m_pRenderTarget->GetShaderResourceView());
+		m_pSceneRenderer->BindShaderResource(1u, m_pZTarget->GetShaderResourceView());
+		m_pSceneRenderer->BindShaderResource(2u, m_pPosTarget->GetShaderResourceView());
+		m_pDirectionalMaterial->BindMaterial(m_pSceneRenderer);
+		m_pMesh->BindBuffers(m_pSceneRenderer);
+		m_pSampler->Bind(m_pSceneRenderer);
 
-	
+		m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
+	}
+
 	//Post process
-	m_pSceneRenderer->SetDefaultRenderTarget();
-	m_pSceneRenderer->BindShaderResource(0u, m_pRenderTarget->GetShaderResourceView());
-	m_pMaterial->BindMaterial(m_pSceneRenderer);
-	m_pMesh->BindBuffers(m_pSceneRenderer);
-	m_pSampler->Bind(m_pSceneRenderer);
-	
-	m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
+	//m_pSceneRenderer->SetDefaultRenderTarget();
+	//m_pSceneRenderer->BindShaderResource(0u, m_pRenderTarget->GetShaderResourceView());
+	//m_pMaterial->BindMaterial(m_pSceneRenderer);
+	//m_pMesh->BindBuffers(m_pSceneRenderer);
+	//m_pSampler->Bind(m_pSceneRenderer);
+	//
+	//m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
 
 	//END FRAME
 	m_pSceneRenderer->EndFrame();

@@ -36,5 +36,9 @@ private:
 	CRenderMesh* m_pMesh;
 
 	CRenderTarget* m_pZTarget;
+	CRenderTarget* m_pPosTarget;
+
+	//Directional tests
+	CMaterial* m_pDirectionalMaterial;
 
 };

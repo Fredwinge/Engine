@@ -45,15 +45,24 @@ void CBox::Update(float deltaTime)
 //TODO: Do better than this
 struct vrtCBuf
 {
+	Matrix world;
+
+	//TODO: REALLY should do better than this
 	Matrix worldViewProjection;
+	Matrix worldView;
+	Matrix InvWorld;
 };
 
 void CBox::RenderInternal(CRenderer* pRenderer)
 {
 	vrtCBuf cbuf;
 
+	cbuf.world = m_WorldMatrix.GetTransposed();
 	cbuf.worldViewProjection = m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
 	cbuf.worldViewProjection.Transpose();
+	cbuf.worldView = m_WorldMatrix * pRenderer->GetCamera()->GetView();
+	cbuf.worldView.Transpose();
+	cbuf.InvWorld = m_WorldMatrix.GetInverted().GetTransposed();
 
 
 	CConstantBuffer* vertexCBuffer = new CConstantBuffer(pRenderer, CConstantBuffer::ETYPE_VERTEX, &cbuf, sizeof(vrtCBuf));

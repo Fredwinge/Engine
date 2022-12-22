@@ -89,11 +89,11 @@ void CApplication::Update()
 	auto deltaTime = m_Timer.Mark() * m_fSpeedFactor;
 	for (auto& d : m_pRenderables)
 	{
-		d->Update(pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
+		d->Update(!pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime);
 	}
 
 	Matrix torvudMatrix = m_pTorvudModel->GetWorldMatrix();
-	torvudMatrix.RotatePreMultiply(Vec3(0.0f, pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
+	torvudMatrix.RotatePreMultiply(Vec3(0.0f, !pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
 	m_pTorvudModel->SetWorldMatrix(torvudMatrix);
 
 //TEMP

@@ -4,6 +4,29 @@
 #include "Math/Vectors.h"
 #include <Windows.h>
 
+//TODO: Move somewhere else, rework to apply to primitives aswell?
+void CalculateTangentBinormal(SVertexData vertex1, SVertexData vertex2, SVertexData vertex3, Vec3& tangent, Vec3& binormal)
+{
+	// This function assumes this equation is correct
+	// | edge1 | = | edgeUV1 | * | tangent  | 
+	// | edge2 | = | edgeUV2 |   | binormal |
+
+	const Vec3 edge1 = vertex2.Position - vertex1.Position;
+	const Vec3 edge2 = vertex3.Position - vertex1.Position;
+	const Vec2 edgeUV1 = vertex2.TexCoord - vertex1.TexCoord;
+	const Vec2 edgeUV2 = vertex3.TexCoord - vertex1.TexCoord;
+
+	const float denominator = 1.0f / (edgeUV1.x * edgeUV2.y - edgeUV2.x * edgeUV1.y);
+
+	tangent = ((edge1 * edgeUV2.y) - (edge2 * edgeUV1.y)) * denominator;
+	binormal = ((edge2 * edgeUV1.x) - (edge1 * edgeUV2.x)) * denominator;
+
+	tangent.Normalize();
+	binormal.Normalize();
+
+	return;
+}
+
 void CModelLoader::LoadModel(const char* path, std::vector<SVertexData>* pVertexBuffer, std::vector<uint16>* pIndexBuffer)
 {
 
@@ -35,9 +58,13 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<SVertexData>* pVer
 	std::vector<Vector2> texcoords;
 	std::vector<Vector3> normals;
 
-	std::vector<tIndex> vert_indices;
-	std::vector<tIndex> uv_indices;
-	std::vector<tIndex> normal_indices;
+	struct Triangle
+	{
+		tIndex vert_indices[3];
+		tIndex uv_indices[3];
+		tIndex normal_indices[3];
+	};
+	std::vector<Triangle> Triangle_Indices;
 
 	//Read file until end is reached
 	while (true)
@@ -94,13 +121,14 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<SVertexData>* pVer
 			if(matches != 9)
 				assert(false && "This ain't gonna work");
 
+			Triangle tri;
 			for (uint32 i = 0; i < 3; ++i)
 			{
-				//Subtract by 1 since OBJ indices start at 1 rather than 0
-				vert_indices.push_back(vIdx[i] - 1);
-				uv_indices.push_back(uvIdx[i] - 1);
-				normal_indices.push_back(nrmIdx[i] - 1);
+				tri.vert_indices[i] = vIdx[i] - 1;
+				tri.uv_indices[i] = uvIdx[i] - 1;
+				tri.normal_indices[i] = nrmIdx[i] - 1;
 			}
+			Triangle_Indices.push_back(tri);
 			
 			/*
 			//Maybe useful for rework
@@ -139,33 +167,47 @@ void CModelLoader::LoadModelOBJ(const char* path, std::vector<SVertexData>* pVer
 	std::vector<tIndex> IndexBuffer;
 	std::vector<SVertexData> VertexBuffer;
 
-	for (uint16 i = 0; i < vert_indices.size(); ++i)
+	int current_idx = -1;
+	for (uint16 i = 0; i < Triangle_Indices.size(); ++i)
 	{
-		SVertexData VertexData;
-		VertexData.Position = vertices[vert_indices[i]];
-		VertexData.TexCoord = texcoords[uv_indices[i]];
-		VertexData.Normal = normals[normal_indices[i]];
 
-		bool isDupe = false;
-		//Check if vertexData is a dupe
-		for (uint16 j = 0; j < VertexBuffer.size(); ++j)
+		Triangle tri = Triangle_Indices[i];
+		SVertexData VertexData[3];
+		for (uint16 tri_idx = 0; tri_idx < 3; ++tri_idx)
 		{
-			if (VertexData.Position == VertexBuffer[j].Position &&
-				VertexData.TexCoord == VertexBuffer[j].TexCoord &&
-				VertexData.Normal == VertexBuffer[j].Normal)
-			{
-				IndexBuffer.push_back(j);
-				++numDupes;
-				isDupe = true;
-				break;
-			}
+			VertexData[tri_idx].Position = vertices[tri.vert_indices[tri_idx]];;
+			VertexData[tri_idx].TexCoord = texcoords[tri.uv_indices[tri_idx]];
+			VertexData[tri_idx].Normal = normals[tri.normal_indices[tri_idx]];
 		}
 
-		if (isDupe == true)
-			continue;
+		//TODO: Add ability to read from file instead
+		//Calculate tangent and binormals
+		CalculateTangentBinormal(VertexData[0], VertexData[1], VertexData[2], VertexData[0].Tangent, VertexData[0].Binormal);
+		CalculateTangentBinormal(VertexData[1], VertexData[2], VertexData[0], VertexData[1].Tangent, VertexData[1].Binormal);
+		CalculateTangentBinormal(VertexData[2], VertexData[0], VertexData[1], VertexData[2].Tangent, VertexData[2].Binormal);
 
-		IndexBuffer.push_back(i - numDupes);
-		VertexBuffer.push_back(VertexData);
+		for (uint16 tri_idx = 0; tri_idx < 3; ++tri_idx)
+		{
+			++current_idx;
+			bool isDupe = false;
+			//Check if vertexData is a dupe
+			for (uint16 j = 0; j < VertexBuffer.size(); ++j)
+			{
+				if (VertexData[tri_idx] == VertexBuffer[j])
+				{
+					IndexBuffer.push_back(j);
+					++numDupes;
+					isDupe = true;
+					break;
+				}
+			}
+
+			if (isDupe == true)
+				continue;
+
+			IndexBuffer.push_back(current_idx - numDupes);
+			VertexBuffer.push_back(VertexData[tri_idx]);
+		}
 	}
 
 	fclose(pFile);

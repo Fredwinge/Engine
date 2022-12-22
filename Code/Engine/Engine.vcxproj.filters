@@ -67,5 +67,8 @@
     <FxCompile Include="Shaders\PostProcessVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Shaders\BasicDirectional.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
