@@ -30,6 +30,7 @@ private:
 
 	//Debugging variables
 	std::vector<std::unique_ptr<IRenderable>> m_pRenderables;
+	std::vector<IRenderable*> m_pLights;
 
 	float m_fSpeedFactor = 1.0f;
 

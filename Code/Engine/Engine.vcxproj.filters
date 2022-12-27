@@ -17,6 +17,7 @@
     <ClCompile Include="Primitives\Cube.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="PointLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModelLoader.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Primitives\Sphere.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="PointLight.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\TexturedPixelShader.hlsl">
@@ -68,6 +70,15 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\BasicDirectional.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DebugLightVertex.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\DebugLightPixel.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BasicPointlight.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

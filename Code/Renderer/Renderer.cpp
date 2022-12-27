@@ -210,6 +210,13 @@ void CRenderer::BeginFrame(float r, float g, float b) noexcept
 	//Gotta clear the depth stencil every frame as well
 	m_pDeviceContext->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0u);
 
+	//Clear rendertarget slots/ shaderresources
+	//Temporary fix to prevent output from being spammed with warnings
+	ClearRenderTargets();
+
+	ID3D11ShaderResourceView* nullRes[MAX_SHADERESOURCE_COUNT] = { nullptr };
+	m_pDeviceContext->PSSetShaderResources(0, MAX_SHADERESOURCE_COUNT, nullRes);
+
 	//TODO: temporary reset, should handle this elsewhere
 	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
 }
@@ -222,10 +229,28 @@ void CRenderer::DrawIndexed(unsigned int indexCount)
 	GFX_ASSERT_INFO_ONLY(m_pDeviceContext->DrawIndexed(indexCount, 0, 0));
 }
 
+void CRenderer::ClearRenderTargets()
+{
+	ID3D11RenderTargetView* nullViews[MAX_RENDERTARGET_COUNT] = { nullptr };
+	ID3D11DepthStencilView* nullDepths[MAX_RENDERTARGET_COUNT] = { nullptr };
+	m_pDeviceContext->OMSetRenderTargets(MAX_RENDERTARGET_COUNT, nullViews, *nullDepths);
+
+	for (uint32 uSlot = 0; uSlot < MAX_RENDERTARGET_COUNT; ++uSlot)
+	{
+		m_aBoundRenderTargets[uSlot] = nullptr;
+		m_aBoundDepthStencilViews[uSlot] = nullptr;
+	}
+}
+
 void CRenderer::SetDefaultRenderTarget()
 {
 	m_pDeviceContext->OMSetRenderTargets(1u, &m_pRenderTargetView, m_pDepthStencilView);
 	//BindRenderTarget(0, m_pRenderTargetView, m_pDepthStencilView);
+}
+
+void CRenderer::SetDefaultDepthState()
+{
+	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
 }
 
 //TODO: Move elsewhere?

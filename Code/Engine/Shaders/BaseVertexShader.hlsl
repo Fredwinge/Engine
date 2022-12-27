@@ -4,8 +4,6 @@ cbuffer CBuf
 {
     float4x4 worldMatrix;
 	float4x4 worldViewProj;
-    float4x4 worldView;
-    float4x4 InvWorldMatrix;
 };
 
 struct VS_INPUT

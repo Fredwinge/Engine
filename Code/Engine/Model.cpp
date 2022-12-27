@@ -73,8 +73,6 @@ struct vrtCBuf
 
 	//TODO: REALLY should do better than this
 	Matrix worldViewProjection;
-	Matrix worldView;
-	Matrix InvWorld;
 };
 
 void CModel::RenderInternal(CRenderer* pRenderer)
@@ -84,9 +82,6 @@ void CModel::RenderInternal(CRenderer* pRenderer)
 	cbuf.world = m_WorldMatrix.GetTransposed();
 	cbuf.worldViewProjection = m_WorldMatrix * pRenderer->GetCamera()->GetViewProjection();
 	cbuf.worldViewProjection.Transpose();
-	cbuf.worldView = m_WorldMatrix * pRenderer->GetCamera()->GetView();
-	cbuf.worldView.Transpose();
-	cbuf.InvWorld = m_WorldMatrix.GetInverted().GetTransposed();
 
 
 	CConstantBuffer* vertexCBuffer = new CConstantBuffer(pRenderer, CConstantBuffer::ETYPE_VERTEX, &cbuf, sizeof(vrtCBuf));

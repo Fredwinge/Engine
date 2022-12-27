@@ -15,6 +15,8 @@ public:
 
 	ID3D11ShaderResourceView* GetShaderResourceView() { return m_pShaderResourceView; }
 
+	ID3D11Resource* GetShaderResource() { ID3D11Resource* pResource; m_pShaderResourceView->GetResource(&pResource); return pResource; }
+
 private:
 
 

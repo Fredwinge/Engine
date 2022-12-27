@@ -1,5 +1,5 @@
 //TODO: Make sure this matches c++ code
-#define MAX_DIRECTIONAL_LIGHTS 8
+#define MAX_POINT_LIGHTS 8
 
 struct PS_INPUT
 {
@@ -13,16 +13,16 @@ struct PS_OUTPUT
     float4 color : SV_Target0;
 };
 
-struct DirectionalLight
+struct PointLight
 {
     float4 LightColor;
-    float4 LightDir;
+    float3 LightPos;
+    float Range;
 };
 
 cbuffer LightBuffer : register(b0)
 {
-    DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
-    float4 camPos;
+    PointLight pointLights[MAX_POINT_LIGHTS];
 };
 
 Texture2D g_SceneTexture : register(t0);
@@ -42,21 +42,21 @@ PS_OUTPUT main(PS_INPUT IN)
     //Uncompress normals, multiply by A to not apply light to background
     Normal.xyz = ((2.0f * Normal.xyz) - 1.0f) * Normal.a;
     
+    float3 BaseAmbient = Albedo * 0.1;
+    
+    //TODO: Add specular
     float3 diffuse = 0;
-    for (int i = 0; i < MAX_DIRECTIONAL_LIGHTS; ++i)
+    for (int i = 0; i < MAX_POINT_LIGHTS; ++i)
     {
-        
-        float3 lightDir = normalize(-directionalLights[i].LightDir.xyz);
-        float diffFactor = saturate(dot(lightDir, Normal.xyz));
-        
+        float3 lightDir = (pointLights[i].LightPos.xyz - WorldPos.xyz);
+        if (length(lightDir) < pointLights[i].Range)
         {
-            //TODO: Add specular / shadows
-            diffuse += diffFactor * directionalLights[i].LightColor.xyz;
+            diffuse += max(dot(Normal.xyz, normalize(lightDir)), 0.0) * pointLights[i].LightColor.xyz;
         }
     }
     
-    float BaseAmbient = 0.1f;
     float3 color = (BaseAmbient + diffuse) * Albedo.xyz;
+    color = lerp(Albedo.xyz, color, Normal.a);
     
     Out.color = float4(color.rgb, 1.0f);
     return Out;

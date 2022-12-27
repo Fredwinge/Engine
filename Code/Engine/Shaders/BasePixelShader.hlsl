@@ -19,7 +19,10 @@ PS_OUTPUT main(PS_INPUT IN)
 {
     PS_OUTPUT OUT;
     OUT.color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-    OUT.normals = float4(IN.normal.xyz, 1.0f);
+    //Compress normals
+    float3 normal = IN.normal * 0.5f + 0.5f;
+    OUT.normals = float4(normal, 1.0f);
+    
     OUT.position = float4(IN.worldPosition.xyz, 1.0f);
 	
     return OUT;

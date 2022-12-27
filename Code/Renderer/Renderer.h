@@ -28,7 +28,9 @@ public:
 	void BeginFrame(float r = 0.7f, float g = 0.7f, float b = 1.0f) noexcept;
 	void DrawIndexed(unsigned int indexCount);
 
+	void ClearRenderTargets();
 	void SetDefaultRenderTarget();
+	void SetDefaultDepthState();
 
 	//Get - Set Camera
 	const CCamera*	GetCamera()					{ return m_pCurrentCamera; }
