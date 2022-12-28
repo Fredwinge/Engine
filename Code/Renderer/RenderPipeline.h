@@ -55,8 +55,8 @@ private:
 	//Post process tests
 	CSampler* m_pSampler;
 	CRenderTarget* m_pRenderTarget;
-	CMaterial* m_pMaterial;
-	CRenderMesh* m_pMesh;
+	CMaterial* m_pPostProcessMaterial;
+	CRenderMesh* m_pPostProcessMesh;
 
 	CRenderTarget* m_pZTarget;
 	CRenderTarget* m_pPosTarget;
@@ -64,25 +64,22 @@ private:
 	CDepthStencil* m_PostProcessDepthStencil;
 	
 
-	//TODO: Move these somewhere else
+	//TODO: Move somewhere else
 	SDirectionalLight m_vDirectionalLights[MAX_DIRECTIONAL_LIGHTS];
 	uint32 m_NumDirectionalLights = 0;
-	CMaterial* m_pDirectionalMaterial;
-	struct DirectionalLightsBuffer
-	{
-		SDirectionalLight m_pDirectonalLights[MAX_DIRECTIONAL_LIGHTS];
-		Vec4 m_CamPos;
-	};
-	CConstantBuffer* m_pDirLightCBuffer;
 
 	SPointLight m_vPointLights[MAX_POINT_LIGHTS];
 	uint32 m_NumPointLights = 0;
-	CMaterial* m_pPointLightMaterial;
-	struct PointLightBuffer
+
+	CMaterial* m_pDeferredLightingMaterial;
+	struct DeferredLightsBuffer
 	{
-		SPointLight m_pPoints[MAX_POINT_LIGHTS];
+		SDirectionalLight m_pDirectonalLights[MAX_DIRECTIONAL_LIGHTS];
+		SPointLight m_pPointLights[MAX_POINT_LIGHTS];
+
+		Vec4 m_CamPos;
 	};
-	CConstantBuffer* m_pPointLightCBuffer;
+	CConstantBuffer* m_pLightingCBuffer;
 
 	//TODO: This is meant to copy m_pRenderTarget and be used as a shader resource, figure out some better way to handle this.
 	CRenderTarget* m_pCopyTarget;

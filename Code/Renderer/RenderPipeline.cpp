@@ -5,7 +5,8 @@
 
 CRenderPipeline::CRenderPipeline(CRenderer* pRenderer)
 	:
-	m_pSceneRenderer(pRenderer)
+	m_pSceneRenderer(pRenderer),
+	m_pPostProcessMesh(nullptr)
 {
 	m_pRenderTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
 	m_pCopyTarget = new CRenderTarget(pRenderer, Vec2(800, 600));
@@ -14,27 +15,19 @@ CRenderPipeline::CRenderPipeline(CRenderer* pRenderer)
 	m_pPosTarget = new CRenderTarget(pRenderer, Vec2(800, 600), DXGI_FORMAT_R32G32B32A32_FLOAT);
 
 	m_pSampler = new CSampler(pRenderer);
-	m_pMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "PostProcessPixel.cso");
+	m_pPostProcessMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "PostProcessPixel.cso");
 	
-	m_pMesh = nullptr;
-	CPlane<1, 1>::Create(pRenderer, &m_pMesh);
+	CPlane<1, 1>::Create(pRenderer, &m_pPostProcessMesh);
 
 	
-
 	m_PostProcessDepthStencil = new CDepthStencil(m_pSceneRenderer, false, D3D11_DEPTH_WRITE_MASK_ZERO, D3D11_COMPARISON_ALWAYS);
 
 	//TODO: Move elsewhere
-	m_pDirectionalMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "BasicDirectional.cso");
-	DirectionalLightsBuffer DirLightBuffer;
-	memcpy(DirLightBuffer.m_pDirectonalLights, m_vDirectionalLights, sizeof(m_vDirectionalLights));
-	const uint32 DirLightBufferSize = sizeof(DirectionalLightsBuffer);
-	m_pDirLightCBuffer = new CConstantBuffer(m_pSceneRenderer, CConstantBuffer::ETYPE_PIXEL, &DirLightBuffer, DirLightBufferSize);
-
-	m_pPointLightMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "BasicPointlight.cso");
-	PointLightBuffer pointLightBuffer;
-	memcpy(pointLightBuffer.m_pPoints, m_vPointLights, sizeof(m_vPointLights));
-	const uint32 pointLightBufferSize = sizeof(PointLightBuffer);
-	m_pPointLightCBuffer = new CConstantBuffer(m_pSceneRenderer, CConstantBuffer::ETYPE_PIXEL, &pointLightBuffer, pointLightBufferSize);
+	m_pDeferredLightingMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "DeferredLighting.cso");
+	DeferredLightsBuffer LightBuffer;
+	memcpy(LightBuffer.m_pDirectonalLights, m_vDirectionalLights, sizeof(m_vDirectionalLights));
+	memcpy(LightBuffer.m_pPointLights, m_vPointLights, sizeof(m_vPointLights));
+	m_pLightingCBuffer = new CConstantBuffer(m_pSceneRenderer, CConstantBuffer::ETYPE_PIXEL, &LightBuffer, sizeof(DeferredLightsBuffer));
 }
 
 void CRenderPipeline::AddToQueue(IRenderable* pRenderable, ERenderPass ePass)
@@ -79,16 +72,16 @@ void CRenderPipeline::RenderScene()
 	//Clear rendertarget slots so we can use them as shader resources instead
 	 m_pSceneRenderer->ClearRenderTargets();
 	
-	//TODO: Combine point/directional lights
-	if(true)
-	{
-		//DIRECTIONAL LIGHTS
-		DirectionalLightsBuffer DirLightBuffer;
-		DirLightBuffer.m_CamPos = m_pSceneRenderer->GetCamera()->GetView().Pos;
-		memcpy(DirLightBuffer.m_pDirectonalLights, m_vDirectionalLights, sizeof(m_vDirectionalLights));
 
-		m_pDirLightCBuffer->Update(m_pSceneRenderer, &DirLightBuffer);
-		m_pDirLightCBuffer->Bind(m_pSceneRenderer);
+	{
+		//Deferred lighting
+		DeferredLightsBuffer LightBuffer;
+		LightBuffer.m_CamPos = m_pSceneRenderer->GetCamera()->GetView().Pos;
+		memcpy(LightBuffer.m_pDirectonalLights, m_vDirectionalLights, sizeof(m_vDirectionalLights));
+		memcpy(LightBuffer.m_pPointLights, m_vPointLights, sizeof(m_vPointLights));
+
+		m_pLightingCBuffer->Update(m_pSceneRenderer, &LightBuffer);
+		m_pLightingCBuffer->Bind(m_pSceneRenderer);
 
 		m_pRenderTarget->Bind(m_pSceneRenderer, 0u);
 		m_pSceneRenderer->GetDeviceContext()->CopyResource(m_pCopyTarget->GetShaderResource(), m_pRenderTarget->GetShaderResource());
@@ -97,42 +90,21 @@ void CRenderPipeline::RenderScene()
 		m_pSceneRenderer->BindShaderResource(0u, m_pCopyTarget->GetShaderResourceView());
 		m_pSceneRenderer->BindShaderResource(1u, m_pZTarget->GetShaderResourceView());
 		m_pSceneRenderer->BindShaderResource(2u, m_pPosTarget->GetShaderResourceView());
-		m_pDirectionalMaterial->BindMaterial(m_pSceneRenderer);
-		m_pMesh->BindBuffers(m_pSceneRenderer);
+		m_pDeferredLightingMaterial->BindMaterial(m_pSceneRenderer);
+		m_pPostProcessMesh->BindBuffers(m_pSceneRenderer);
 		m_pSampler->Bind(m_pSceneRenderer);
 
-		m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
-	}
-	else
-	{
-		//POINT LIGHTS
-		PointLightBuffer pointLightBuffer;
-		memcpy(pointLightBuffer.m_pPoints, m_vPointLights, sizeof(m_vPointLights));
-		
-		m_pPointLightCBuffer->Update(m_pSceneRenderer, &pointLightBuffer);
-		m_pPointLightCBuffer->Bind(m_pSceneRenderer);
-
-		m_pRenderTarget->Bind(m_pSceneRenderer, 0u);
-		m_pSceneRenderer->GetDeviceContext()->CopyResource(m_pCopyTarget->GetShaderResource(), m_pRenderTarget->GetShaderResource());
-
-		m_pSceneRenderer->BindShaderResource(0u, m_pCopyTarget->GetShaderResourceView());
-		m_pSceneRenderer->BindShaderResource(1u, m_pZTarget->GetShaderResourceView());
-		m_pSceneRenderer->BindShaderResource(2u, m_pPosTarget->GetShaderResourceView());
-		m_pPointLightMaterial->BindMaterial(m_pSceneRenderer);
-		m_pMesh->BindBuffers(m_pSceneRenderer);
-		m_pSampler->Bind(m_pSceneRenderer);
-
-		m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
+		m_pSceneRenderer->DrawIndexed(m_pPostProcessMesh->GetIdxCount());
 	}
 
 	//Post process
 	m_pSceneRenderer->SetDefaultRenderTarget();
 	m_pSceneRenderer->BindShaderResource(0u, m_pRenderTarget->GetShaderResourceView());
-	m_pMaterial->BindMaterial(m_pSceneRenderer);
-	m_pMesh->BindBuffers(m_pSceneRenderer);
+	m_pPostProcessMaterial->BindMaterial(m_pSceneRenderer);
+	m_pPostProcessMesh->BindBuffers(m_pSceneRenderer);
 	m_pSampler->Bind(m_pSceneRenderer);
 	
-	m_pSceneRenderer->DrawIndexed(m_pMesh->GetIdxCount());
+	m_pSceneRenderer->DrawIndexed(m_pPostProcessMesh->GetIdxCount());
 
 	//END FRAME
 	m_pSceneRenderer->EndFrame();

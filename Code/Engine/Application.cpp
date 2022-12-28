@@ -53,27 +53,17 @@ CApplication::CApplication()
 	m_Camera.MoveCamera(&pWindow->m_Keyboard, Vector2(0.0f, 0.0f), 0.0f);
 
 	SDirectionalLight DirLight;
-	DirLight.m_vLightColor = Vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	DirLight.m_vLightColor = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	DirLight.m_vDirection = Vec4(0.0f, -10.0f, -10.0f, 1.0f);
 	m_pRenderPipeline->AddDirectionalLight(DirLight);
 
-	SDirectionalLight DirLight2;
-	DirLight2.m_vLightColor = Vec4(0.0f, 1.0f, 0.3f, 1.0f);
-	DirLight2.m_vDirection = Vec4(0.0f, 0.0f, 1.0f, 1.0f);
-	m_pRenderPipeline->AddDirectionalLight(DirLight2);
-
-	SDirectionalLight DirLight3;
-	DirLight3.m_vLightColor = Vec4(0.0f, 0.0f, 1.0f, 1.0f);
-	DirLight3.m_vDirection = Vec4(-4000.0f, 100.0f, -3000.0f, 1.0f);
-	m_pRenderPipeline->AddDirectionalLight(DirLight3);
-
-	CPointLight* pPoint = new CPointLight(m_pRenderer, Vec4(1.0f, 0.0f, 0.0f, 0.0f), Vec3(10.0f, 5.0f, -5.0f), 15.0f);
+	CPointLight* pPoint = new CPointLight(m_pRenderer, Vec4(1.0f, 0.0f, 0.0f, 0.0f), Vec3(10.0f, 5.0f, -5.0f), 25.0f);
 	m_pLights.push_back(pPoint);
 
-	CPointLight* pPoint2 = new CPointLight(m_pRenderer, Vec4(0.0f, 1.0f, 0.0f, 0.0f), Vec3(-10.0f, -5.0f, -10.0f), 15.0f);
+	CPointLight* pPoint2 = new CPointLight(m_pRenderer, Vec4(0.0f, 1.0f, 0.0f, 0.0f), Vec3(-10.0f, -5.0f, -10.0f), 25.0f);
 	m_pLights.push_back(pPoint2);
 
-	CPointLight* pPoint3 = new CPointLight(m_pRenderer, Vec4(0.0f, 0.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, 20.0f), 15.0f);
+	CPointLight* pPoint3 = new CPointLight(m_pRenderer, Vec4(0.0f, 0.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, 20.0f), 25.0f);
 	m_pLights.push_back(pPoint3);
 	
 	for (int i = 0; i < m_pLights.size(); ++i)

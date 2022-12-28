@@ -69,16 +69,13 @@
     <FxCompile Include="Shaders\PostProcessVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Shaders\BasicDirectional.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
     <FxCompile Include="Shaders\DebugLightVertex.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\DebugLightPixel.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Shaders\BasicPointlight.hlsl">
+    <FxCompile Include="Shaders\DeferredLighting.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
