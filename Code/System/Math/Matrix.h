@@ -80,8 +80,8 @@ struct Matrix
 	void SetRotation(const Vector3 PitchYawRoll);
 	static const Matrix CreateRotation(const Vector3 PitchYawRoll);
 
-	//Dumb support function?
-	void RotatePreMultiply(const Vector3 PitchYawRoll);
+	void Scale(const Vector3 vScale);
+	static const Matrix CreateScale(const Vector3 vScale);
 
 	//Projection matrixes are lefthanded by default
 	static const Matrix CreateProjection(const float widthRatio, const float heightRatio, const float near, const float far);

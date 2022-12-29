@@ -36,7 +36,9 @@ CApplication::CApplication()
 	CPlane<1, 1>::Create(m_pRenderer, &pPlaneMesh);
 	m_pRenderables.push_back(std::make_unique<CModel>(m_pRenderer, pPlaneMesh));
 	Matrix planeMatrix = m_pRenderables.back().get()->GetWorldMatrix();
-	planeMatrix.Pos.SetXYZ(Vec3(0.0f, -10.0f, -10.0f));
+	//planeMatrix *= Matrix::CreateScaling(Vec3(25.0f, 1.0f, 25.0f));
+	planeMatrix.Pos.SetXYZ(Vec3(0.0f, -20.0f, 10.0f));
+	planeMatrix.Scale(Vec3(50.0f, 1.0f, 50.0f));
 	m_pRenderables.back().get()->SetWorldMatrix(planeMatrix);
 
 	m_Camera.SetProjection(Matrix::CreateProjectionFov(75.0f, 800.0f / 600.0f, 0.5f, 100.0f));
@@ -118,7 +120,7 @@ void CApplication::Update()
 	}
 
 	Matrix torvudMatrix = m_pTorvudModel->GetWorldMatrix();
-	torvudMatrix.RotatePreMultiply(Vec3(0.0f, !pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
+	torvudMatrix.Rotate(Vec3(0.0f, !pWindow->m_Keyboard.KeyIsPressed(VK_SPACE) ? 0.0f : deltaTime, 0.0f));
 	m_pTorvudModel->SetWorldMatrix(torvudMatrix);
 
 //TEMP

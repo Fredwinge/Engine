@@ -320,7 +320,7 @@ void Matrix::Rotate(const Vector3 PitchYawRoll)
 
 	Matrix rotation = zRot * yRot * xRot;
 
-	*this *= rotation;
+	*this = rotation * *this;
 }
 
 //TODO: This is pretty fucking dumb
@@ -371,26 +371,21 @@ const Matrix Matrix::CreateRotation(const Vector3 PitchYawRoll)
 	return rotation;
 }
 
-void Matrix::RotatePreMultiply(const Vector3 PitchYawRoll)
+void Matrix::Scale(const Vector3 vScale)
 {
-	const Vector3 v = PitchYawRoll;
+	const Matrix scale = CreateScale(vScale);
+	*this = scale * *this;
+}
 
-	//ZYX order
-	Matrix xRot = Identity;
-	xRot.Up.SetXYZ(Vector3(0.0f, cos(v.x), -sin(v.x)));
-	xRot.At.SetXYZ(Vector3(0.0f, sin(v.x), cos(v.x)));
+const Matrix Matrix::CreateScale(const Vector3 vScale)
+{
+	Matrix scaleMatrix = Matrix::Identity;
 
-	Matrix yRot = Identity;
-	yRot.Left.SetXYZ(Vector3(cos(v.y), 0.0f, sin(v.y)));
-	yRot.At.SetXYZ(Vector3(-sin(v.y), 0.0f, cos(v.y)));
+	scaleMatrix.Left.x = vScale.x;
+	scaleMatrix.Up.y = vScale.y;
+	scaleMatrix.At.z = vScale.z;
 
-	Matrix zRot = Identity;
-	zRot.Left.SetXYZ(Vector3(cos(v.z), -sin(v.z), 0.0f));
-	zRot.Up.SetXYZ(Vector3(sin(v.z), cos(v.z), 0.0f));
-
-	Matrix rotation = zRot * yRot * xRot;
-
-	*this = rotation * *this;
+	return scaleMatrix;
 }
 
 const Matrix Matrix::CreateProjection(const float widthRatio, const float heightRatio, const float near, const float far)
