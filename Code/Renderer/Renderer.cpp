@@ -253,6 +253,12 @@ void CRenderer::SetDefaultDepthState()
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 1u);
 }
 
+void CRenderer::SetDefaultBlendState()
+{
+	const float blendFactor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_pDeviceContext->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
+}
+
 //TODO: Move elsewhere?
 void CRenderer::ResolveDirtyBinds()
 {

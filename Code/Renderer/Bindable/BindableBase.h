@@ -9,3 +9,4 @@
 #include "Texture.h"
 #include "Sampler.h"
 #include "DepthStencil.h"
+#include "BlendState.h"

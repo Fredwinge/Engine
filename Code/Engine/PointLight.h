@@ -27,6 +27,7 @@ private:
 	Vec4 m_vColor;
 	float m_fRadius;
 
-	CConstantBuffer* vertexCBuffer;
+	CConstantBuffer* m_pVertexCBuffer;
+	CConstantBuffer* m_pPixelCBuffer;
 
 };

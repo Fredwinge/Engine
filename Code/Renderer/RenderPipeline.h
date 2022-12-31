@@ -28,6 +28,7 @@ public:
 	enum ERenderPass
 	{
 		OPAQUE_PASS = 0,
+		TRANSPARENT_PASS = 1,
 
 		NUM_PASSES
 	};
@@ -43,6 +44,8 @@ public:
 	void AddDirectionalLight(SDirectionalLight dirLight);
 
 	void AddPointLight(SPointLight pointLight);
+
+	void SortRenderQueue();
 
 private:
 
@@ -61,7 +64,7 @@ private:
 	CRenderTarget* m_pZTarget;
 	CRenderTarget* m_pPosTarget;
 
-	CDepthStencil* m_PostProcessDepthStencil;
+	CDepthStencil* m_pNoDepthTestDepthStencil;
 	
 
 	//TODO: Move somewhere else
@@ -83,5 +86,7 @@ private:
 
 	//TODO: This is meant to copy m_pRenderTarget and be used as a shader resource, figure out some better way to handle this.
 	CRenderTarget* m_pCopyTarget;
+
+	CBlendState* m_pTransparentBlendState;
 
 };

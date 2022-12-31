@@ -46,6 +46,9 @@
     <ClCompile Include="Bindable\DepthStencil.cpp">
       <Filter>Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="Bindable\BlendState.cpp">
+      <Filter>Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
@@ -99,6 +102,9 @@
       <Filter>Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Bindable\DepthStencil.h">
+      <Filter>Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Bindable\BlendState.h">
       <Filter>Bindable</Filter>
     </ClInclude>
   </ItemGroup>

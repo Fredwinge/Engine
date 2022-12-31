@@ -4,6 +4,7 @@
 #include "VertexData.h"
 #include <assert.h>
 
+//TODO: Something is wrong with the CSphere, there are weird artifacts on one side when the sphere is transparent. Check it out
 template<uint32 LatDiv = 10, uint32 LongDiv = 10>
 class CSphere
 {

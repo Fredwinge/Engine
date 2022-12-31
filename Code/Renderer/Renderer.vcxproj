@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bindable\BlendState.cpp" />
     <ClCompile Include="Bindable\DepthStencil.cpp" />
     <ClCompile Include="Bindable\IndexBuffer.cpp" />
     <ClCompile Include="Bindable\InputLayout.cpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bindable\BindableBase.h" />
+    <ClInclude Include="Bindable\BlendState.h" />
     <ClInclude Include="Bindable\ConstantBuffer.h" />
     <ClInclude Include="Bindable\DepthStencil.h" />
     <ClInclude Include="Bindable\IndexBuffer.h" />

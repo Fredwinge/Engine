@@ -59,13 +59,13 @@ CApplication::CApplication()
 	DirLight.m_vDirection = Vec4(0.0f, -10.0f, -10.0f, 1.0f);
 	m_pRenderPipeline->AddDirectionalLight(DirLight);
 
-	CPointLight* pPoint = new CPointLight(m_pRenderer, Vec4(1.0f, 0.0f, 0.0f, 0.0f), Vec3(10.0f, 5.0f, -5.0f), 25.0f);
+	CPointLight* pPoint = new CPointLight(m_pRenderer, Vec4(1.0f, 0.0f, 0.0f, 1.0f), Vec3(10.0f, 5.0f, -5.0f), 25.0f);
 	m_pLights.push_back(pPoint);
 
-	CPointLight* pPoint2 = new CPointLight(m_pRenderer, Vec4(0.0f, 1.0f, 0.0f, 0.0f), Vec3(-10.0f, -5.0f, -10.0f), 25.0f);
+	CPointLight* pPoint2 = new CPointLight(m_pRenderer, Vec4(0.0f, 1.0f, 0.0f, 1.0f), Vec3(-10.0f, -5.0f, -10.0f), 25.0f);
 	m_pLights.push_back(pPoint2);
 
-	CPointLight* pPoint3 = new CPointLight(m_pRenderer, Vec4(0.0f, 0.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, 20.0f), 25.0f);
+	CPointLight* pPoint3 = new CPointLight(m_pRenderer, Vec4(0.0f, 0.0f, 1.0f, 1.0f), Vec3(0.0f, 0.0f, 20.0f), 25.0f);
 	m_pLights.push_back(pPoint3);
 	
 	for (int i = 0; i < m_pLights.size(); ++i)
@@ -161,7 +161,7 @@ void CApplication::Render()
 
 	for (auto& light : m_pLights)
 	{
-		m_pRenderPipeline->AddToQueue(light, CRenderPipeline::OPAQUE_PASS);
+		m_pRenderPipeline->AddToQueue(light, CRenderPipeline::TRANSPARENT_PASS);
 	}
 
 	m_pRenderPipeline->RenderScene();

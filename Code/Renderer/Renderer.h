@@ -31,6 +31,7 @@ public:
 	void ClearRenderTargets();
 	void SetDefaultRenderTarget();
 	void SetDefaultDepthState();
+	void SetDefaultBlendState();
 
 	//Get - Set Camera
 	const CCamera*	GetCamera()					{ return m_pCurrentCamera; }

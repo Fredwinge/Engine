@@ -20,7 +20,18 @@ CRenderPipeline::CRenderPipeline(CRenderer* pRenderer)
 	CPlane<1, 1>::Create(pRenderer, &m_pPostProcessMesh);
 
 	
-	m_PostProcessDepthStencil = new CDepthStencil(m_pSceneRenderer, false, D3D11_DEPTH_WRITE_MASK_ZERO, D3D11_COMPARISON_ALWAYS);
+	m_pNoDepthTestDepthStencil = new CDepthStencil(m_pSceneRenderer, false, D3D11_DEPTH_WRITE_MASK_ZERO, D3D11_COMPARISON_ALWAYS);
+
+	D3D11_RENDER_TARGET_BLEND_DESC transparencyBlendDesc;
+	transparencyBlendDesc.BlendEnable = true;
+	transparencyBlendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	transparencyBlendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	transparencyBlendDesc.BlendOp = D3D11_BLEND_OP_ADD;
+	transparencyBlendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	transparencyBlendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	transparencyBlendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	transparencyBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	m_pTransparentBlendState = new CBlendState(m_pSceneRenderer, true, transparencyBlendDesc);
 
 	//TODO: Move elsewhere
 	m_pDeferredLightingMaterial = new CMaterial(pRenderer, "PostProcessVertex.cso", "DeferredLighting.cso");
@@ -45,6 +56,9 @@ void CRenderPipeline::ClearQueue()
 
 void CRenderPipeline::RenderScene()
 {
+	//TODO: Do somewhere else
+	SortRenderQueue();
+
 	m_pSceneRenderer->BeginFrame(sin(m_Timer.TimeElapsed()));
 
 	//DRAW FRAME
@@ -67,8 +81,8 @@ void CRenderPipeline::RenderScene()
 		m_RenderQueue[OPAQUE_PASS][i]->Render(m_pSceneRenderer);
 	}
 	
-	//Disable depth testing before PP passes, so we can actually draw them all.
-	m_PostProcessDepthStencil->Bind(m_pSceneRenderer);
+	//Disable depth testing
+	m_pNoDepthTestDepthStencil->Bind(m_pSceneRenderer);
 	//Clear rendertarget slots so we can use them as shader resources instead
 	 m_pSceneRenderer->ClearRenderTargets();
 	
@@ -76,7 +90,7 @@ void CRenderPipeline::RenderScene()
 	{
 		//Deferred lighting
 		DeferredLightsBuffer LightBuffer;
-		LightBuffer.m_CamPos = m_pSceneRenderer->GetCamera()->GetView().Pos;
+		LightBuffer.m_CamPos = Vec4(m_pSceneRenderer->GetCamera()->GetPosition(), 1.0f);
 		memcpy(LightBuffer.m_pDirectonalLights, m_vDirectionalLights, sizeof(m_vDirectionalLights));
 		memcpy(LightBuffer.m_pPointLights, m_vPointLights, sizeof(m_vPointLights));
 
@@ -96,6 +110,15 @@ void CRenderPipeline::RenderScene()
 
 		m_pSceneRenderer->DrawIndexed(m_pPostProcessMesh->GetIdxCount());
 	}
+
+	m_pSceneRenderer->SetDefaultDepthState();
+	m_pTransparentBlendState->Bind(m_pSceneRenderer);
+	for (size_t i = 0; i < m_RenderQueue[TRANSPARENT_PASS].size(); ++i)
+	{
+		m_RenderQueue[TRANSPARENT_PASS][i]->Render(m_pSceneRenderer);
+	}
+	m_pSceneRenderer->SetDefaultBlendState();
+	m_pNoDepthTestDepthStencil->Bind(m_pSceneRenderer);
 
 	//Post process
 	m_pSceneRenderer->SetDefaultRenderTarget();
@@ -122,4 +145,28 @@ void CRenderPipeline::AddPointLight(SPointLight pointLight)
 	assert(m_NumPointLights < MAX_POINT_LIGHTS);
 	m_vPointLights[m_NumPointLights] = pointLight;
 	++m_NumPointLights;
+}
+
+//TODO: Do a proper sort instead of hacking it like this
+#include <map>
+void CRenderPipeline::SortRenderQueue()
+{
+	//TODO: change to distance to camera z-plane, instead of just the position?
+	Vec3 camPos = m_pSceneRenderer->GetCamera()->GetPosition();
+
+	std::map<float, IRenderable*> uglySortMap;
+
+	for (uint32 i = 0; i < m_RenderQueue[TRANSPARENT_PASS].size(); ++i)
+	{
+		IRenderable* pRenderable = m_RenderQueue[TRANSPARENT_PASS][i];
+		Vec3 objPos = pRenderable->GetWorldMatrix().Pos.GetXYZ();
+		float dist = objPos.GetDistanceTo(camPos);
+
+		uglySortMap[dist] = pRenderable;
+	}
+	m_RenderQueue[TRANSPARENT_PASS].clear();
+	for (std::map<float, IRenderable*>::reverse_iterator it = uglySortMap.rbegin(); it != uglySortMap.rend(); ++it)
+	{
+		m_RenderQueue[TRANSPARENT_PASS].push_back(it->second);
+	}
 }

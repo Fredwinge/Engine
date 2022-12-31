@@ -1,6 +1,7 @@
 cbuffer CBuf
 {
     float4x4 worldViewProj;
+    float4x4 worldMatrix;
     float4 lightColor;
 };
 
@@ -17,6 +18,7 @@ struct VS_OUTPUT
 {
     float4 position : SV_Position;
     float4 color : color0;
+    float3 normal : normal;
 };
 
 VS_OUTPUT main(VS_INPUT IN)
@@ -26,6 +28,7 @@ VS_OUTPUT main(VS_INPUT IN)
 	
     OUT.position = mul(float4(IN.position, 1.0f), worldViewProj);
     OUT.color = lightColor;
+    OUT.normal = normalize(mul(IN.normal, (float3x3) worldMatrix));
 
     return OUT;
 }

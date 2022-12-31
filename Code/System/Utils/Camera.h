@@ -25,6 +25,8 @@ public:
 	//TODO: MOVE SOMEWHERE ELSE
 	void MoveCamera(CKeyboard* pKbd, Vector2 deltaMove, float deltaTime);
 
+	const Vec3 GetPosition() const					{ return m_vPos; }
+
 	void SetPosition(const Vector3 pos)				{ m_vPos = pos; }
 	void SetRotation(const Vector3 PitchYawRoll)	{ m_vPitchYawRoll = PitchYawRoll; }
 
